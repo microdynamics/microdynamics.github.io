@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://microdynamics.github.io/"/>
-  <updated>2018-03-21T11:30:40.191Z</updated>
+  <updated>2018-03-22T03:24:42.356Z</updated>
   <id>https://microdynamics.github.io/</id>
   
   <author>
@@ -17,19 +17,21 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Hello World</title>
-    <link href="https://microdynamics.github.io/wiki/hello-world/"/>
-    <id>https://microdynamics.github.io/wiki/hello-world/</id>
+    <title>Problem</title>
+    <link href="https://microdynamics.github.io/wiki/Problem/"/>
+    <id>https://microdynamics.github.io/wiki/Problem/</id>
     <published>2018-03-21T11:30:40.191Z</published>
-    <updated>2018-03-21T11:30:40.191Z</updated>
+    <updated>2018-03-22T03:24:42.356Z</updated>
     
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" rel="external nofollow noopener noreferrer" target="_blank">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" rel="external nofollow noopener noreferrer" target="_blank">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" rel="external nofollow noopener noreferrer" target="_blank">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html" rel="external nofollow noopener noreferrer" target="_blank">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html" rel="external nofollow noopener noreferrer" target="_blank">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html" rel="external nofollow noopener noreferrer" target="_blank">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/deployment.html" rel="external nofollow noopener noreferrer" target="_blank">Deployment</a></p>]]></content>
+    <content type="html"><![CDATA[<p><img src="images/wrong.png" alt="files content"></p><p><img src="images/order.png" alt="files content"></p><p>Welcome to <a href="https://hexo.io/" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" rel="external nofollow noopener noreferrer" target="_blank">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" rel="external nofollow noopener noreferrer" target="_blank">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" rel="external nofollow noopener noreferrer" target="_blank">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html" rel="external nofollow noopener noreferrer" target="_blank">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html" rel="external nofollow noopener noreferrer" target="_blank">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html" rel="external nofollow noopener noreferrer" target="_blank">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/deployment.html" rel="external nofollow noopener noreferrer" target="_blank">Deployment</a></p>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; rel=&quot;external nofollow noopener noreferrer&quot; target=&quot;_blank&quot;&gt;Hexo&lt;/a&gt;! This is your very first post.
+        &lt;p&gt;&lt;img src=&quot;images/wrong.png&quot; alt=&quot;files content&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;images/order.png&quot; alt=&quot;files content&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Welcome to &lt;a href=&quot;https
       
     
     </summary>
@@ -78,26 +80,6 @@
   </entry>
   
   <entry>
-    <title>Breeze Air四轴飞行器(1)</title>
-    <link href="https://microdynamics.github.io/wiki/2.%20Breeze%20Air%E5%9B%9B%E8%BD%B4%E9%A3%9E%E8%A1%8C%E5%99%A8/breeze_air_1/"/>
-    <id>https://microdynamics.github.io/wiki/2. Breeze Air四轴飞行器/breeze_air_1/</id>
-    <published>2017-04-01T08:57:48.000Z</published>
-    <updated>2018-03-22T02:56:44.216Z</updated>
-    
-    <summary type="html">
-    
-      本篇文章介绍Breeze Air四轴飞行器
-    
-    </summary>
-    
-      <category term="2. Breeze Air四轴飞行器" scheme="https://microdynamics.github.io/categories/2-Breeze-Air%E5%9B%9B%E8%BD%B4%E9%A3%9E%E8%A1%8C%E5%99%A8/"/>
-    
-    
-      <category term="Breeze Air" scheme="https://microdynamics.github.io/tags/Breeze-Air/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Breeze Pro四轴飞行器(1)</title>
     <link href="https://microdynamics.github.io/wiki/breeze_pro_1/"/>
     <id>https://microdynamics.github.io/wiki/breeze_pro_1/</id>
@@ -123,26 +105,6 @@
     <id>https://microdynamics.github.io/wiki/1. Breeze Mini四轴飞行器/1.3/</id>
     <published>2017-04-01T08:57:48.000Z</published>
     <updated>2018-03-22T02:58:12.944Z</updated>
-    
-    <summary type="html">
-    
-      本篇文章介绍Breeze Mini四轴飞行器
-    
-    </summary>
-    
-      <category term="1. Breeze Mini四轴飞行器" scheme="https://microdynamics.github.io/categories/1-Breeze-Mini%E5%9B%9B%E8%BD%B4%E9%A3%9E%E8%A1%8C%E5%99%A8/"/>
-    
-    
-      <category term="Breeze Mini" scheme="https://microdynamics.github.io/tags/Breeze-Mini/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>2.1. STM32开发环境搭建(Keil)</title>
-    <link href="https://microdynamics.github.io/wiki/1.%20Breeze%20Mini%E5%9B%9B%E8%BD%B4%E9%A3%9E%E8%A1%8C%E5%99%A8/2.1/"/>
-    <id>https://microdynamics.github.io/wiki/1. Breeze Mini四轴飞行器/2.1/</id>
-    <published>2017-04-01T08:57:48.000Z</published>
-    <updated>2018-03-22T02:58:26.017Z</updated>
     
     <summary type="html">
     
@@ -198,6 +160,46 @@
   </entry>
   
   <entry>
+    <title>Breeze Air四轴飞行器(1)</title>
+    <link href="https://microdynamics.github.io/wiki/2.%20Breeze%20Air%E5%9B%9B%E8%BD%B4%E9%A3%9E%E8%A1%8C%E5%99%A8/breeze_air_1/"/>
+    <id>https://microdynamics.github.io/wiki/2. Breeze Air四轴飞行器/breeze_air_1/</id>
+    <published>2017-04-01T08:57:48.000Z</published>
+    <updated>2018-03-22T02:56:44.216Z</updated>
+    
+    <summary type="html">
+    
+      本篇文章介绍Breeze Air四轴飞行器
+    
+    </summary>
+    
+      <category term="2. Breeze Air四轴飞行器" scheme="https://microdynamics.github.io/categories/2-Breeze-Air%E5%9B%9B%E8%BD%B4%E9%A3%9E%E8%A1%8C%E5%99%A8/"/>
+    
+    
+      <category term="Breeze Air" scheme="https://microdynamics.github.io/tags/Breeze-Air/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>2.1. STM32开发环境搭建(Keil)</title>
+    <link href="https://microdynamics.github.io/wiki/1.%20Breeze%20Mini%E5%9B%9B%E8%BD%B4%E9%A3%9E%E8%A1%8C%E5%99%A8/2.1/"/>
+    <id>https://microdynamics.github.io/wiki/1. Breeze Mini四轴飞行器/2.1/</id>
+    <published>2017-04-01T08:57:48.000Z</published>
+    <updated>2018-03-22T02:58:26.017Z</updated>
+    
+    <summary type="html">
+    
+      本篇文章介绍Breeze Mini四轴飞行器
+    
+    </summary>
+    
+      <category term="1. Breeze Mini四轴飞行器" scheme="https://microdynamics.github.io/categories/1-Breeze-Mini%E5%9B%9B%E8%BD%B4%E9%A3%9E%E8%A1%8C%E5%99%A8/"/>
+    
+    
+      <category term="Breeze Mini" scheme="https://microdynamics.github.io/tags/Breeze-Mini/"/>
+    
+  </entry>
+  
+  <entry>
     <title>1. 四轴飞行器介绍</title>
     <link href="https://microdynamics.github.io/wiki/breeze_1/"/>
     <id>https://microdynamics.github.io/wiki/breeze_1/</id>
@@ -214,26 +216,6 @@
     
     
       <category term="Breeze" scheme="https://microdynamics.github.io/tags/Breeze/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>2.4. STM32开发环境搭建-链接脚本详解(ARM-GCC)</title>
-    <link href="https://microdynamics.github.io/wiki/1.%20Breeze%20Mini%E5%9B%9B%E8%BD%B4%E9%A3%9E%E8%A1%8C%E5%99%A8/2.4/"/>
-    <id>https://microdynamics.github.io/wiki/1. Breeze Mini四轴飞行器/2.4/</id>
-    <published>2017-04-01T08:57:48.000Z</published>
-    <updated>2018-03-22T02:58:44.758Z</updated>
-    
-    <summary type="html">
-    
-      本篇文章介绍Breeze Mini四轴飞行器
-    
-    </summary>
-    
-      <category term="1. Breeze Mini四轴飞行器" scheme="https://microdynamics.github.io/categories/1-Breeze-Mini%E5%9B%9B%E8%BD%B4%E9%A3%9E%E8%A1%8C%E5%99%A8/"/>
-    
-    
-      <category term="Breeze Mini" scheme="https://microdynamics.github.io/tags/Breeze-Mini/"/>
     
   </entry>
   
@@ -258,11 +240,11 @@
   </entry>
   
   <entry>
-    <title>3.1. 代码编写规范</title>
-    <link href="https://microdynamics.github.io/wiki/1.%20Breeze%20Mini%E5%9B%9B%E8%BD%B4%E9%A3%9E%E8%A1%8C%E5%99%A8/3.1/"/>
-    <id>https://microdynamics.github.io/wiki/1. Breeze Mini四轴飞行器/3.1/</id>
+    <title>2.4. STM32开发环境搭建-链接脚本详解(ARM-GCC)</title>
+    <link href="https://microdynamics.github.io/wiki/1.%20Breeze%20Mini%E5%9B%9B%E8%BD%B4%E9%A3%9E%E8%A1%8C%E5%99%A8/2.4/"/>
+    <id>https://microdynamics.github.io/wiki/1. Breeze Mini四轴飞行器/2.4/</id>
     <published>2017-04-01T08:57:48.000Z</published>
-    <updated>2018-03-22T02:58:56.413Z</updated>
+    <updated>2018-03-22T02:58:44.758Z</updated>
     
     <summary type="html">
     
@@ -298,11 +280,31 @@
   </entry>
   
   <entry>
-    <title>4.2. STM32系统开发-固件库与固件库编程</title>
-    <link href="https://microdynamics.github.io/wiki/1.%20Breeze%20Mini%E5%9B%9B%E8%BD%B4%E9%A3%9E%E8%A1%8C%E5%99%A8/4.2/"/>
-    <id>https://microdynamics.github.io/wiki/1. Breeze Mini四轴飞行器/4.2/</id>
+    <title>3.1. 代码编写规范</title>
+    <link href="https://microdynamics.github.io/wiki/1.%20Breeze%20Mini%E5%9B%9B%E8%BD%B4%E9%A3%9E%E8%A1%8C%E5%99%A8/3.1/"/>
+    <id>https://microdynamics.github.io/wiki/1. Breeze Mini四轴飞行器/3.1/</id>
     <published>2017-04-01T08:57:48.000Z</published>
-    <updated>2018-03-22T02:59:20.469Z</updated>
+    <updated>2018-03-22T02:58:56.413Z</updated>
+    
+    <summary type="html">
+    
+      本篇文章介绍Breeze Mini四轴飞行器
+    
+    </summary>
+    
+      <category term="1. Breeze Mini四轴飞行器" scheme="https://microdynamics.github.io/categories/1-Breeze-Mini%E5%9B%9B%E8%BD%B4%E9%A3%9E%E8%A1%8C%E5%99%A8/"/>
+    
+    
+      <category term="Breeze Mini" scheme="https://microdynamics.github.io/tags/Breeze-Mini/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>4.1. STM32系统开发- 启动文件与CMSIS</title>
+    <link href="https://microdynamics.github.io/wiki/1.%20Breeze%20Mini%E5%9B%9B%E8%BD%B4%E9%A3%9E%E8%A1%8C%E5%99%A8/4.1/"/>
+    <id>https://microdynamics.github.io/wiki/1. Breeze Mini四轴飞行器/4.1/</id>
+    <published>2017-04-01T08:57:48.000Z</published>
+    <updated>2018-03-22T02:59:09.092Z</updated>
     
     <summary type="html">
     
@@ -338,11 +340,11 @@
   </entry>
   
   <entry>
-    <title>4.1. STM32系统开发- 启动文件与CMSIS</title>
-    <link href="https://microdynamics.github.io/wiki/1.%20Breeze%20Mini%E5%9B%9B%E8%BD%B4%E9%A3%9E%E8%A1%8C%E5%99%A8/4.1/"/>
-    <id>https://microdynamics.github.io/wiki/1. Breeze Mini四轴飞行器/4.1/</id>
+    <title>4.2. STM32系统开发-固件库与固件库编程</title>
+    <link href="https://microdynamics.github.io/wiki/1.%20Breeze%20Mini%E5%9B%9B%E8%BD%B4%E9%A3%9E%E8%A1%8C%E5%99%A8/4.2/"/>
+    <id>https://microdynamics.github.io/wiki/1. Breeze Mini四轴飞行器/4.2/</id>
     <published>2017-04-01T08:57:48.000Z</published>
-    <updated>2018-03-22T02:59:09.092Z</updated>
+    <updated>2018-03-22T02:59:20.469Z</updated>
     
     <summary type="html">
     
