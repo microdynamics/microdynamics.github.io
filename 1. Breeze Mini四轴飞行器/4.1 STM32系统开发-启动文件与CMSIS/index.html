@@ -13,7 +13,7 @@
         <meta name="description" content="A Material Design theme for MkDocs">
       
       
-        <link rel="canonical" href="https://microdynamics.github.io/1. Breeze Mini四轴飞行器/2.5 STM32开发环境搭建-启动文件详解(ARM-GCC)/">
+        <link rel="canonical" href="https://microdynamics.github.io/1. Breeze Mini四轴飞行器/4.1 STM32系统开发-启动文件与CMSIS/">
       
       
         <meta name="author" content="maksyuki">
@@ -42,7 +42,7 @@
     
     
       
-        <title>2.5. STM32开发环境搭建-启动文件详解(ARM-GCC)</title>
+        <title>4-1-STM32系统开发- 启动文件与CMSIS</title>
       
     
     
@@ -121,7 +121,7 @@
                 Home | Team MicroDynamics
               </span>
               <span class="md-header-nav__topic">
-                2.5. STM32开发环境搭建-启动文件详解(ARM-GCC)
+                4-1-STM32系统开发- 启动文件与CMSIS
               </span>
             
           
@@ -439,6 +439,42 @@
           
           
 
+
+  <li class="md-nav__item">
+    <a href="../2.5%20STM32%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-%E5%90%AF%E5%8A%A8%E6%96%87%E4%BB%B6%E8%AF%A6%E8%A7%A3%28ARM-GCC%29/" title="2.5. STM32开发环境搭建-启动文件详解(ARM-GCC)" class="md-nav__link">
+      2.5. STM32开发环境搭建-启动文件详解(ARM-GCC)
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../3.1%20%E4%BB%A3%E7%A0%81%E7%BC%96%E5%86%99%E8%A7%84%E8%8C%83/" title="3-1-代码编写规范" class="md-nav__link">
+      3-1-代码编写规范
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../3.2%20%E9%A3%9E%E6%8E%A7%E7%AE%97%E6%B3%95%E6%80%BB%E8%A7%88/" title="3-2-飞控算法总览" class="md-nav__link">
+      3-2-飞控算法总览
+    </a>
+  </li>
+
+        
+          
+          
+          
+
   
 
 
@@ -447,46 +483,10 @@
     <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
     
     
-    <a href="./" title="2.5. STM32开发环境搭建-启动文件详解(ARM-GCC)" class="md-nav__link md-nav__link--active">
-      2.5. STM32开发环境搭建-启动文件详解(ARM-GCC)
+    <a href="./" title="4-1-STM32系统开发- 启动文件与CMSIS" class="md-nav__link md-nav__link--active">
+      4-1-STM32系统开发- 启动文件与CMSIS
     </a>
     
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../3.1%20%E4%BB%A3%E7%A0%81%E7%BC%96%E5%86%99%E8%A7%84%E8%8C%83/" title="3.1 代码编写规范" class="md-nav__link">
-      3.1 代码编写规范
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../3.2%20%E9%A3%9E%E6%8E%A7%E7%AE%97%E6%B3%95%E6%80%BB%E8%A7%88/" title="3.2 飞控算法总览" class="md-nav__link">
-      3.2 飞控算法总览
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../4.1%20STM32%E7%B3%BB%E7%BB%9F%E5%BC%80%E5%8F%91-%E5%90%AF%E5%8A%A8%E6%96%87%E4%BB%B6%E4%B8%8ECMSIS/" title="4.1 STM32系统开发 启动文件与CMSIS" class="md-nav__link">
-      4.1 STM32系统开发 启动文件与CMSIS
-    </a>
   </li>
 
         
@@ -855,10 +855,10 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/microdynamics/microdynamics_website_development/edit/master/docs/1. Breeze Mini四轴飞行器/2.5 STM32开发环境搭建-启动文件详解(ARM-GCC).md" title="编辑此页" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/microdynamics/microdynamics_website_development/edit/master/docs/1. Breeze Mini四轴飞行器/4.1 STM32系统开发-启动文件与CMSIS.md" title="编辑此页" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                  <h1>2.5. STM32开发环境搭建-启动文件详解(ARM-GCC)</h1>
+                  <h1>4-1-STM32系统开发- 启动文件与CMSIS</h1>
                 
                 <ul>
 <li>Breeze Mini
@@ -884,7 +884,7 @@ toc: true</li>
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../2.4%20STM32%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-%E9%93%BE%E6%8E%A5%E8%84%9A%E6%9C%AC%E8%AF%A6%E8%A7%A3%28ARM-GCC%29/" title="STM32开发环境搭建-链接脚本详解(ARM-GCC)" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../3.2%20%E9%A3%9E%E6%8E%A7%E7%AE%97%E6%B3%95%E6%80%BB%E8%A7%88/" title="3-2-飞控算法总览" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -893,19 +893,19 @@ toc: true</li>
                 <span class="md-footer-nav__direction">
                   后退
                 </span>
-                STM32开发环境搭建-链接脚本详解(ARM-GCC)
+                3-2-飞控算法总览
               </span>
             </div>
           </a>
         
         
-          <a href="../3.1%20%E4%BB%A3%E7%A0%81%E7%BC%96%E5%86%99%E8%A7%84%E8%8C%83/" title="3.1 代码编写规范" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../4.2%20STM32%E7%B3%BB%E7%BB%9F%E5%BC%80%E5%8F%91-%E5%9B%BA%E4%BB%B6%E5%BA%93%E4%B8%8E%E5%9B%BA%E4%BB%B6%E5%BA%93%E7%BC%96%E7%A8%8B/" title="4.2 STM32系统开发 固件库与固件库编程" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   前进
                 </span>
-                3.1 代码编写规范
+                4.2 STM32系统开发 固件库与固件库编程
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
