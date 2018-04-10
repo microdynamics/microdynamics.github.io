@@ -1170,6 +1170,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_17" title="参考" class="md-nav__link">
+    参考
+  </a>
+  
+</li>
+      
       
       
       
@@ -1751,6 +1758,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_17" title="参考" class="md-nav__link">
+    参考
+  </a>
+  
+</li>
+      
       
       
       
@@ -1987,11 +2001,566 @@
 <p><img alt="breeze_algorithm_RawAccNoiseData" src="https://microdynamics-1256406063.cos.ap-shanghai.myqcloud.com/breeze/algorithm/MPU6050_RawAccNoiseData.png" /></p>
 <p>由上述波形可见加速度输出信号中存在大量的干扰噪声，其幅值最高可达<code>1.5g/(m/s^2)</code>，已经将真实信号完全掩盖了，这样的信号是没法直接使用的。</p>
 <h2 id="_5">姿态数据滤波<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
-<p>上面对姿态传感器(陀螺仪和加速度计)数据的分析表明：<strong>四轴飞行器在实际飞行过程中电机和桨叶高速旋转所带来的扰动会对姿态数据的精度产生很大的影响。**但是噪声信号大多集中在高频段，此时考虑设计一个滤波器将高频噪声信号滤除掉来**提高有用信号在总信号中所占的比例。</strong></p>
+<p>上面对姿态传感器(陀螺仪和加速度计)数据的分析表明：<strong>四轴飞行器在实际飞行过程中电机和桨叶高速旋转所带来的扰动会对姿态数据的精度产生很大的影响</strong>。但是噪声信号大多集中在高频段，此时考虑设计一个滤波器将高频噪声信号滤除掉来 <strong>提高有用信号在总信号中所占的比例。</strong></p>
 <h3 id="1_6">1. 数字滤波器设计<a class="headerlink" href="#1_6" title="Permanent link">&para;</a></h3>
 <h4 id="1-iir">1. 常用数字滤波器与IIR滤波器简介<a class="headerlink" href="#1-iir" title="Permanent link">&para;</a></h4>
+<p>数字滤波器可以分为经典滤波器和现代滤波器。</p>
+<ul>
+<li>经典滤波器：假定输入信号中的有用成分和希望去除的成分各自占有不同的频带。如果信号和噪声的频谱相互重迭，经典滤波器则无能为力。常见的经典滤波器有FIR和IIR滤波器等。</li>
+<li>现代滤波器：从含有噪声的时间序列中估计出信号的某些特征或信号本身。现代滤波器将信号和噪声都视为随机信号。常见的包括Wiener滤波器、Kalman滤波器、线性预测器、自适应滤波器等。</li>
+</ul>
+<p>IIR数字滤波器是一类递归型的线性时不变因果系统，其差分方程可以写为：</p>
+<div>
+<div class="MathJax_Preview">
+y(n) = \sum_{i=1}^N a_{i}y(n-i) + \sum_{i=0}^M b_{i}x(n-i)
+</div>
+<script type="math/tex; mode=display">
+y(n) = \sum_{i=1}^N a_{i}y(n-i) + \sum_{i=0}^M b_{i}x(n-i)
+</script>
+</div>
+<p>对上式进行Z变换得：</p>
+<div>
+<div class="MathJax_Preview">
+Y(z) = \sum_{i=1}^N a_{i}z^{-i}Y(z) + \sum_{i=0}^M b_{i}z^{-i}X(z)
+</div>
+<script type="math/tex; mode=display">
+Y(z) = \sum_{i=1}^N a_{i}z^{-i}Y(z) + \sum_{i=0}^M b_{i}z^{-i}X(z)
+</script>
+</div>
+<p>对上式等式左右两边合并同类项后得传递函数<span><span class="MathJax_Preview">H(z)</span><script type="math/tex">H(z)</script></span>：</p>
+<div>
+<div class="MathJax_Preview">
+H(z) = \frac{Y(z)}{X(z)} = \frac{\sum_{i=0}^M b_{i}z^{-i}}{1-\sum_{i=1}^N a_{i}z^{-i}} = b_{0}\frac{\prod_{i=1}^M (1-c_{i}z^{-1})}{\prod_{i=1}^N (1-d_{i}z^{-1})}
+</div>
+<script type="math/tex; mode=display">
+H(z) = \frac{Y(z)}{X(z)} = \frac{\sum_{i=0}^M b_{i}z^{-i}}{1-\sum_{i=1}^N a_{i}z^{-i}} = b_{0}\frac{\prod_{i=1}^M (1-c_{i}z^{-1})}{\prod_{i=1}^N (1-d_{i}z^{-1})}
+</script>
+</div>
+<p>其中<span><span class="MathJax_Preview">c_{i}</span><script type="math/tex">c_{i}</script></span>为零点而<span><span class="MathJax_Preview">d_{i}</span><script type="math/tex">d_{i}</script></span>为极点。<span><span class="MathJax_Preview">H(z)</span><script type="math/tex">H(z)</script></span>的设计目标就是要确定其系数和零极点，以使滤波器满足给定的性能指标。</p>
+<p>数字滤波器的功能本质上是将一组输入数字序列通过一定的运算后转变为另一组输出数字序列。滤波器系统函数可以表达为多种不同的形式，每一种对应着不同的算法，也就对应着不同的实现结构。例如：</p>
+<div>
+<div class="MathJax_Preview">
+H(z)=\frac{1}{1-0.3z^{-1}-0.4z^{-2}}
+</div>
+<script type="math/tex; mode=display">
+H(z)=\frac{1}{1-0.3z^{-1}-0.4z^{-2}}
+</script>
+</div>
+<p>可以分解为：</p>
+<div>
+<div class="MathJax_Preview">
+H(z)=\frac{1}{1-0.8z^{-1}}\cdot \frac{1}{1+0.5z^{-1}}
+</div>
+<script type="math/tex; mode=display">
+H(z)=\frac{1}{1-0.8z^{-1}}\cdot \frac{1}{1+0.5z^{-1}}
+</script>
+</div>
+<p>或：</p>
+<div>
+<div class="MathJax_Preview">
+H(z)=\frac{0.6154}{1-0.8z^{-1}}+\frac{0.3846}{1+0.5z^{-1}}
+</div>
+<script type="math/tex; mode=display">
+H(z)=\frac{0.6154}{1-0.8z^{-1}}+\frac{0.3846}{1+0.5z^{-1}}
+</script>
+</div>
+<p>上述同一系统的三种不同描述形式就对应了不同的实现结构，或者说不同的滤波器结构可以实现相同的传递函数。IIR滤波器常见的结构形式有直接Ⅰ型、直接Ⅱ型（典范型）、级联型、并联型。通过差分方程能够画出包含反馈结构的数字网络称为直接型。</p>
+<p><img alt="breeze_algorithm_IIR_diff_equation" src="https://microdynamics-1256406063.cos.ap-shanghai.myqcloud.com/breeze/algorithm/IIR_difference_equation.png" /></p>
+<p>直接Ⅰ型滤波器的网络结构可以根据差分方程很直观地画出（<strong>The Direct-Form I structure implements the feed-forward terms first followed by the feedback terms</strong>）：</p>
+<p><img alt="breeze_algorithm_IIR_direct_form_1" src="https://microdynamics-1256406063.cos.ap-shanghai.myqcloud.com/breeze/algorithm/IIR_direct_form_1.png" /></p>
+<p>可以看出直接Ⅰ型滤波器需要N+M个延时单元（N≥M）。直接Ⅱ型结构是对直接Ⅰ型的变型，将上面网络的零点与极点的级联次序互换，并将延时单元合并。实现N阶滤波器只需要N个延时单元（<strong>The Direct-Form II structure uses fewer delay blocks than Direct-Form I</strong>），故称为典范型。</p>
+<p>直接Ⅱ型看上去不那么直观，可以通过下图进行理解。我们可以将整个滤波器系统看成A、B两个子系统串联而成，由于为线性系统因此交换顺序不影响最终输出结果，传递函数可写为：</p>
+<div>
+<div class="MathJax_Preview">
+H(z)=B(z)\cdot \frac{1}{A(z)}=\frac{1}{A(z)}\cdot B(z)
+</div>
+<script type="math/tex; mode=display">
+H(z)=B(z)\cdot \frac{1}{A(z)}=\frac{1}{A(z)}\cdot B(z)
+</script>
+</div>
+<p><img alt="breeze_algorithm_IIR_direct_form_2" src="https://microdynamics-1256406063.cos.ap-shanghai.myqcloud.com/breeze/algorithm/IIR_direct_form_2.png" /></p>
+<ul>
+<li>
+<p><strong>直接型</strong></p>
+<p>优点：直接型结构简单，用的延迟器较少（N和M中较大者的个数）</p>
+<p>缺点：系数<span><span class="MathJax_Preview">a_{k}</span><script type="math/tex">a_{k}</script></span>，<span><span class="MathJax_Preview">b_{k}</span><script type="math/tex">b_{k}</script></span>对滤波器性能的控制关系不直接，因此调整不方便；具体实现滤波器时<span><span class="MathJax_Preview">a_{k}</span><script type="math/tex">a_{k}</script></span>，<span><span class="MathJax_Preview">b_{k}</span><script type="math/tex">b_{k}</script></span>的量化误差将使滤波器的频率响应产生很大的改变，甚至影响系统的稳定性。直接型结构一般用于实现低阶系统。</p>
+</li>
+<li>
+<p><strong>级联型</strong></p>
+<p>将系统传递函数<span><span class="MathJax_Preview">H(z)</span><script type="math/tex">H(z)</script></span>因式分解为多个二阶子系统，系统函数就可以表示为这些二阶子系统传递函数的乘积。实现时将每个二阶子系统用直接型实现，整个系统函数用二阶环节的级联实现。</p>
+</li>
+<li>
+<p><strong>并联型</strong></p>
+<p>与级联型类似，用部分分式展开法将系统函数表示为二阶子系统传递函数的和。每个二阶子系统仍然用直接型实现，整个系统函数用二阶环节的并联实现。</p>
+</li>
+</ul>
 <h4 id="2-matlabiir">2. 使用Matlab辅助设计IIR滤波器<a class="headerlink" href="#2-matlabiir" title="Permanent link">&para;</a></h4>
+<p>在IIR滤波器设计过程中，通常利用模拟滤波器来设计数字滤波器。即先根据滤波器的性能指标设计出相应的模拟滤波器的系统函数<span><span class="MathJax_Preview">H(s)</span><script type="math/tex">H(s)</script></span>，然后再由<span><span class="MathJax_Preview">H(s)</span><script type="math/tex">H(s)</script></span>经变换得到所需要的数字滤波器的系统函数<span><span class="MathJax_Preview">H(z)</span><script type="math/tex">H(z)</script></span>。常用的变换方法有冲激响应不变法和双线性变换法。下面使用Matlab自带的滤波器工具箱来可视化生成数字滤波器和所需要的相关系数：</p>
+<p>在Matlab命令行界面中输入 <strong>fdatool</strong> 打开滤波器设计工具箱。<strong>Design Method</strong> 用于选择IIR滤波器还是FIR滤波器，这里我们选择IIR滤波器，类型选择 <strong>Butterworth</strong>，当然也可以选择其他类型，不同类型的频率响应不同，选择后默认的滤波器结构是直接II型。<strong>ResponseType</strong> 用于选择低通、高通、带通、带阻等类型，选择低通滤波“<strong>Lowpass</strong>”。<strong>Frequency Specifications</strong> 用于设置采样频率以及截止频率，这里填入200以及30，即采样率为200Hz，30Hz以上的频率将被滤除掉。<strong>Fiter Order</strong> 选择滤波器阶数，为了简单起见，先选择一个2阶滤波器做实验。</p>
+<p>参数设置好后点击 <strong>Design filter</strong> 按钮，将按要求设计滤波器。默认生成的IIR滤波器类型是 <strong>Direct-Form II,Second-Order Sections（直接Ⅱ型，每个Section是一个二阶滤波器）</strong>，在工具栏上点击 <strong>Filter Coefficients</strong> 图标或菜单栏上选择 <strong>Analysis→Filter Coefficients</strong> 可以查看生成的滤波器系数。具体操作如下图所示</p>
+<p><img alt="breeze_algorithm_IIR_filter_design" src="https://microdynamics-1256406063.cos.ap-shanghai.myqcloud.com/breeze/algorithm/IIR_filter_design.png" /></p>
+<p>由Matlab工具箱依据给定参数设计出的滤波器系数如下图所示：</p>
+<p><img alt="breeze_algorithm_IIR_filter_coeff_section" src="https://microdynamics-1256406063.cos.ap-shanghai.myqcloud.com/breeze/algorithm/IIR_filter_coeff_section.png" /></p>
+<p>其表示的系统函数为：</p>
+<div>
+<div class="MathJax_Preview">
+H(z) = \frac{0.131106439(1 + 2z^{-1} + z^{-2})}{1 - 0.747789178z^{-1} + 0.272214937z^{-2}}
+</div>
+<script type="math/tex; mode=display">
+H(z) = \frac{0.131106439(1 + 2z^{-1} + z^{-2})}{1 - 0.747789178z^{-1} + 0.272214937z^{-2}}
+</script>
+</div>
+<p>高阶IIR滤波器是采用二阶滤波器级联的方式来实现的，其系统函数为多个二阶滤波器系统函数的乘积。默认情况下，<strong>Filter Coefficients</strong> 把结果分成多个二阶Section显示，其中还包括有增益，增益的目的是为了保证计算的精度和系统的稳定性。 选择 <strong>[edit]→[Convert to Single Section]</strong>，这时候系数就变成我们所熟悉的形式了，由于这里设计的就是二阶滤波器，所以转换后的参数就是将增益乘到括号中的各项后展开得到的值。</p>
+<p><img alt="breeze_algorithm_IIR_coeff_convert" src="https://microdynamics-1256406063.cos.ap-shanghai.myqcloud.com/breeze/algorithm/IIR_filter_coeff_convert.png" /></p>
+<p>其表示的系统函数为：</p>
+<div>
+<div class="MathJax_Preview">
+H(z) = \frac{0.131106439 + 0.262212879z^{-1} + 0.131106439z^{-2}}{1 - 0.747789178z^{-1} + 0.272214937z^{-2}}
+</div>
+<script type="math/tex; mode=display">
+H(z) = \frac{0.131106439 + 0.262212879z^{-1} + 0.131106439z^{-2}}{1 - 0.747789178z^{-1} + 0.272214937z^{-2}}
+</script>
+</div>
+<p>Matlab中二阶滤波器差分方程公式如下（<strong>注意反馈项符号为负号</strong>）：</p>
+<div>
+<div class="MathJax_Preview">
+y(n) = b_0 \cdot x(n) + b_1 \cdot x(n-1) + b_2 \cdot x(n-2) -a_1 \cdot y(n-1) - a_2 \cdot y(n-2)
+</div>
+<script type="math/tex; mode=display">
+y(n) = b_0 \cdot x(n) + b_1 \cdot x(n-1) + b_2 \cdot x(n-2) -a_1 \cdot y(n-1) - a_2 \cdot y(n-2)
+</script>
+</div>
+<p>按照上面的公式，滤波器差分方程为：</p>
+<div>
+<div class="MathJax_Preview">
+y(n) = 0.131106439 \cdot x(n) + 0.262212879 \cdot x(n-1) + 0.131106439 \cdot x(n-2) \\
+- (- 0.747789178) \cdot y(n-1) - 0.272214937 \cdot y(n-2)
+</div>
+<script type="math/tex; mode=display">
+y(n) = 0.131106439 \cdot x(n) + 0.262212879 \cdot x(n-1) + 0.131106439 \cdot x(n-2) \\
+- (- 0.747789178) \cdot y(n-1) - 0.272214937 \cdot y(n-2)
+</script>
+</div>
+<p>为了能够在微控制器上实现所设计的数字滤波器，将上面得到的差分方程用C语言改写后得到：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="k">const</span> <span class="kt">int</span> <span class="n">maxn</span>  <span class="o">=</span> <span class="mi">16</span><span class="p">;</span>
+
+<span class="kt">double</span> <span class="n">w_x</span><span class="p">[</span><span class="n">maxn</span><span class="p">],</span> <span class="n">w_y</span><span class="p">[</span><span class="n">maxn</span><span class="p">];</span>
+
+<span class="k">const</span> <span class="kt">double</span> <span class="n">B</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mf">0.13110643991662596</span><span class="p">,</span> <span class="mf">0.26221287983325192</span><span class="p">,</span> <span class="mf">0.13110643991662596</span><span class="p">};</span>
+<span class="k">const</span> <span class="kt">double</span> <span class="n">A</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.74778917825850344</span><span class="p">,</span>  <span class="mf">0.27221493792500728</span><span class="p">};</span>
+
+<span class="kt">void</span> <span class="nf">Init</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">memset</span><span class="p">(</span><span class="n">w_x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">w_x</span><span class="p">));</span>
+    <span class="n">memset</span><span class="p">(</span><span class="n">w_y</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">w_y</span><span class="p">));</span>    
+<span class="p">}</span>
+
+<span class="kt">double</span> <span class="nf">Filter</span><span class="p">(</span><span class="kt">double</span> <span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">double</span> <span class="n">out</span><span class="p">;</span>
+
+    <span class="n">w_x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">;</span>
+    <span class="n">w_y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">B</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">w_x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">B</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">w_x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">B</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">w_x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">w_y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="o">-</span> <span class="n">w_y</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">A</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+    <span class="n">out</span>    <span class="o">=</span> <span class="n">w_y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+
+    <span class="n">w_x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">w_x</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+    <span class="n">w_x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">w_x</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+
+    <span class="n">w_y</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">w_y</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+    <span class="n">w_y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">w_y</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+
+    <span class="k">return</span> <span class="n">out</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table>
+
 <h3 id="2_6">2. 数字滤波器性能测试<a class="headerlink" href="#2_6" title="Permanent link">&para;</a></h3>
+<p>用上面设计出的滤波器对前面陀螺仪的噪声数据进行滤波处理，即先将噪声数据读入，然后再调用<code class="codehilite"><span class="kt">double</span> <span class="n">Filter</span><span class="p">(</span><span class="kt">double</span> <span class="n">data</span><span class="p">)</span></code>函数依次处理x、y和z轴的数据。注意每次处理一组数据时要先调用<code>void Init()</code>函数初始化。源代码和测试数据可以从<a href="https://github.com/microdynamics-quadcopter/breeze_experimental_research">breeze_experimental_research</a>中获得，文件名为<code>IIR_digital_filter_second_order.cpp</code>和<code>MPU6050_RawGyroNoiseData.txt</code>，完整代码如下所示：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;cstdio&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;cstring&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="k">const</span> <span class="kt">int</span> <span class="n">maxn</span>  <span class="o">=</span> <span class="mi">16</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">maxnn</span> <span class="o">=</span> <span class="mi">6666</span><span class="p">;</span>
+
+<span class="kt">double</span> <span class="n">w_x</span><span class="p">[</span><span class="n">maxn</span><span class="p">],</span> <span class="n">w_y</span><span class="p">[</span><span class="n">maxn</span><span class="p">];</span>
+
+<span class="k">const</span> <span class="kt">double</span> <span class="n">B</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mf">0.13110643991662596</span><span class="p">,</span> <span class="mf">0.26221287983325192</span><span class="p">,</span> <span class="mf">0.13110643991662596</span><span class="p">};</span>
+<span class="k">const</span> <span class="kt">double</span> <span class="n">A</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.74778917825850344</span><span class="p">,</span>  <span class="mf">0.27221493792500728</span><span class="p">};</span>
+
+<span class="kt">void</span> <span class="nf">Init</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">memset</span><span class="p">(</span><span class="n">w_x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">w_x</span><span class="p">));</span>
+    <span class="n">memset</span><span class="p">(</span><span class="n">w_y</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">w_y</span><span class="p">));</span>    
+<span class="p">}</span>
+
+<span class="kt">double</span> <span class="nf">Filter</span><span class="p">(</span><span class="kt">double</span> <span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">double</span> <span class="n">out</span><span class="p">;</span>
+
+    <span class="n">w_x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">;</span>
+    <span class="n">w_y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">B</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">w_x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">B</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">w_x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">B</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">w_x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">w_y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="o">-</span> <span class="n">w_y</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">A</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+    <span class="n">out</span>    <span class="o">=</span> <span class="n">w_y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+
+    <span class="n">w_x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">w_x</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+    <span class="n">w_x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">w_x</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+
+    <span class="n">w_y</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">w_y</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+    <span class="n">w_y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">w_y</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+
+    <span class="k">return</span> <span class="n">out</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">len</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">double</span> <span class="n">va</span><span class="p">[</span><span class="n">maxnn</span><span class="p">],</span> <span class="n">vx</span><span class="p">[</span><span class="n">maxnn</span><span class="p">],</span> <span class="n">vy</span><span class="p">[</span><span class="n">maxnn</span><span class="p">],</span> <span class="n">vz</span><span class="p">[</span><span class="n">maxnn</span><span class="p">];</span>
+<span class="kt">double</span> <span class="n">vxx</span><span class="p">[</span><span class="n">maxnn</span><span class="p">],</span> <span class="n">vyy</span><span class="p">[</span><span class="n">maxnn</span><span class="p">],</span> <span class="n">vzz</span><span class="p">[</span><span class="n">maxnn</span><span class="p">];</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">freopen</span><span class="p">(</span><span class="s">&quot;MPU6050_RawGyroNoiseData.txt&quot;</span><span class="p">,</span> <span class="s">&quot;r&quot;</span><span class="p">,</span> <span class="n">stdin</span><span class="p">);</span>
+    <span class="n">freopen</span><span class="p">(</span><span class="s">&quot;MPU6050_FilteredGyroData_second_order.txt&quot;</span><span class="p">,</span> <span class="s">&quot;w&quot;</span><span class="p">,</span> <span class="n">stdout</span><span class="p">);</span>
+
+    <span class="kt">double</span> <span class="n">data</span><span class="p">;</span>
+    <span class="k">while</span><span class="p">(</span><span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%f&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">data</span><span class="p">)</span> <span class="o">!=</span> <span class="n">EOF</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">va</span><span class="p">[</span><span class="n">len</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">;</span>
+        <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%f %f %f&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">vx</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="o">&amp;</span><span class="n">vy</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="o">&amp;</span><span class="n">vz</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+        <span class="n">len</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">Init</span><span class="p">();</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">len</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="n">vxx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Filter</span><span class="p">(</span><span class="n">vx</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+
+    <span class="n">Init</span><span class="p">();</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">len</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="n">vyy</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Filter</span><span class="p">(</span><span class="n">vy</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+
+    <span class="n">Init</span><span class="p">();</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">len</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="n">vzz</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Filter</span><span class="p">(</span><span class="n">vz</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+
+
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">len</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%f %f %f %f</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">va</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">vxx</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">vyy</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">vzz</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table>
+
+<p>滤波后的陀螺仪数据存储在<code>MPU6050_FilteredGyroData_second_order.txt</code>中，对其调用Matlab绘图，绘图程序的完整代码如下：
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">clear</span> <span class="n">all</span><span class="p">;</span>
+<span class="n">clc</span><span class="p">;</span>
+
+<span class="n">is_gyro</span> <span class="p">=</span> <span class="mi">1</span><span class="p">;</span>
+
+<span class="k">if</span> <span class="n">is_gyro</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="n">data1</span> <span class="p">=</span> <span class="n">load</span><span class="p">(</span><span class="s">&#39;./MPU6050_RawGyroNoiseData.txt&#39;</span><span class="p">);</span>
+    <span class="n">data2</span> <span class="p">=</span> <span class="n">load</span><span class="p">(</span><span class="s">&#39;./MPU6050_FilteredGyroData_second_order.txt&#39;</span><span class="p">);</span>
+<span class="c">%     data2 = load(&#39;./MPU6050_FilteredGyroData_fifth_order.txt&#39;);</span>
+    <span class="n">x1</span>  <span class="p">=</span> <span class="n">data1</span><span class="p">(:,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="n">y11</span> <span class="p">=</span> <span class="n">data1</span><span class="p">(:,</span> <span class="mi">2</span><span class="p">);</span>
+    <span class="n">y12</span> <span class="p">=</span> <span class="n">data1</span><span class="p">(:,</span> <span class="mi">3</span><span class="p">);</span>
+    <span class="n">y13</span> <span class="p">=</span> <span class="n">data1</span><span class="p">(:,</span> <span class="mi">4</span><span class="p">);</span>
+
+    <span class="n">x2</span>  <span class="p">=</span> <span class="n">data2</span><span class="p">(:,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="n">y21</span> <span class="p">=</span> <span class="n">data2</span><span class="p">(:,</span> <span class="mi">2</span><span class="p">);</span>
+    <span class="n">y22</span> <span class="p">=</span> <span class="n">data2</span><span class="p">(:,</span> <span class="mi">3</span><span class="p">);</span>
+    <span class="n">y23</span> <span class="p">=</span> <span class="n">data2</span><span class="p">(:,</span> <span class="mi">4</span><span class="p">);</span>
+
+    <span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="n">plot</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y11</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y21</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">);</span>
+    <span class="n">axis</span><span class="p">([</span><span class="mi">3</span> <span class="mi">13</span> <span class="o">-</span><span class="mf">0.2</span> <span class="mf">0.2</span><span class="p">]);</span>
+    <span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;t/s&#39;</span><span class="p">);</span>
+    <span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;Amplitude/LSB&#39;</span><span class="p">);</span>
+    <span class="n">title</span><span class="p">(</span><span class="s">&#39;GYRO X Axis&#39;</span><span class="p">);</span>
+    <span class="n">legend</span><span class="p">(</span><span class="s">&#39;Raw Noise Data&#39;</span><span class="p">,</span><span class="s">&#39;Filtered Data&#39;</span><span class="p">)</span>
+
+    <span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+    <span class="n">plot</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">fft</span><span class="p">(</span><span class="n">y11</span><span class="p">)));</span> <span class="n">hold</span> <span class="n">on</span><span class="p">;</span>
+    <span class="n">plot</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">fft</span><span class="p">(</span><span class="n">y21</span><span class="p">)),</span> <span class="s">&#39;r&#39;</span><span class="p">);</span> <span class="n">hold</span> <span class="n">on</span><span class="p">;</span>
+    <span class="n">axis</span><span class="p">([</span><span class="mi">0</span> <span class="mi">1400</span> <span class="mi">0</span> <span class="mi">20</span><span class="p">]);</span>
+    <span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;f/Hz&#39;</span><span class="p">);</span>
+    <span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;Amplitude/LSB&#39;</span><span class="p">);</span>
+    <span class="n">legend</span><span class="p">(</span><span class="s">&#39;Raw Noise Data&#39;</span><span class="p">,</span><span class="s">&#39;Filtered Data&#39;</span><span class="p">)</span>
+
+    <span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+    <span class="n">plot</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y12</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y22</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">);</span>
+    <span class="n">axis</span><span class="p">([</span><span class="mi">3</span> <span class="mi">13</span> <span class="o">-</span><span class="mf">0.15</span> <span class="mf">0.1</span><span class="p">]);</span>
+    <span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;t/s&#39;</span><span class="p">);</span>
+    <span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;Amplitude/LSB&#39;</span><span class="p">);</span>
+    <span class="n">title</span><span class="p">(</span><span class="s">&#39;GYRO Y Axis&#39;</span><span class="p">);</span>
+    <span class="n">legend</span><span class="p">(</span><span class="s">&#39;Raw Noise Data&#39;</span><span class="p">,</span><span class="s">&#39;Filtered Data&#39;</span><span class="p">)</span>
+
+    <span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+    <span class="n">plot</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">fft</span><span class="p">(</span><span class="n">y12</span><span class="p">)));</span> <span class="n">hold</span> <span class="n">on</span><span class="p">;</span>
+    <span class="n">plot</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">fft</span><span class="p">(</span><span class="n">y22</span><span class="p">)),</span> <span class="s">&#39;r&#39;</span><span class="p">);</span> <span class="n">hold</span> <span class="n">on</span><span class="p">;</span>
+    <span class="n">axis</span><span class="p">([</span><span class="mi">0</span> <span class="mi">1400</span> <span class="mi">0</span> <span class="mi">40</span><span class="p">]);</span>
+    <span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;f/Hz&#39;</span><span class="p">);</span>
+    <span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;Amplitude/LSB&#39;</span><span class="p">);</span>
+    <span class="n">legend</span><span class="p">(</span><span class="s">&#39;Raw Noise Data&#39;</span><span class="p">,</span><span class="s">&#39;Filtered Data&#39;</span><span class="p">)</span>
+
+    <span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
+    <span class="n">plot</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y13</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y23</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">);</span>
+    <span class="n">axis</span><span class="p">([</span><span class="mi">3</span> <span class="mi">13</span> <span class="o">-</span><span class="mf">0.05</span> <span class="mf">0.15</span><span class="p">]);</span>
+    <span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;t/s&#39;</span><span class="p">);</span>
+    <span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;Amplitude/LSB&#39;</span><span class="p">);</span>
+    <span class="n">title</span><span class="p">(</span><span class="s">&#39;GYRO Z Axis&#39;</span><span class="p">);</span>
+    <span class="n">legend</span><span class="p">(</span><span class="s">&#39;Raw Noise Data&#39;</span><span class="p">,</span><span class="s">&#39;Filtered Data&#39;</span><span class="p">)</span>
+
+    <span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">);</span>
+    <span class="n">plot</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">fft</span><span class="p">(</span><span class="n">y13</span><span class="p">)));</span> <span class="n">hold</span> <span class="n">on</span><span class="p">;</span>
+    <span class="n">plot</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">fft</span><span class="p">(</span><span class="n">y23</span><span class="p">)),</span> <span class="s">&#39;r&#39;</span><span class="p">);</span> <span class="n">hold</span> <span class="n">on</span><span class="p">;</span>
+    <span class="n">axis</span><span class="p">([</span><span class="mi">0</span> <span class="mi">1400</span> <span class="mi">0</span> <span class="mi">25</span><span class="p">]);</span>
+    <span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;f/Hz&#39;</span><span class="p">);</span>
+    <span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;Amplitude/LSB&#39;</span><span class="p">);</span>
+
+    <span class="n">legend</span><span class="p">(</span><span class="s">&#39;Raw Noise Data&#39;</span><span class="p">,</span><span class="s">&#39;Filtered Data&#39;</span><span class="p">)</span>
+<span class="k">else</span>
+    <span class="n">data</span> <span class="p">=</span> <span class="n">load</span><span class="p">(</span><span class="s">&#39;./MPU6050_FilterAccData.txt&#39;</span><span class="p">);</span> 
+    <span class="n">x</span>  <span class="p">=</span> <span class="n">data</span><span class="p">(:,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="n">y1</span> <span class="p">=</span> <span class="n">data</span><span class="p">(:,</span> <span class="mi">2</span><span class="p">);</span>
+    <span class="n">y2</span> <span class="p">=</span> <span class="n">data</span><span class="p">(:,</span> <span class="mi">3</span><span class="p">);</span>
+    <span class="n">y3</span> <span class="p">=</span> <span class="n">data</span><span class="p">(:,</span> <span class="mi">4</span><span class="p">);</span>
+
+    <span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y1</span><span class="p">);</span>
+    <span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;t/s&#39;</span><span class="p">);</span>
+    <span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;g/(m/s^2)&#39;</span><span class="p">);</span>
+    <span class="n">title</span><span class="p">(</span><span class="s">&#39;ACC X Axis&#39;</span><span class="p">);</span>
+
+    <span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+    <span class="n">plot</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">fft</span><span class="p">(</span><span class="n">y1</span><span class="p">)));</span>
+    <span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;f/Hz&#39;</span><span class="p">);</span>
+    <span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;Amplitude/LSB&#39;</span><span class="p">);</span>
+
+    <span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+    <span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y2</span><span class="p">);</span>
+    <span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;t/s&#39;</span><span class="p">);</span>
+    <span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;g/(m/s^2)&#39;</span><span class="p">);</span>
+    <span class="n">title</span><span class="p">(</span><span class="s">&#39;ACC Y Axis&#39;</span><span class="p">);</span>
+
+    <span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+    <span class="n">plot</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">fft</span><span class="p">(</span><span class="n">y2</span><span class="p">)));</span>
+    <span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;f/Hz&#39;</span><span class="p">);</span>
+    <span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;Amplitude/LSB&#39;</span><span class="p">);</span>
+
+    <span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
+    <span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y3</span><span class="p">);</span>
+    <span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;t/s&#39;</span><span class="p">);</span>
+    <span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;g/(m/s^2)&#39;</span><span class="p">);</span>
+    <span class="n">title</span><span class="p">(</span><span class="s">&#39;ACC Z Axis&#39;</span><span class="p">);</span>
+
+    <span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">);</span>
+    <span class="n">plot</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">fft</span><span class="p">(</span><span class="n">y3</span><span class="p">)));</span>
+    <span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;f/Hz&#39;</span><span class="p">);</span>
+    <span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;Amplitude/LSB&#39;</span><span class="p">);</span>
+<span class="k">end</span>
+</pre></div>
+</td></tr></table></p>
+<p>源代码和测试数据可以从<a href="https://github.com/microdynamics-quadcopter/breeze_experimental_research">breeze_experimental_research</a>中获得，文件名为<code>MPU6050_FilteredDataOutput.m</code>和<code>MPU6050_FilteredGyroData_second_order.txt</code>，最后得到的波形如下：</p>
+<p><img alt="breeze_algorithm_MPU6050_FilteredGyroData" src="https://microdynamics-1256406063.cos.ap-shanghai.myqcloud.com/breeze/algorithm/MPU6050_FilteredGyroData.png" /></p>
+<p>从图中可以看到，红色波形所表示的滤波后数据的噪声比原始采集数据要小得多，而且从频谱图中可以明显看到高频信号的幅值响应被有效抑制。这说明设计的IIR低通滤波器是有效的，将其应用到陀螺仪信号的实时滤波是合理的。加速度数据滤波器设计和陀螺仪的类似，这里就不再赘述。</p>
 <h2 id="_6">姿态解算<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
 <h3 id="1_7">1. 互补滤波<a class="headerlink" href="#1_7" title="Permanent link">&para;</a></h3>
 <h3 id="2_7">2. 卡尔曼滤波<a class="headerlink" href="#2_7" title="Permanent link">&para;</a></h3>
@@ -2378,6 +2947,10 @@ C_n^b=
 <h2 id="_16">总结<a class="headerlink" href="#_16" title="Permanent link">&para;</a></h2>
 <p>到此为止，Breeze微型四轴飞行器飞控算法方面的内容就全部介绍完了，我想有很多同学看完之后还是会觉得云里雾里。的确，飞控这一部分在整个四轴飞行器的开发过程中算是最具挑战性，同时也是最难以理解的，所以不要指望仅仅只看几篇网上的博客教程就能入门飞控。如果你的研究方向是基于四轴飞行器平台来做上层研究的话（比如视觉避障、视觉SLAM、自主悬停和运动规划等），那么目前你所了解到的飞控知识应该已经足够，但是如果你想研究四轴飞行器的底层飞控算法实现，甚至是想自己实现一整套飞控算法的话，那么你还需要阅读更多飞控方面的专业书籍、论文，并要对国内外优秀的开源飞控代码进行深入的研究，我相信只要你足够的努力，你也可以成为别人眼里的飞控大神！</p>
 <p>最后，简单预告一下下一篇文章所要讲的内容。下一篇文章我主要会介绍Breeze微型四轴飞行器上层软件开发的相关内容，除此之外，由于下一篇文章是Breeze微型四轴系列的最后一篇，所以我还会在文章中对之前整个Breeze微型四轴项目所讲的内容进行总结，敬请期待。</p>
+<h2 id="_17">参考<a class="headerlink" href="#_17" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://www.cnblogs.com/21207-iHome/p/7059144.html">IIR数字滤波器的实现(C语言)</a></li>
+</ul>
                 
                   
                 
