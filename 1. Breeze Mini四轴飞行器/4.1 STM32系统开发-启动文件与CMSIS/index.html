@@ -99,6 +99,10 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
     <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
     
+      <a href="#_1" tabindex="1" class="md-skip">
+        跳转至
+      </a>
+    
     
       <header class="md-header" data-md-component="header">
   <nav class="md-header-nav md-grid">
@@ -483,9 +487,84 @@
     <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
     
     
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        4.1 STM32系统开发-启动文件与CMSIS
+      </label>
+    
     <a href="./" title="4.1 STM32系统开发-启动文件与CMSIS" class="md-nav__link md-nav__link--active">
       4.1 STM32系统开发-启动文件与CMSIS
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" title="前言" class="md-nav__link">
+    前言
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" title="启动文件" class="md-nav__link">
+    启动文件
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cmsis" title="CMSIS" class="md-nav__link">
+    CMSIS
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cmsis_1" title="CMSIS结构" class="md-nav__link">
+    CMSIS结构
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cmsis_2" title="CMSIS框架" class="md-nav__link">
+    CMSIS框架
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" title="总结" class="md-nav__link">
+    总结
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" title="参考" class="md-nav__link">
+    参考
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -844,8 +923,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../../%E5%85%B3%E4%BA%8E/about/" title="About" class="md-nav__link">
-      About
+    <a href="../../%E5%85%B3%E4%BA%8E/2.%20%E5%8A%9F%E8%83%BD%E6%B5%8B%E8%AF%95/" title="2. 功能测试" class="md-nav__link">
+      2. 功能测试
     </a>
   </li>
 
@@ -862,6 +941,83 @@
               </div>
             
             
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" title="前言" class="md-nav__link">
+    前言
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" title="启动文件" class="md-nav__link">
+    启动文件
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cmsis" title="CMSIS" class="md-nav__link">
+    CMSIS
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cmsis_1" title="CMSIS结构" class="md-nav__link">
+    CMSIS结构
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cmsis_2" title="CMSIS框架" class="md-nav__link">
+    CMSIS框架
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" title="总结" class="md-nav__link">
+    总结
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" title="参考" class="md-nav__link">
+    参考
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           <div class="md-content">
             <article class="md-content__inner md-typeset">
@@ -872,7 +1028,100 @@
                 
                   <h1>4.1 STM32系统开发-启动文件与CMSIS</h1>
                 
-                
+                <h2 id="_1">前言<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<h2 id="_2">启动文件<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>启动文件主要用来进行堆栈的初始化、中断向量表的定义和中断函数的定义。启动文件要引导进入系统<code>main</code>函数，<code>Reset_Handler</code>中断处理函数是唯一被实现了的函数，其在系统启动时会被调用。以下就是<code>Reset_Handler</code>实现的代码：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>; Reset handler
+Reset_Handler    PROC
+                 EXPORT  Reset_Handler             [WEAK]
+     IMPORT  __main
+     IMPORT  SystemInit
+                 LDR     R0, =SystemInit
+                 BLX     R0
+                 LDR     R0, =__main
+                 BX      R0
+                 ENDP
+</pre></div>
+</td></tr></table>
+
+<p>在工程目录<code>breeze_firmware_none\keil\Libraries\CMSIS\startup</code>中有8个启动文件，如下图所示：</p>
+<p><img alt="breeze_embedded_cmsis_architecture" src="https://microdynamics-1256406063.cos.ap-shanghai.myqcloud.com/breeze/embedded/startup_files.png" /></p>
+<p>上述8个启动文件分别对应于ST公司不同系列的MCU产品，对于103系列来说，可能会用到的启动文件只有3个：</p>
+<ul>
+<li>
+<p>startup_stm32f10x_ld.s：适用于 <strong>小容量</strong> 产品</p>
+</li>
+<li>
+<p>startup_stm32f10x_md.s：适用于 <strong>中容量</strong> 产品</p>
+</li>
+<li>
+<p>startup_stm32f10x_hd.s：适用于 <strong>大容量</strong> 产品</p>
+</li>
+</ul>
+<p>这里的容量指的是FLASH的大小，具体规格如下：</p>
+<table>
+<thead>
+<tr>
+<th>小容量</th>
+<th>中容量</th>
+<th>大容量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>16K or 32K</td>
+<td>64K or 128K</td>
+<td>&gt;= 256K</td>
+</tr>
+</tbody>
+</table>
+<p>由于Breeze Mini采用的主微控制器 <strong>STM32F103TBU6</strong> 的FLASH容量为128K，属于中容量规格的产品，所以选择将<code>startup_stm32f10x_md.s</code>加入到keil工程中。</p>
+<h2 id="cmsis">CMSIS<a class="headerlink" href="#cmsis" title="Permanent link">&para;</a></h2>
+<p>CMSIS指的是ARM Cortex™ 微控制器软件接口标准(Cortex Microcontroller Software Interface Standard)，其提供与供应商无关的硬件抽象层，为处理器和外设实现一致，简单的软件接口，从而简化软件的重用、缩短微控制器新开发人员的学习过程并缩短新设备的上市时间。</p>
+<p>我们知道不同厂家，比如TI，ST，Freescale，Nordic Semiconductor等不同半导体厂家都有基于Cortex M系列内核的MCU产品，但是这些MCU的外设却大不相同，外设的设计、接口、寄存器等都不一样，因此一个能够非常熟练对STM32进行开发的工程师很难快速地上手开发一款他不熟悉的，尽管是Cortex M内核的芯片。而CMSIS的目的是让不同厂家的Cortex M内核的MCU至少在内核层次上能够做到一定的一致性，提高软件移植的效率，而这就是CMSIS出现的最主要原因。</p>
+<h3 id="cmsis_1">CMSIS结构<a class="headerlink" href="#cmsis_1" title="Permanent link">&para;</a></h3>
+<p>这里简单介绍一下CMSIS的文件结构，CMSIS包含如下四个部分：</p>
+<ul>
+<li>
+<p><strong>CMSIS-CORE</strong></p>
+<p>提供与 Cortex-M0、Cortex-M3、Cortex-M4、SC000 和 SC300 处理器与外围寄存器之间的接口</p>
+</li>
+<li>
+<p><strong>CMSIS-DSP</strong></p>
+<p>包含以定点（分数 q7、q15、q31）和单精度浮点（32 位）实现的 60 多种函数的 DSP 库</p>
+</li>
+<li>
+<p><strong>CMSIS-RTOS</strong></p>
+<p>用于线程控制、资源和时间管理的实时操作系统的标准化编程接口</p>
+</li>
+<li>
+<p><strong>CMSIS-SVD</strong></p>
+<p>包含完整微控制器系统（包括外设）的程序员视图的系统视图描述 XML 文件</p>
+</li>
+</ul>
+<h3 id="cmsis_2">CMSIS框架<a class="headerlink" href="#cmsis_2" title="Permanent link">&para;</a></h3>
+<p>以下是CMSIS 5.x标准的软件架构图：</p>
+<p><img alt="breeze_embedded_cmsis_architecture" src="https://microdynamics-1256406063.cos.ap-shanghai.myqcloud.com/breeze/embedded/cmsis_architecture.png" /></p>
+<p>从上图可以看到，CMSIS 5.x软件架构主要分为以下三层：<strong>应用代码层</strong>、<strong>CMSIS软件层</strong> 和 <strong>微控制器层</strong>，其中 <strong>CMSIS软件层</strong> 起着承上启下的作用，一方面该层对微控制器层进行了统一的实现，屏蔽了不同厂商对Cortex-M系列微处理器核内外设寄存器的不同定义，另一方面又向上层的操作系统和应用层提供接口，简化了应用程序开发的难度，使开发人员能够在完全透明的情况下进行应用程序的开发。如果没有CMSIS标准，那么各个半导体公司可能会自己制定各自产品的库函数的命名规则，而这会使得软件在不同厂家芯片上的移植变得困难。也正是如此，CMSIS层的实现也相对复杂些。有关CMSIS更详细的介绍请访问<a href="https://developer.arm.com/embedded/cmsis">ARM官网</a>。</p>
+<p>目前支持CMSIS标准的半导体和工具链厂商：</p>
+<p><img alt="breeze_embedded_cmsis_architecture" src="https://microdynamics-1256406063.cos.ap-shanghai.myqcloud.com/breeze/embedded/cmsis_vendors.jpg" /></p>
+<h2 id="_3">总结<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h2 id="_4">参考<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<ul>
+<li>STM32F103TBU6.pdf, <a href="http://www.st.com/content/st_com/en.html">STMicroelectronics</a>.</li>
+<li>STM32_Reference_Manual.pdf, <a href="http://www.st.com/content/st_com/en.html">STMicroelectronics</a>.</li>
+<li>STM32开发指南-库函数版本_V1.3.pdf, <a href="http://www.alientek.com/">ALLENTEK</a>.</li>
+<li><a href="https://blog.csdn.net/android_lover2014/article/details/54982473">CMSIS是什么</a></li>
+</ul>
                 
                   
                 
