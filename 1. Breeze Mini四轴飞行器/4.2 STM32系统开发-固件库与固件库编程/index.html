@@ -99,6 +99,10 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
     <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
     
+      <a href="#_1" tabindex="1" class="md-skip">
+        跳转至
+      </a>
+    
     
       <header class="md-header" data-md-component="header">
   <nav class="md-header-nav md-grid">
@@ -495,9 +499,50 @@
     <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
     
     
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        4.2 STM32系统开发-固件库与固件库编程
+      </label>
+    
     <a href="./" title="4.2 STM32系统开发-固件库与固件库编程" class="md-nav__link md-nav__link--active">
       4.2 STM32系统开发-固件库与固件库编程
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" title="前言" class="md-nav__link">
+    前言
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stm32" title="STM32固件库简介" class="md-nav__link">
+    STM32固件库简介
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" title="参考" class="md-nav__link">
+    参考
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -862,6 +907,49 @@
               </div>
             
             
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" title="前言" class="md-nav__link">
+    前言
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stm32" title="STM32固件库简介" class="md-nav__link">
+    STM32固件库简介
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" title="参考" class="md-nav__link">
+    参考
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           <div class="md-content">
             <article class="md-content__inner md-typeset">
@@ -872,7 +960,35 @@
                 
                   <h1>4.2 STM32系统开发-固件库与固件库编程</h1>
                 
-                
+                <h2 id="_1">前言<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<h2 id="stm32">STM32固件库简介<a class="headerlink" href="#stm32" title="Permanent link">&para;</a></h2>
+<p>STM32固件库是意法半导体为了提高代码的可移植性，为了加快产品开发所提供的一整套API，这些API一方面向下直接操作硬件寄存器，一方面向用户提供可编程接口，使得用户可以在不用知道知道具体寄存器的情况下编写应用程序，而且便于移植。</p>
+<p>如果读者曾经学习过51单片机的话，可能会比较容易理解。因为在51单片机开发的过程中，我们常常直接操作寄存器，即或读或写取指定位。比如要控制51的IO口的高低电平状态，使用字节赋值方式操作寄存器：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">P0</span> <span class="o">=</span> <span class="mh">0x21</span>
+</pre></div>
+</td></tr></table>
+
+<p>上面这段代码会将P0.0和P0.5位口置高，同样在STM32的开发中，我们也可以直接操作寄存器，只不过是每次操作的寄存器的位长由原先的8位变成了32位：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">GPIOx</span><span class="o">-&gt;</span><span class="n">BRR</span> <span class="o">=</span> <span class="mh">0x0021</span>
+</pre></div>
+</td></tr></table>
+
+<p>51的寄存器数量少，字长短，掌握每个寄存器的用法进而直接操作寄存器进行编程还不算太难，但是STM32的寄存器数量有数百个，而且字长均为32位，这个体量掌握起来就非常有难度了。于是意法半导体将对这些底层寄存器的操作封装起来，提供一整套API供开发者使用。这使得开发者有时不需要知道操作的具体是哪个寄存器，就可以编写应用程序。比如上面通过向BRR寄存器写值的代码在官方固件库中都已经封装好了：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="kt">void</span> <span class="nf">GPIO_ResetBits</span><span class="p">(</span><span class="n">GPIO_TypeDef</span><span class="o">*</span> <span class="n">GPIOx</span><span class="p">,</span> <span class="kt">uint16_t</span> <span class="n">GPIO_Pin</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">GPIOx</span><span class="o">-&gt;</span><span class="n">BRR</span> <span class="o">=</span> <span class="n">GPIO_Pin</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table>
+
+<p>只需要知道操作的是哪组GPIO口和GPIO口的哪一位，就可以直接调用<code class="codehilite"><span class="n">GPIO_ResetBits</span><span class="p">(</span><span class="n">GPIOx</span><span class="p">,</span> <span class="n">GPIO_Pin</span><span class="p">)</span></code>来操作，而且由于固件库都有很好的命名规范，所以基本上通过函数名字就可以大概了解这个函数的功能是什么，相比寄存器编程方式来说，也大大提高了程序的可读性。</p>
+<h2 id="_2">参考<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://documents-1256406063.cos.ap-shanghai.myqcloud.com/STM32F1%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97-%E5%BA%93%E5%87%BD%E6%95%B0%E7%89%88%E6%9C%AC_V3.1%20.pdf">STM32开发指南-库函数版本_V3.1.pdf</a>, 正点原子, <a href="http://www.alientek.com/">ALLENTEK</a>.</li>
+</ul>
                 
                   
                 
