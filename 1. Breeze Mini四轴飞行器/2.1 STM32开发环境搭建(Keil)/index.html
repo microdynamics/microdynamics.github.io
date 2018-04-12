@@ -257,6 +257,19 @@
   
     <li class="md-tabs__item">
       
+        <a href="../../4.%20Breeze%E7%9F%A5%E8%AF%86%E5%BA%93/%E5%9B%9B%E8%BD%B4%E9%A3%9E%E8%A1%8C%E5%99%A8%E4%BB%8B%E7%BB%8D/" title="4. Breeze知识库" class="md-tabs__link">
+          4. Breeze知识库
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
         <a href="../../%E5%85%B3%E4%BA%8E/1.%20%E5%9B%A2%E9%98%9F%E4%BB%8B%E7%BB%8D/" title="关于" class="md-tabs__link">
           关于
         </a>
@@ -455,7 +468,14 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_2" title="参考" class="md-nav__link">
+  <a href="#_2" title="获取飞控系统代码" class="md-nav__link">
+    获取飞控系统代码
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" title="参考" class="md-nav__link">
     参考
   </a>
   
@@ -883,10 +903,46 @@
       <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
     
     <label class="md-nav__link" for="nav-5">
-      关于
+      4. Breeze知识库
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
       <label class="md-nav__title" for="nav-5">
+        4. Breeze知识库
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../4.%20Breeze%E7%9F%A5%E8%AF%86%E5%BA%93/%E5%9B%9B%E8%BD%B4%E9%A3%9E%E8%A1%8C%E5%99%A8%E4%BB%8B%E7%BB%8D/" title="四轴飞行器介绍" class="md-nav__link">
+      四轴飞行器介绍
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      关于
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
         关于
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -975,7 +1031,14 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_2" title="参考" class="md-nav__link">
+  <a href="#_2" title="获取飞控系统代码" class="md-nav__link">
+    获取飞控系统代码
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" title="参考" class="md-nav__link">
     参考
   </a>
   
@@ -1067,7 +1130,17 @@
 <p>窗口提示是否要 <strong>替换</strong> 原先版本的驱动，<strong>注意有的时候新版本的JLink驱动可能没法正常工作</strong>，目前 <strong>Breeze Mini</strong> 使用的 <strong>V6.12a</strong> 版本的JLink经过测试是没有问题的，若安装的是 <strong>V6.12a</strong> 版本的驱动，则可以直接选择 <strong>替换</strong>。若安装的是比 <strong>V6.12a</strong> 版本更高的驱动的话，则可能在替换原先版本后出现JLink仿真器硬件错误等问题，所以这里 <strong>建议安装V6.12a版本的驱动</strong>。</p>
 <p>最后点击完成，结束驱动的安装：</p>
 <p><img alt="breeze_embedded_jlink_driver_install_6" src="https://microdynamics-1256406063.cos.ap-shanghai.myqcloud.com/breeze/embedded/jlink_driver_install_6.png" /></p>
-<h2 id="_2">参考<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h2 id="_2">获取飞控系统代码<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>目前 <strong>Breeze Mini</strong> 飞控系统代码提供 <strong>KEIL MDK</strong> 版本和支持开源工具链的 <strong>MAKE</strong> 版本，但是由于 <strong>MAKE</strong> 版本的代码还没有测试完，所以目前只支持 <strong>KEIL MDK</strong> 版本的开发。</p>
+<p>首先访问Breeze Mini的飞控代码的<a href="https://github.com/microdynamics-quadcopter/breeze_firmware_none">Github</a>主页，然后点击绿色按钮 <strong>Clone or download</strong> 后下载ZIP压缩格式的代码，具体操作如下图所示：</p>
+<p><img alt="breeze_embedded_github_download_project" src="https://microdynamics-1256406063.cos.ap-shanghai.myqcloud.com/breeze/embedded/github_download_project.png" /></p>
+<p>如果电脑中安装有 <strong>git</strong> 工具的话，也可以在命令行中键入以下命令来获得代码：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>git clone https://github.com/microdynamics-quadcopter/breeze_firmware_none
+</pre></div>
+</td></tr></table>
+
+<p>将代码下载到本地后，直接双击打开 <strong>breeze_firmware_demo\keil\Project</strong> 路径下的MDK5工程文件 <strong>breeze_firmware_none.uvprojx</strong>，工程所有的配置都已经</p>
+<h2 id="_3">参考<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://documents-1256406063.cos.ap-shanghai.myqcloud.com/STM32F1%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97-%E5%BA%93%E5%87%BD%E6%95%B0%E7%89%88%E6%9C%AC_V3.1%20.pdf">STM32开发指南-库函数版本_V3.1.pdf</a>, 正点原子, <a href="http://www.alientek.com/">ALLENTEK</a>.</li>
 </ul>
