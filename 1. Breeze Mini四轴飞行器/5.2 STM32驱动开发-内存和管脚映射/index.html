@@ -581,7 +581,14 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" title="参考" class="md-nav__link">
+  <a href="#_4" title="总结" class="md-nav__link">
+    总结
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" title="参考" class="md-nav__link">
     参考
   </a>
   
@@ -1010,7 +1017,14 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" title="参考" class="md-nav__link">
+  <a href="#_4" title="总结" class="md-nav__link">
+    总结
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" title="参考" class="md-nav__link">
     参考
   </a>
   
@@ -1038,7 +1052,7 @@
                   <h1>5.2 STM32驱动开发-内存和管脚映射</h1>
                 
                 <h2 id="_1">内容<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
-<p>讲解的这部分内容和代码在工程目录中的 <strong>Drivers</strong> 目录下的 <strong>stm32f10x_driver_io.c</strong> 中。</p>
+<p>讲解的这部分内容和代码在工程目录中的 <strong>Drivers</strong> 目录下的 <strong>stm32f10x_driver_io.c</strong> 和 <strong>stm32f10x_driver_io.h</strong> 中。</p>
 <h2 id="_2">端口复用与重映射<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <p>为了使不同器件封装的外设IO功能数量达到最优，可以把一些复用功能重新映射到其他一些不太常用的引脚上。STM32中有很多内置的外设的输入输出引脚具有重映射功能，查看STM32的datasheet可以知道每个内置外设都有若干个输入输出引脚，一般这些引脚的输出端口都是固定不变的，为了让设计工程师可以更好地安排引脚的走向和功能，意法半导体在STM32中引入了外设引脚重映射的概念，即一个外设的引脚除了可以具有默认的端口外，还可以通过设置重映射寄存器的方式，把这个外设的引脚映射到其他的端口上。</p>
 <p>简单地讲就是把管脚的外设功能映射到另外一个管脚上，但是这种映射不是随意的，只能映射到某几个引脚上，我们这里拿串口1为例进行讲解：</p>
@@ -1161,7 +1175,100 @@
 
 <p>就是设置地址为0x40010800(GPIOA基地址) + 0x014(BRR寄存器相对偏移) = 0x40010814的寄存器BRR的值了。本质上和操作51单片机寄存器的方法一样。</p>
 <h2 id="gpio">GPIO口的位带操作<a class="headerlink" href="#gpio" title="Permanent link">&para;</a></h2>
-<h2 id="_4">参考<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p>位带(bit-band)操作简单来说就是把一个bit膨胀为一个32bit的字，当访问这个字的时候就可以达到访问这个bit的目的，比如BSRR寄存器有32个位，那么位带操作就会将这32个位映射到32个地址上，我们只要访问这32个地址就可以达到访问这32位的目的。</p>
+<p>对于上图，我们往地址Address0写入1，则就可以达到往寄存器的第0位Bit0写1的目的，当然这里仅仅是简单介绍一下，不想讲得过于复杂，作为Cortex-M3存储器系统所支持的一种操作数据的方式，在硬件I/O密集型的底层程序中有很多的优越性。如果想要更加深入了解的话，可以参考《Cortex-M3权威指南》第五章(P87~P92)。我们在 <strong>stm32f10x_io.h</strong> 中定义的位带操作如下：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="cp">#define BIT_BAND(addr, bit_nums) ((addr &amp; 0XF0000000) + 0X2000000 + \</span>
+<span class="cp">                                 ((addr &amp; 0XFFFFF) &lt;&lt; 5) + (bit_nums &lt;&lt; 2))</span>
+<span class="cp">#define MEM_ADDR(addr)          *((volatile unsigned long *)(addr))</span>
+<span class="cp">#define BIT_ADDR(addr, bit_nums)   MEM_ADDR(BIT_BAND(addr, bit_nums))</span>
+
+<span class="c1">// IO interfaces address mapping.</span>
+<span class="cp">#define GPIOA_ODR_ADDR           (GPIOA_BASE + 12)</span>
+<span class="cp">#define GPIOB_ODR_ADDR           (GPIOB_BASE + 12)</span>
+<span class="cp">#define GPIOC_ODR_ADDR           (GPIOC_BASE + 12)</span>
+<span class="cp">#define GPIOD_ODR_ADDR           (GPIOD_BASE + 12)</span>
+<span class="cp">#define GPIOE_ODR_ADDR           (GPIOE_BASE + 12)</span>
+<span class="cp">#define GPIOF_ODR_ADDR           (GPIOF_BASE + 12)</span>
+<span class="cp">#define GPIOG_ODR_ADDR           (GPIOG_BASE + 12)</span>
+
+<span class="cp">#define GPIOA_IDR_ADDR           (GPIOA_BASE + 8)</span>
+<span class="cp">#define GPIOB_IDR_ADDR           (GPIOB_BASE + 8)</span>
+<span class="cp">#define GPIOC_IDR_ADDR           (GPIOC_BASE + 8)</span>
+<span class="cp">#define GPIOD_IDR_ADDR           (GPIOD_BASE + 8)</span>
+<span class="cp">#define GPIOE_IDR_ADDR           (GPIOE_BASE + 8)</span>
+<span class="cp">#define GPIOF_IDR_ADDR           (GPIOF_BASE + 8)</span>
+<span class="cp">#define GPIOG_IDR_ADDR           (GPIOG_BASE + 8)</span>
+
+<span class="cp">#define PA_IN(n)                  BIT_ADDR(GPIOA_IDR_ADDR, n)</span>
+<span class="cp">#define PA_OUT(n)                 BIT_ADDR(GPIOA_ODR_ADDR, n)</span>
+<span class="cp">#define PB_IN(n)                  BIT_ADDR(GPIOB_IDR_ADDR, n)</span>
+<span class="cp">#define PB_OUT(n)                 BIT_ADDR(GPIOB_ODR_ADDR, n)</span>
+<span class="cp">#define PC_IN(n)                  BIT_ADDR(GPIOC_IDR_ADDR, n)</span>
+<span class="cp">#define PC_OUT(n)                 BIT_ADDR(GPIOC_ODR_ADDR, n)</span>
+<span class="cp">#define PD_IN(n)                  BIT_ADDR(GPIOD_IDR_ADDR, n)</span>
+<span class="cp">#define PD_OUT(n)                 BIT_ADDR(GPIOD_ODR_ADDR, n)</span>
+<span class="cp">#define PE_IN(n)                  BIT_ADDR(GPIOE_IDR_ADDR, n)</span>
+<span class="cp">#define PE_OUT(n)                 BIT_ADDR(GPIOE_ODR_ADDR, n)</span>
+<span class="cp">#define PF_IN(n)                  BIT_ADDR(GPIOF_IDR_ADDR, n)</span>
+<span class="cp">#define PF_OUT(n)                 BIT_ADDR(GPIOF_ODR_ADDR, n)</span>
+<span class="cp">#define PG_IN(n)                  BIT_ADDR(GPIOG_IDR_ADDR, n)</span>
+<span class="cp">#define PG_OUT(n)                 BIT_ADDR(GPIOG_ODR_ADDR, n)</span>
+</pre></div>
+</td></tr></table>
+
+<p>以上代码就是GPIO口的位带操作的具体实现，比如我们写下如下代码：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">PAout</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="mi">1</span>
+</pre></div>
+</td></tr></table>
+
+<p>就是设置GPIOA的第2个管脚为1，其实际上是设置了寄存器ODR的某个位，<code>BIT_ADDR</code>宏所定义的公式就是来计算GPIO的某个端口对应的位带地址。有了这个位带定义，就可以像51/AVR单片机一样操作STM32的IO端口了，比如要GPIOA的第7个IO端口输出1，则可以使用：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">PAout</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="o">=</span> <span class="mi">1</span>
+</pre></div>
+</td></tr></table>
+
+<p>而要判断GPIOA的第15个IO端口是否为1，则可以使用</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="n">PAin</span><span class="p">(</span><span class="mi">14</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">...</span>
+</pre></div>
+</td></tr></table>
+
+<h2 id="_4">总结<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p>如果不用位带操作GPIO口，只使用固件库函数操作GPIO口也是可以的，使用位带操作GPIO口和固件库操作GPIO口还是有些不同的，位带操作本质上还是一种对寄存器的直接操作，没有定义额外的成员变量进行操作，只不过 <strong>使用了一些“数学技巧”</strong> 来计算寄存器的地址，也即没有上面所讲解的结构体和寄存器要一一对应的问题，而固件库操则是为了方便、灵活地管理相关寄存器，首先定义该外设为结构体，<strong>并将该外设的相关寄存器抽象成结构体的成员变量</strong>，由于外设基地址和相对地址偏移的确定，再加上C语言中 <strong>变量名就是地址别名</strong> 这个特性，当固件库把相关寄存器所对应的成员变量按照硬件实际上的地址高低顺序排列时，就实现了抽象变量名和物理寄存器地址的一一对应，而这个对应关系也是固件库操作和位带等直接对寄存器操作的最大差别。</p>
+<h2 id="_5">参考<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://documents-1256406063.cos.ap-shanghai.myqcloud.com/STM32F1%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97-%E5%BA%93%E5%87%BD%E6%95%B0%E7%89%88%E6%9C%AC_V3.1%20.pdf">STM32开发指南-库函数版本_V3.1.pdf</a>, 正点原子, <a href="http://www.alientek.com/">ALLENTEK</a>.</li>
 </ul>
