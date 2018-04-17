@@ -648,6 +648,47 @@
     相关知识
   </a>
   
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#crlcrh" title="CRL和CRH寄存器" class="md-nav__link">
+    CRL和CRH寄存器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#idr" title="IDR寄存器" class="md-nav__link">
+    IDR寄存器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#odr" title="ODR寄存器" class="md-nav__link">
+    ODR寄存器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bsrr" title="BSRR寄存器" class="md-nav__link">
+    BSRR寄存器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#brr" title="BRR寄存器" class="md-nav__link">
+    BRR寄存器
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1017,6 +1058,47 @@
     相关知识
   </a>
   
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#crlcrh" title="CRL和CRH寄存器" class="md-nav__link">
+    CRL和CRH寄存器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#idr" title="IDR寄存器" class="md-nav__link">
+    IDR寄存器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#odr" title="ODR寄存器" class="md-nav__link">
+    ODR寄存器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bsrr" title="BSRR寄存器" class="md-nav__link">
+    BSRR寄存器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#brr" title="BRR寄存器" class="md-nav__link">
+    BRR寄存器
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1062,7 +1144,7 @@
                   <h1>6.1 STM32模块开发-LED</h1>
                 
                 <h2 id="_1">前言<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
-<p>这里主要讲解 <strong>Breeze Mini</strong> 的LED相关功能代码， 代码在工程目录下的 <strong>Modules</strong> 子目录下的 <strong>stm32f10x_module_led.c</strong> 和 <strong>stm32f10x_module_led.h</strong> 中。</p>
+<p>这里主要讲解 <strong>Breeze Mini</strong> 的LED功能模块，完整代码在工程目录下的 <strong>Modules</strong> 子目录下的 <strong>stm32f10x_module_led.c</strong> 和 <strong>stm32f10x_module_led.h</strong> 中，该代码主要是控制位于四个机臂上的LED的亮灭来提示用户 <strong>Breeze Mini</strong> 的工作状态。</p>
 <h2 id="_2">相关知识<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <p>STM32要实现LED的亮与灭其实就是实现GPIO口的高低电平控制，由于STM32的IO口要相比51要复杂得多，所以为了更好地理解，这里先简单介绍一下STM32的IO口。STM32的GPIO口可以被配置成8种模式：</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -1099,6 +1181,7 @@
 
 <p>CRL和CRH寄存器控制IO口的模式和输出速率，STM32的IO口位配置表如下所示：</p>
 <p>STM32输出模式如下表所示：</p>
+<h3 id="crlcrh">CRL和CRH寄存器<a class="headerlink" href="#crlcrh" title="Permanent link">&para;</a></h3>
 <p>接着再来看看端口低位配置寄存器 <strong>(Config Register Low, i.e. CRL)</strong> 的各位描述，该寄存器的复位值 <strong>0X44444444</strong>，从上图中可以看出，复位值其实就是配置端口为浮空输入模式，而且CRL控制着IO端口的低8个，每个IO端口的位占用CRL的4个位，其中高两位为配置 <strong>CNF</strong>，低两位配置 <strong>MODE</strong>：</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -1142,14 +1225,14 @@
 5
 6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span>
 <span class="p">{</span>
-    <span class="kt">uint16_t</span> <span class="n">GPIO_Pin</span><span class="p">;</span>
+    <span class="kt">uint16_t</span>          <span class="n">GPIO_Pin</span><span class="p">;</span>
     <span class="n">GPIOSpeed_TypeDef</span> <span class="n">GPIO_Speed</span><span class="p">;</span>
-    <span class="n">GPIOMode_TypeDef</span> <span class="n">GPIO_Mode</span><span class="p">;</span>
+    <span class="n">GPIOMode_TypeDef</span>  <span class="n">GPIO_Mode</span><span class="p">;</span>
 <span class="p">}</span><span class="n">GPIO_InitTypeDef</span><span class="p">;</span>
 </pre></div>
 </td></tr></table>
 
-<p>通过 <strong>初始化结构体GPIO_InitTypeDef</strong> 来初始化GPIO的一般格式为：</p>
+<p>上面定义的初始化GPIO的结构体有三个成员变量，从变量名字可以得知其分别表示 <strong>GPIO的端口</strong>、<strong>GPIO的工作速度</strong> 和 <strong>GPIO的工作模式</strong>。这也可以从另一方面告诉我们初始化GPIO口的操作就是设置这些成员变量的值。通过 <strong>初始化结构体GPIO_InitTypeDef</strong> 来初始化GPIO的一般格式为：</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -1162,9 +1245,137 @@
 </pre></div>
 </td></tr></table>
 
-<p>这段代码先定义了一个GPIO口的初始化结构体 <strong>GPIO_InitTypeDef</strong> 类型的变量 <strong>GPIO_InitStructure</strong>，然后第2行设置待配置管脚为 <strong>GPIOA第5个端口</strong>，第3行设置端口工作在 <strong>推挽输出模式</strong>，第4行设置端口最大工作速度为 <strong>50MHz</strong>。第5行则调用函数对设置好的参数进行初始化。</p>
+<p>这段代码和我们前面所预测的实现是一样的，这段代码先定义了一个GPIO口的初始化结构体 <strong>GPIO_InitTypeDef</strong> 类型的变量 <strong>GPIO_InitStructure</strong>，然后第2行设置待配置管脚为 <strong>GPIOA第5个端口</strong>，第3行设置端口工作在 <strong>推挽输出模式</strong>，第4行设置端口最大工作速度为 <strong>50MHz</strong>。第5行则调用函数对设置好的参数进行初始化。</p>
+<p>如果想知道<code>GPIO_Mode</code>成员变量都支持哪些值，可以双击 <strong>"GPIO_Mode_Out_PP"</strong> 后右键点击 <strong>"Go to definition of..."</strong> 跳转到其定义处：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="k">typedef</span> <span class="k">enum</span>
+<span class="p">{</span> 
+    <span class="n">GPIO_Mode_AIN</span>         <span class="o">=</span> <span class="mh">0x0</span><span class="p">,</span>   <span class="c1">//模拟输入</span>
+    <span class="n">GPIO_Mode_IN_FLOATING</span> <span class="o">=</span> <span class="mh">0x04</span><span class="p">,</span>  <span class="c1">//浮空输入</span>
+    <span class="n">GPIO_Mode_IPD</span>         <span class="o">=</span> <span class="mh">0x28</span><span class="p">,</span>  <span class="c1">//下拉输入</span>
+    <span class="n">GPIO_Mode_IPU</span>         <span class="o">=</span> <span class="mh">0x48</span><span class="p">,</span>  <span class="c1">//上拉输入</span>
+    <span class="n">GPIO_Mode_Out_OD</span>      <span class="o">=</span> <span class="mh">0x14</span><span class="p">,</span>  <span class="c1">//开漏输出</span>
+    <span class="n">GPIO_Mode_Out_PP</span>      <span class="o">=</span> <span class="mh">0x10</span><span class="p">,</span>  <span class="c1">//推挽输出</span>
+    <span class="n">GPIO_Mode_AF_OD</span>       <span class="o">=</span> <span class="mh">0x1C</span><span class="p">,</span>  <span class="c1">//开漏输出</span>
+    <span class="n">GPIO_Mode_AF_PP</span>       <span class="o">=</span> <span class="mh">0x18</span>   <span class="c1">//复用推挽</span>
+<span class="p">}</span><span class="n">GPIOMode_TypeDef</span><span class="p">;</span>
+</pre></div>
+</td></tr></table>
+
+<p>使用同样的方法可以得到GPIO端口工作速度的定义：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="k">typedef</span> <span class="k">enum</span>
+<span class="p">{</span> 
+    <span class="n">GPIO_Speed_10MHz</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">GPIO_Speed_2MHz</span><span class="p">,</span> 
+    <span class="n">GPIO_Speed_50MHz</span>
+<span class="p">}</span><span class="n">GPIOSpeed_TypeDef</span><span class="p">;</span>
+</pre></div>
+</td></tr></table>
+
+<p>至于如何快速定位配置参数比如(GPIO_Speed_10MHz)的取值范围等技巧在 <strong>开发常用技巧(Keil)</strong> 中有详细的介绍，还不太清楚的用户可以再去了解一下。</p>
+<h3 id="idr">IDR寄存器<a class="headerlink" href="#idr" title="Permanent link">&para;</a></h3>
+<p>IDR(Input Data Register)是端口输入数据寄存器，是只读的，高16位保留，只用了低16位，且只能以16位的格式读出值。
+以下是该寄存器各位的描述：</p>
+<p>要想知道某个IO口的高低电平状态，就可以按16位的格式读这个寄存器，然后再查需要的位的状态即可。在固件库中操作IDR寄存器来获得IO端口电平的函数是：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="kt">uint8_t</span> <span class="n">GPIO_ReadInputDataBit</span><span class="p">(</span><span class="n">GPIO_TypeDef</span><span class="o">*</span> <span class="n">GPIOx</span><span class="p">,</span> <span class="kt">uint16_t</span> <span class="n">GPIO_Pin</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+
+<p>这样读取GPIOA的第5个端口的电平状态的代码是：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">GPIO_ReadInputDataBit</span><span class="p">(</span><span class="n">GPIOA</span><span class="p">,</span> <span class="n">GPIO_Pin_5</span><span class="p">);</span>
+</pre></div>
+</td></tr></table>
+
+<p>返回值为 <strong>Bit_SET(高电平)</strong> 或 <strong>Bit_RESET(低电平)</strong></p>
+<h3 id="odr">ODR寄存器<a class="headerlink" href="#odr" title="Permanent link">&para;</a></h3>
+<p>ODR(Output Data Register)是端口输出数据寄存器，可读可写，只使用了低16位，当读寄存器时读出的是当前IO口的输出高低电平状态，当写寄存器时可以控制IO口的输出高低电平，该寄存器各位描述如下所示：</p>
+<p>在固件库中操作ODR寄存器来设置和读取IO输出电平的函数是：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="kt">void</span> <span class="n">GPIO_Write</span><span class="p">(</span><span class="n">GPIO_TypeDef</span><span class="o">*</span> <span class="n">GPIOx</span><span class="p">,</span> <span class="kt">uint16_t</span> <span class="n">PortVal</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+
+<h3 id="bsrr">BSRR寄存器<a class="headerlink" href="#bsrr" title="Permanent link">&para;</a></h3>
+<p>BSRR(Bit Set Reset Register)寄存器是端口位设置/清除寄存器，具有和ODR寄存器类似的作用，以下是该寄存器的各位描述：</p>
+<p>比如要设置GPIOA的第5个端口的值为1，则只需要向GPIOA的BSRR寄存器的 <strong>低16位</strong> 的第5位写1：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">GPIOA</span> <span class="o">-&gt;</span> <span class="n">BSRR</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">5</span><span class="p">;</span>
+</pre></div>
+</td></tr></table>
+
+<p>如果要置GPIOA的第5个端口的值为0，则只需向GPIOA的BSRR寄存器的 <strong>高16位</strong> 的第5位写1：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">GPIOA</span> <span class="o">-&gt;</span> <span class="n">BSRR</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="mi">16</span> <span class="o">+</span> <span class="mi">5</span><span class="p">);</span>
+</pre></div>
+</td></tr></table>
+
+<p>注意向该寄存器写0是无效的，所以可以直接通过对1移指定位数来实现。</p>
+<h3 id="brr">BRR寄存器<a class="headerlink" href="#brr" title="Permanent link">&para;</a></h3>
+<p>BRR(Bit Reset Register)寄存器是端口位清除寄存器，和BSRR高16位的功能是一样的。在固件库中操作BSRR和BRR寄存器进而来设置GPIO输出状态的函数是：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="kt">void</span> <span class="n">GPIO_SetBits</span><span class="p">(</span><span class="n">GPIO_TypeDef</span><span class="o">*</span> <span class="n">GPIOx</span><span class="p">,</span> <span class="kt">uint16_t</span> <span class="n">GPIO_Pin</span><span class="p">)</span>
+<span class="kt">void</span> <span class="n">GPIO_ResetBits</span><span class="p">(</span><span class="n">GPIO_TypeDef</span><span class="o">*</span> <span class="n">GPIOx</span><span class="p">,</span> <span class="kt">uint16_t</span> <span class="n">GPIO_Pin</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+
+<p>在具体利用固件库操作GPIO的输出状态时常用的固件库函数是<code>GPIO_SetBits</code>和<code>GPIO_ResetBits</code>。</p>
 <h2 id="_3">硬件连接<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p><strong>Breeze Mini</strong> 硬件上4个LED分别连接在 <strong>GPIOA.11</strong>、<strong>GPIOA.12</strong>、<strong>GPIOA.8</strong> 和 <strong>GPIOA.15</strong> 上，而且4个LED都是通过电阻上拉到VCC的，该部分原理图如下所示：</p>
+<p><img alt="breeze_embedded_led_sch" src="https://microdynamics-1256406063.cos.ap-shanghai.myqcloud.com/breeze/embedded/led_sch.png" /></p>
 <h2 id="_4">软件设计<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p>完整代码在工程目录下的 <strong>Modules</strong> 子目录下的 <strong>stm32f10x_module_led.c</strong> 和 <strong>stm32f10x_module_led.h</strong> 中，先简单介绍一些函数：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="kt">void</span> <span class="nf">LED_Init</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">GPIO_InitTypeDef</span> <span class="n">GPIO_InitStructure</span><span class="p">;</span>
+<span class="hll">    <span class="n">RCC_APB2PeriphClockCmd</span><span class="p">(</span><span class="n">RCC_APB2Periph_GPIOA</span> <span class="o">|</span> <span class="n">RCC_APB2Periph_AFIO</span><span class="p">,</span> <span class="n">ENABLE</span><span class="p">);</span>
+</span>    <span class="n">GPIO_InitStructure</span><span class="p">.</span><span class="n">GPIO_Pin</span>   <span class="o">=</span> <span class="n">GPIO_Pin_11</span> <span class="o">|</span> <span class="n">GPIO_Pin_12</span> <span class="o">|</span>
+                                    <span class="n">GPIO_Pin_8</span>  <span class="o">|</span> <span class="n">GPIO_Pin_15</span><span class="p">;</span>
+    <span class="n">GPIO_InitStructure</span><span class="p">.</span><span class="n">GPIO_Mode</span>  <span class="o">=</span> <span class="n">GPIO_Mode_Out_PP</span><span class="p">;</span>
+    <span class="n">GPIO_InitStructure</span><span class="p">.</span><span class="n">GPIO_Speed</span> <span class="o">=</span> <span class="n">GPIO_Speed_50MHz</span><span class="p">;</span>
+    <span class="n">GPIO_Init</span><span class="p">(</span><span class="n">GPIOA</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">GPIO_InitStructure</span><span class="p">);</span>
+
+    <span class="c1">// When hardware disables the JATG, don&#39;t disable the SWD meanwhile.</span>
+    <span class="c1">// Otherwise the chip will be damaged!!!</span>
+    <span class="n">AFIO</span><span class="o">-&gt;</span><span class="n">MAPR</span> <span class="o">|=</span> <span class="n">AFIO_MAPR_SWJ_CFG_JTAGDISABLE</span><span class="p">;</span>
+
+    <span class="n">LED_A_OFF</span><span class="p">;</span>
+    <span class="n">LED_B_OFF</span><span class="p">;</span>
+    <span class="n">LED_C_OFF</span><span class="p">;</span>
+    <span class="n">LED_D_OFF</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table>
+
+<p>注意在配置STM32任意一个外设的时后，<strong>都要先使能外设的时钟</strong>，由于GPIOA是挂载在高速APB2总线上的外设，所以上面代码就调用了 <mark>RCC_APB2PeriphClockCmd</mark> 函数来使能GPIOA时钟，对时钟部分还不太清楚的读者可以到 <strong>STM32驱动开发-系统时钟树</strong> 部分再了解一下。</p>
 <h2 id="_5">参考<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://documents-1256406063.cos.ap-shanghai.myqcloud.com/STM32F1%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97-%E5%BA%93%E5%87%BD%E6%95%B0%E7%89%88%E6%9C%AC_V3.1%20.pdf">STM32开发指南-库函数版本_V3.1.pdf</a>, 正点原子, <a href="http://www.alientek.com/">ALLENTEK</a>.</li>
