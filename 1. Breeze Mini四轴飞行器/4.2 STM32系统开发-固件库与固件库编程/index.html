@@ -482,7 +482,31 @@
 
 
   <li class="md-nav__item">
-    <a href="../3.2%20%E9%A3%9E%E6%8E%A7%E7%B3%BB%E7%BB%9F%E6%80%BB%E8%A7%88/" title="3.2 飞控系统总览" class="md-nav__link">
+    <a href="../3.2%20Keil%E5%BC%80%E5%8F%91%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7/" title="3.2 Keil开发常用技巧" class="md-nav__link">
+      3.2 Keil开发常用技巧
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../3.3%20ARM-GCC%E5%BC%80%E5%8F%91%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7/" title="3.3 ARM GCC开发常用技巧" class="md-nav__link">
+      3.3 ARM GCC开发常用技巧
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../3.4%20%E9%A3%9E%E6%8E%A7%E7%B3%BB%E7%BB%9F%E6%80%BB%E8%A7%88/" title="3.2 飞控系统总览" class="md-nav__link">
       3.2 飞控系统总览
     </a>
   </li>
@@ -543,7 +567,14 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_2" title="参考" class="md-nav__link">
+  <a href="#_2" title="总结" class="md-nav__link">
+    总结
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" title="参考" class="md-nav__link">
     参考
   </a>
   
@@ -982,7 +1013,14 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_2" title="参考" class="md-nav__link">
+  <a href="#_2" title="总结" class="md-nav__link">
+    总结
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" title="参考" class="md-nav__link">
     参考
   </a>
   
@@ -1034,7 +1072,28 @@
 </td></tr></table>
 
 <p>只需要知道操作的是哪组GPIO口和GPIO口的哪一位，就可以直接调用<code class="codehilite"><span class="n">GPIO_ResetBits</span><span class="p">(</span><span class="n">GPIOx</span><span class="p">,</span> <span class="n">GPIO_Pin</span><span class="p">)</span></code>来操作，而且由于固件库都有很好的命名规范，所以基本上通过函数名字就可以大概了解这个函数的功能是什么，相比寄存器编程方式来说，也大大提高了程序的可读性。</p>
-<h2 id="_2">参考<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h2 id="_2">总结<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>使用固件库编程是有其固定的程序编写方法的，一般上是先初始化硬件驱动，初始化使用固件库的一般格式是：</p>
+<p><strong>声明初始化结构体 -&gt; 设置初始化结构体各成员变量的值 -&gt; 对于给定待初始化硬件变量和初始化结构体调用初始化函数</strong>。</p>
+<p>比如使用固件库来初始化GPIOA的格式如下：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">GPIO_InitTypeDef</span> <span class="n">GPIO_InitStructure</span><span class="p">;</span>
+<span class="n">GPIO_InitStructure</span><span class="p">.</span><span class="n">GPIO_Pin</span>   <span class="o">=</span> <span class="n">GPIO_Pin_5</span><span class="p">;</span>
+<span class="n">GPIO_InitStructure</span><span class="p">.</span><span class="n">GPIO_Mode</span>  <span class="o">=</span> <span class="n">GPIO_Mode_Out_PP</span><span class="p">;</span>
+<span class="n">GPIO_InitStructure</span><span class="p">.</span><span class="n">GPIO_Speed</span> <span class="o">=</span> <span class="n">GPIO_Speed_50MHz</span><span class="p">;</span>
+<span class="n">GPIO_Init</span><span class="p">(</span><span class="n">GPIOA</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">GPIO_InitStructure</span><span class="p">);</span>
+</pre></div>
+</td></tr></table>
+
+<div class="admonition info">
+<p class="admonition-title">注意</p>
+<p>这里只是为了讲解固件库初始化的一般方式，GPIO的具体用法和相应参数后面会详细讲解。</p>
+</div>
+<p>上面代码先定义了一个GPIO口的初始化结构体 <strong>GPIO_InitTypeDef</strong> 类型的变量 <strong>GPIO_InitStructure</strong>，然后对其成员变量按照用户要求赋值，最后对 <strong>GPIOA</strong> 和 <strong>GPIO_InitStructure</strong> 调用 <strong>GPIO_Init</strong> 函数来实现对GPIOA第5个端口的初始化。</p>
+<h2 id="_3">参考<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://documents-1256406063.cos.ap-shanghai.myqcloud.com/STM32F1%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97-%E5%BA%93%E5%87%BD%E6%95%B0%E7%89%88%E6%9C%AC_V3.1%20.pdf">STM32开发指南-库函数版本_V3.1.pdf</a>, 正点原子, <a href="http://www.alientek.com/">ALLENTEK</a>.</li>
 </ul>
