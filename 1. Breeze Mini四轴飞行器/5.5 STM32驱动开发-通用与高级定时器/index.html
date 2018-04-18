@@ -99,6 +99,10 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
     <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
     
+      <a href="#_1" tabindex="1" class="md-skip">
+        跳转至
+      </a>
+    
     
       <header class="md-header" data-md-component="header">
   <nav class="md-header-nav md-grid">
@@ -592,9 +596,139 @@
     <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
     
     
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        5.5 STM32驱动开发-通用与高级定时器
+      </label>
+    
     <a href="./" title="5.5 STM32驱动开发-通用与高级定时器" class="md-nav__link md-nav__link--active">
       5.5 STM32驱动开发-通用与高级定时器
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" title="前言" class="md-nav__link">
+    前言
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" title="相关知识" class="md-nav__link">
+    相关知识
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" title="通用定时器" class="md-nav__link">
+    通用定时器
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#timx_cr1" title="TIMx_CR1寄存器" class="md-nav__link">
+    TIMx_CR1寄存器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timx_dier" title="TIMx_DIER寄存器" class="md-nav__link">
+    TIMx_DIER寄存器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timx_psc" title="TIMx_PSC寄存器" class="md-nav__link">
+    TIMx_PSC寄存器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timx_cnt" title="TIMx_CNT寄存器" class="md-nav__link">
+    TIMx_CNT寄存器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timx_arr" title="TIMx_ARR寄存器" class="md-nav__link">
+    TIMx_ARR寄存器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timx_sr" title="TIMx_SR寄存器" class="md-nav__link">
+    TIMx_SR寄存器
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" title="高级定时器" class="md-nav__link">
+    高级定时器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" title="固件库配置定时器" class="md-nav__link">
+    固件库配置定时器
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" title="硬件连接" class="md-nav__link">
+    硬件连接
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" title="软件设计" class="md-nav__link">
+    软件设计
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" title="参考" class="md-nav__link">
+    参考
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -935,6 +1069,138 @@
               </div>
             
             
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" title="前言" class="md-nav__link">
+    前言
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" title="相关知识" class="md-nav__link">
+    相关知识
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" title="通用定时器" class="md-nav__link">
+    通用定时器
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#timx_cr1" title="TIMx_CR1寄存器" class="md-nav__link">
+    TIMx_CR1寄存器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timx_dier" title="TIMx_DIER寄存器" class="md-nav__link">
+    TIMx_DIER寄存器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timx_psc" title="TIMx_PSC寄存器" class="md-nav__link">
+    TIMx_PSC寄存器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timx_cnt" title="TIMx_CNT寄存器" class="md-nav__link">
+    TIMx_CNT寄存器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timx_arr" title="TIMx_ARR寄存器" class="md-nav__link">
+    TIMx_ARR寄存器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timx_sr" title="TIMx_SR寄存器" class="md-nav__link">
+    TIMx_SR寄存器
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" title="高级定时器" class="md-nav__link">
+    高级定时器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" title="固件库配置定时器" class="md-nav__link">
+    固件库配置定时器
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" title="硬件连接" class="md-nav__link">
+    硬件连接
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" title="软件设计" class="md-nav__link">
+    软件设计
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" title="参考" class="md-nav__link">
+    参考
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           <div class="md-content">
             <article class="md-content__inner md-typeset">
@@ -945,7 +1211,110 @@
                 
                   <h1>5.5 STM32驱动开发-通用与高级定时器</h1>
                 
-                
+                <h2 id="_1">前言<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>这里主要讲解 <strong>Breeze Mini</strong> 的内部定时器，完整代码在工程目录下的 <strong>Drivers</strong> 子目录下的 <strong>stm32f10x_driver_timer.c</strong> 和 <strong>stm32f10x_driver_timer.h</strong> 中，该代码主要是驱动定时器产生不同长度的定时中断来控制main函数调用相应函数，实现中断嵌套功能。同时也是为了后面讲解PWM功能模块做铺垫。</p>
+<h2 id="_2">相关知识<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h3 id="_3">通用定时器<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>STM32F1系列的通用定时器是一个通过可编程预分频器 <strong>(PSC)</strong> 驱动的16位自动装载计数器 <strong>(CNT</strong>)，其被用于：测量输入信号的脉冲长度 <strong>(输入捕获)</strong> 和产生输出波形 <strong>(输出比较和脉冲宽度调制)</strong>，使用PSC和RCC时钟控制预分频器，脉冲长度和波形周期可以在几个微秒到几个毫秒之间调整。STM32的每个通用定时器都是独立的，可以单独使用，每个通用定时器功能包括：</p>
+<ol>
+<li>
+<p>具有一个16位向上、向下或向上向下自动装载计数器(TIMx_CNT)</p>
+</li>
+<li>
+<p>具有一个16位可编程预分频器(TIMx_PSC)，计数器时钟频率的分频系数范围为1~65535</p>
+</li>
+<li>
+<p>拥有4个独立通道，可以被配置成如下功能：</p>
+<ol>
+<li>
+<p>输入捕获</p>
+</li>
+<li>
+<p>输出比较</p>
+</li>
+<li>
+<p>PWM输出(边缘或中间对齐模式)</p>
+</li>
+<li>
+<p>单脉冲模式输出</p>
+</li>
+</ol>
+</li>
+<li>
+<p>具有可使用外部信号 <strong>(TIMx_ETR)</strong> 控制定时器与定时器互联的同步电路</p>
+</li>
+<li>
+<p>具有事件中断响应能力，事件源有：</p>
+<ol>
+<li>
+<p>更新：计数器溢出和计数器初始化(通过软件或内部/外部触发)</p>
+</li>
+<li>
+<p>触发事件：计数器启动、停止、初始化或由内部/外部触发计数</p>
+</li>
+<li>
+<p>输入捕获</p>
+</li>
+<li>
+<p>输出比较</p>
+</li>
+<li>
+<p>针对定位的增量(正交)编码器和霍尔传感器电路</p>
+</li>
+<li>
+<p>触发输入作为外部时钟或按周期的电流管理</p>
+</li>
+</ol>
+</li>
+</ol>
+<p>更多内容可以直接参考 <strong>STM32寄存器手册</strong> 第253页通用定时器一章，为了能够更加清楚地了解通用定时器的功能，下面会介绍一些与定时功能密切相关的寄存器。</p>
+<h4 id="timx_cr1">TIMx_CR1寄存器<a class="headerlink" href="#timx_cr1" title="Permanent link">&para;</a></h4>
+<p>TIMx_CR1是TIMx的控制寄存器，该寄存器的各位描述如下图所示：</p>
+<p>从上图描述可以看出，TIMx_CR1的第0位控制计数使能，只有该位置1，才能开启定时器计数。第4位设置计数的方向，第5和6位设置计数对齐方式，第8和9位设置定时器时钟分频因子。</p>
+<h4 id="timx_dier">TIMx_DIER寄存器<a class="headerlink" href="#timx_dier" title="Permanent link">&para;</a></h4>
+<p>TIMx_DIER是TIMx的DMA/中断使能寄存器，该寄存器各位描述如下图所示：</p>
+<p>这里只需要关注该寄存器的第0位，该位是更新中断使能位，设置该位为1则允许更新事件产生中断。</p>
+<h4 id="timx_psc">TIMx_PSC寄存器<a class="headerlink" href="#timx_psc" title="Permanent link">&para;</a></h4>
+<p>TIMx_PSC是TIMx的预分频寄存器，该寄存器用于对时钟进行分频，然后提供给计数器，以作为计数器的时钟。该寄存器的各位描述如下图所示：</p>
+<p>这里定时器的时钟来源有4个：</p>
+<ol>
+<li>
+<p>内部时钟(CK_INT)</p>
+</li>
+<li>
+<p>外部时钟模式1(外部输入脚TIx)</p>
+</li>
+<li>
+<p>外部时钟模式2(外部触发输入ETR)</p>
+</li>
+<li>
+<p>内部触发输入(使用另一个定时器为本定时器提供时钟)</p>
+</li>
+</ol>
+<p>具体选择哪个时钟源可以通过 <strong>TIMx_SMCR</strong> 寄存器的对应位来设置，这里的CK_INT时钟是从APB1总线时钟倍频得来的，而高级定时器的内部时钟来自于APB2总线时钟。</p>
+<h4 id="timx_cnt">TIMx_CNT寄存器<a class="headerlink" href="#timx_cnt" title="Permanent link">&para;</a></h4>
+<p>TIMx_CNT是TIMx的计数寄存器，该寄存器存储有当前定时器的计数值。</p>
+<h4 id="timx_arr">TIMx_ARR寄存器<a class="headerlink" href="#timx_arr" title="Permanent link">&para;</a></h4>
+<p>TIMx_ARR是TIMx的自动装载计数器，该寄存器在物理上对应着2个寄存器，1个是可以被操作的，被称为预装载寄存器，还有1个是被操作不了的，这个操作不了的寄存器被称为 <strong>影子寄存器</strong>。实际上真正起作用的是影子寄存器，根据TIMx_CR1寄存器中APRE位的设置：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">APRE</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1">//预装载寄存器的内容可以随时送到影子寄存器中，两者是相连的</span>
+<span class="n">APRE</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1">//只有在每次更新事件时才把预装载寄存器的内容送到影子寄存器中</span>
+</pre></div>
+</td></tr></table>
+
+<p>该寄存器的各位描述如下图所示：</p>
+<h4 id="timx_sr">TIMx_SR寄存器<a class="headerlink" href="#timx_sr" title="Permanent link">&para;</a></h4>
+<p>TIMx_SR是TIMx的状态寄存器，该寄存器用来标记定时器事件和中断是否发生，该寄存器各位描述如下图所示：</p>
+<p>关于定时器更多的详细描述请参考 <strong>STM32寄存器手册</strong> 第282页，只要对上面介绍的寄存器进行设置，就可以使用通用定时器产生要求的延时信号。</p>
+<h3 id="_4">高级定时器<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<h3 id="_5">固件库配置定时器<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<p>定时器相关的库函数在 <strong>FWLib</strong> 目录下的 <strong>stm32f10x_tim.c</strong> 和 <strong>stm32f10x_tim.h</strong> 中。</p>
+<h2 id="_6">硬件连接<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<h2 id="_7">软件设计<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<h2 id="_8">参考<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://documents-1256406063.cos.ap-shanghai.myqcloud.com/STM32F1%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97-%E5%BA%93%E5%87%BD%E6%95%B0%E7%89%88%E6%9C%AC_V3.1%20.pdf">STM32开发指南-库函数版本_V3.1.pdf</a>, 正点原子, <a href="http://www.alientek.com/">ALLENTEK</a>.</li>
+</ul>
                 
                   
                 
