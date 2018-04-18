@@ -1074,7 +1074,7 @@
 <p>只需要知道操作的是哪组GPIO口和GPIO口的哪一位，就可以直接调用<code class="codehilite"><span class="n">GPIO_ResetBits</span><span class="p">(</span><span class="n">GPIOx</span><span class="p">,</span> <span class="n">GPIO_Pin</span><span class="p">)</span></code>来操作，而且由于固件库都有很好的命名规范，所以基本上通过函数名字就可以大概了解这个函数的功能是什么，相比寄存器编程方式来说，也大大提高了程序的可读性。</p>
 <h2 id="_2">总结<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <p>使用固件库编程是有其固定的程序编写方法的，一般上是先初始化硬件驱动，初始化使用固件库的一般格式是：</p>
-<p><strong>声明初始化结构体 -&gt; 设置初始化结构体各成员变量的值 -&gt; 对于给定待初始化硬件变量和初始化结构体调用初始化函数</strong>。</p>
+<p><strong>使能对应外设的时钟 -&gt; 定义外设初始化结构体 -&gt; 设置初始化结构体各成员变量的值 -&gt; 对于给定待初始化外设变量和初始化结构体调用初始化函数</strong>。</p>
 <p>比如使用固件库来初始化GPIOA的格式如下：</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
