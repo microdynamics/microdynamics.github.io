@@ -482,8 +482,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../3.2%20Keil%E5%BC%80%E5%8F%91%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7/" title="3.2 Keil开发常用技巧" class="md-nav__link">
-      3.2 Keil开发常用技巧
+    <a href="../3.2%20%E5%BC%80%E5%8F%91%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7%28Keil%29/" title="3.2 开发常用技巧(Keil)" class="md-nav__link">
+      3.2 开发常用技巧(Keil)
     </a>
   </li>
 
@@ -494,8 +494,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../3.3%20ARM-GCC%E5%BC%80%E5%8F%91%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7/" title="3.3 ARM GCC开发常用技巧" class="md-nav__link">
-      3.3 ARM GCC开发常用技巧
+    <a href="../3.3%20%E5%BC%80%E5%8F%91%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7%28ARM-GCC%29/" title="3.3 开发常用技巧(ARM GCC)" class="md-nav__link">
+      3.3 开发常用技巧(ARM GCC)
     </a>
   </li>
 
@@ -703,10 +703,30 @@
     软件设计
   </a>
   
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" title="外设初始化" class="md-nav__link">
+    外设初始化
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#led" title="LED状态机" class="md-nav__link">
+    LED状态机
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
-  <a href="#_5" title="参考" class="md-nav__link">
+  <a href="#_6" title="参考" class="md-nav__link">
     参考
   </a>
   
@@ -1113,10 +1133,30 @@
     软件设计
   </a>
   
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" title="外设初始化" class="md-nav__link">
+    外设初始化
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#led" title="LED状态机" class="md-nav__link">
+    LED状态机
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
-  <a href="#_5" title="参考" class="md-nav__link">
+  <a href="#_6" title="参考" class="md-nav__link">
     参考
   </a>
   
@@ -1335,6 +1375,7 @@
 <p><img alt="breeze_embedded_led_sch" src="https://microdynamics-1256406063.cos.ap-shanghai.myqcloud.com/breeze/embedded/led_sch.png" /></p>
 <h2 id="_4">软件设计<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <p>完整代码在工程目录下的 <strong>Modules</strong> 子目录下的 <strong>stm32f10x_module_led.c</strong> 和 <strong>stm32f10x_module_led.h</strong> 中，先简单介绍一些函数：</p>
+<h3 id="_5">外设初始化<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -1375,8 +1416,24 @@
 </pre></div>
 </td></tr></table>
 
-<p>注意在配置STM32任意一个外设的时后，<strong>都要先使能外设的时钟</strong>，由于GPIOA是挂载在高速APB2总线上的外设，所以上面代码就调用了 <mark>RCC_APB2PeriphClockCmd</mark> 函数来使能GPIOA时钟，对时钟部分还不太清楚的读者可以到 <strong>STM32驱动开发-系统时钟树</strong> 部分再了解一下。</p>
-<h2 id="_5">参考<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<p>注意在配置STM32任意一个外设的时候，<strong>都要先使能外设的时钟</strong>，由于GPIOA是挂载在高速APB2总线上的外设，所以上面代码就调用了 <mark>RCC_APB2PeriphClockCmd</mark> 函数来使能GPIOA时钟，对时钟部分还不太清楚的读者可以到 <strong>STM32驱动开发-系统时钟树</strong> 部分再了解一下。</p>
+<p>在使能完成GPIOA的外设时钟后，将 <strong>GPIOA.11</strong>、<strong>GPIOA.12</strong>、<strong>GPIOA.8</strong> 和 <strong>GPIOA.15</strong> 分别设置成 <strong>推挽输出</strong> 模式，<strong>IO口速度</strong> 为50MHz，最后调用</p>
+<p><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">LED_A_OFF</span><span class="p">;</span>
+<span class="n">LED_B_OFF</span><span class="p">;</span>
+<span class="n">LED_C_OFF</span><span class="p">;</span>
+<span class="n">LED_D_OFF</span><span class="p">;</span>
+</pre></div>
+</td></tr></table>
+4个宏定义来关闭LED，由于LED是默认是上拉的，所以只有置端口为1才是关闭LED，比如LED_A_OFF的定义是这样的：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="cp">#define LED_A_OFF    GPIO_SetBits(GPIOA, GPIO_Pin_11)</span>
+</pre></div>
+</td></tr></table>
+
+<h3 id="led">LED状态机<a class="headerlink" href="#led" title="Permanent link">&para;</a></h3>
+<h2 id="_6">参考<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://documents-1256406063.cos.ap-shanghai.myqcloud.com/STM32F1%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97-%E5%BA%93%E5%87%BD%E6%95%B0%E7%89%88%E6%9C%AC_V3.1%20.pdf">STM32开发指南-库函数版本_V3.1.pdf</a>, 正点原子, <a href="http://www.alientek.com/">ALLENTEK</a>.</li>
 </ul>

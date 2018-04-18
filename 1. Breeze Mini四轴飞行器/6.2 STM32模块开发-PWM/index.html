@@ -99,6 +99,10 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
     <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
     
+      <a href="#_1" tabindex="1" class="md-skip">
+        跳转至
+      </a>
+    
     
       <header class="md-header" data-md-component="header">
   <nav class="md-header-nav md-grid">
@@ -478,8 +482,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../3.2%20Keil%E5%BC%80%E5%8F%91%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7/" title="3.2 Keil开发常用技巧" class="md-nav__link">
-      3.2 Keil开发常用技巧
+    <a href="../3.2%20%E5%BC%80%E5%8F%91%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7%28Keil%29/" title="3.2 开发常用技巧(Keil)" class="md-nav__link">
+      3.2 开发常用技巧(Keil)
     </a>
   </li>
 
@@ -490,8 +494,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../3.3%20ARM-GCC%E5%BC%80%E5%8F%91%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7/" title="3.3 ARM GCC开发常用技巧" class="md-nav__link">
-      3.3 ARM GCC开发常用技巧
+    <a href="../3.3%20%E5%BC%80%E5%8F%91%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7%28ARM-GCC%29/" title="3.3 开发常用技巧(ARM GCC)" class="md-nav__link">
+      3.3 开发常用技巧(ARM GCC)
     </a>
   </li>
 
@@ -628,9 +632,118 @@
     <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
     
     
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        6.2 STM32模块开发-PWM
+      </label>
+    
     <a href="./" title="6.2 STM32模块开发-PWM" class="md-nav__link md-nav__link--active">
       6.2 STM32模块开发-PWM
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" title="前言" class="md-nav__link">
+    前言
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" title="相关知识" class="md-nav__link">
+    相关知识
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pwm" title="PWM简介" class="md-nav__link">
+    PWM简介
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stm32pwm" title="STM32的PWM外设" class="md-nav__link">
+    STM32的PWM外设
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#timx_ccmr" title="TIMx_CCMR寄存器" class="md-nav__link">
+    TIMx_CCMR寄存器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timx_ccer" title="TIMx_CCER寄存器" class="md-nav__link">
+    TIMx_CCER寄存器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timx_ccr" title="TIMx_CCR寄存器" class="md-nav__link">
+    TIMx_CCR寄存器
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pwm_1" title="库函数配置PWM" class="md-nav__link">
+    库函数配置PWM
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" title="硬件连接" class="md-nav__link">
+    硬件连接
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" title="软件设计" class="md-nav__link">
+    软件设计
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" title="参考" class="md-nav__link">
+    参考
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -935,6 +1048,117 @@
               </div>
             
             
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" title="前言" class="md-nav__link">
+    前言
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" title="相关知识" class="md-nav__link">
+    相关知识
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pwm" title="PWM简介" class="md-nav__link">
+    PWM简介
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stm32pwm" title="STM32的PWM外设" class="md-nav__link">
+    STM32的PWM外设
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#timx_ccmr" title="TIMx_CCMR寄存器" class="md-nav__link">
+    TIMx_CCMR寄存器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timx_ccer" title="TIMx_CCER寄存器" class="md-nav__link">
+    TIMx_CCER寄存器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timx_ccr" title="TIMx_CCR寄存器" class="md-nav__link">
+    TIMx_CCR寄存器
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pwm_1" title="库函数配置PWM" class="md-nav__link">
+    库函数配置PWM
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" title="硬件连接" class="md-nav__link">
+    硬件连接
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" title="软件设计" class="md-nav__link">
+    软件设计
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" title="参考" class="md-nav__link">
+    参考
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           <div class="md-content">
             <article class="md-content__inner md-typeset">
@@ -945,7 +1169,31 @@
                 
                   <h1>6.2 STM32模块开发-PWM</h1>
                 
-                
+                <h2 id="_1">前言<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>这里主要讲解 <strong>Breeze Mini</strong> 的PWM输出功能模块，完整代码在工程目录下的 <strong>Modules</strong> 子目录下的 <strong>stm32f10x_module_motor.c</strong> 和 <strong>stm32f10x_module_motor.h</strong> 中，该代码主要产生PWM信号来控制空心杯电机的速度大小。</p>
+<h2 id="_2">相关知识<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h3 id="pwm">PWM简介<a class="headerlink" href="#pwm" title="Permanent link">&para;</a></h3>
+<p><strong>PWM(Pulse Width Modulation)</strong> 叫做 <strong>脉冲宽度调制</strong>，是一种利用数字输出来控制模拟电路的方法，简单来说就是对脉冲的宽度进行控制。</p>
+<h3 id="stm32pwm">STM32的PWM外设<a class="headerlink" href="#stm32pwm" title="Permanent link">&para;</a></h3>
+<p>STM32的PWM输出信号都是通过定时器产生的，除了TIM6和TIM7，其他的定时器都能够产生PWM输出。其中高级定时器TIM1能够产生最多7路的PWM信号输出，通用定时器能够产生最多4路的PWM信号。为了能够对STM32的PWM产生有更深地理解，这里先介绍与PWM相关的寄存器。</p>
+<p>由于STM32的PWM信号是通过定时器产生的，所以如果要使用通用定时器TIM来产生PWM输出，除了要了解 <strong>STM32驱动开发-通用与高级定时器</strong> 中所讲解的寄存器外，还要介绍3个寄存器，这3个寄存器分别是 <strong>捕获/比较模式寄存器(TIMx_CCMR[1...2])</strong>、<strong>捕获/比较使能寄存器(TIMx_CCER)</strong> 和 <strong>捕获/比较寄存器(TIMx_CCR[1...4])</strong>。</p>
+<h4 id="timx_ccmr">TIMx_CCMR寄存器<a class="headerlink" href="#timx_ccmr" title="Permanent link">&para;</a></h4>
+<p>该寄存器共有2个，分别为TIMx_CCMR1和TIMx_CCMR2。其中TIMx_CCMR1控制通道1和2(CH1, CH2)，TIMx_CCMR2控制通道3和4(CH3, CH4)，以下该寄存器各位描述：</p>
+<p>该寄存器的有些位在不同模式下的功能是不一样的，对该寄存器的详细说明，可以参考 <strong>STM32寄存器手册</strong> 第288页，14.4.7一节。这里要额外说明的是 <strong>模式设置位OCxM</strong>，该位由3位组成，所以共可以配置成7种模式，我们这里使用的是PWM模式，所以需要设置成 <strong>110</strong> 或者 <strong>111</strong>。设置值的差别仅在于 <strong>输出电平的极性会相反</strong>。</p>
+<h4 id="timx_ccer">TIMx_CCER寄存器<a class="headerlink" href="#timx_ccer" title="Permanent link">&para;</a></h4>
+<p>该寄存器控制各个输入输出通道的开关，其各位描述如下图所示：</p>
+<p>该寄存使用起来比较简单，想要定时器从第几个通道输出PWM信号，就置第几个CC[1...4]E为1，比如想要从通道2输出PWM信号，就需要将 <strong>CC2E</strong> 置为1，更加详细的用法可以参考 <strong>STM32寄存器手册</strong> 第292页，14.4.9一节。</p>
+<h4 id="timx_ccr">TIMx_CCR寄存器<a class="headerlink" href="#timx_ccr" title="Permanent link">&para;</a></h4>
+<p>TIMx_CCR一共有4个，分别对应4路输出通道，该寄存器的各位描述为：</p>
+<p>在输出模式下，该寄存器的值会与CNT的值进行比较，根据比较结果来产生相应的动作。修改该寄存器的值就可以控制PWM的输出脉宽。</p>
+<h3 id="pwm_1">库函数配置PWM<a class="headerlink" href="#pwm_1" title="Permanent link">&para;</a></h3>
+<p>PWM相关的库函数在 <strong>FWLib</strong> 目录下的 <strong>stm32f10x_tim.c</strong> 和 <strong>stm32f10x_tim.h</strong> 中。</p>
+<h2 id="_3">硬件连接<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h2 id="_4">软件设计<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<h2 id="_5">参考<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://documents-1256406063.cos.ap-shanghai.myqcloud.com/STM32F1%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97-%E5%BA%93%E5%87%BD%E6%95%B0%E7%89%88%E6%9C%AC_V3.1%20.pdf">STM32开发指南-库函数版本_V3.1.pdf</a>, 正点原子, <a href="http://www.alientek.com/">ALLENTEK</a>.</li>
+</ul>
                 
                   
                 
