@@ -1345,6 +1345,60 @@
 </pre></div>
 </td></tr></table>
 
+<p>这是一个含参数的宏定义，这样如果要设置整个系统的中断优先级组为2，则代码为：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">NVIC_PriorityGroupConfig</span><span class="p">(</span><span class="n">NVIC_PriorityGroup_2</span><span class="p">);</span>
+</pre></div>
+</td></tr></table>
+
+<p>设置好整个系统的中断分组后，还要对于每个外设中断设置它的抢占和子优先级，这里需要用到中断初始化函数 <strong>NVIC_Init</strong>，其原型为：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="kt">void</span> <span class="nf">NVIC_Init</span><span class="p">(</span><span class="n">NVIC_InitTypeDef</span><span class="o">*</span> <span class="n">NVIC_InitStruct</span><span class="p">);</span>
+</pre></div>
+</td></tr></table>
+
+<p>其中 <strong>NVIC_InitTypeDef</strong> 定义为：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span>
+<span class="p">{</span>
+    <span class="kt">uint8_t</span> <span class="n">NVIC_IRQChannel</span><span class="p">;</span>
+    <span class="kt">uint8_t</span> <span class="n">NVIC_IRQChannelPreemptionPriority</span><span class="p">;</span>
+    <span class="kt">uint8_t</span> <span class="n">NVIC_IRQChannelSubPriority</span><span class="p">;</span>
+    <span class="n">FunctionalState</span> <span class="n">NVIC_IRQChannelCmd</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">NVIC_InitTypeDef</span><span class="p">;</span>
+</pre></div>
+</td></tr></table>
+
+<p><strong>NVIC_IRQChannel</strong> 表示待初始化中断名，所有STM32支持的各外设中断名可以从 <strong>stm32f10x.h</strong> 中找到，<strong>NVIC_IRQChannelPreemptionPriority</strong> 表示中断的抢占优先级别，<strong>NVIC_IRQChannelSubPriority</strong> 表示中断的子优先级别，<strong>NVIC_IRQChannelCmd</strong> 表示中断使能控制。</p>
+<p>比如若要使能串口1的中断，要求设置抢占优先级为1，子优先级为0，具体代码为：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">NVIC_InitTypeDef</span> <span class="n">NVIC_InitStructure</span><span class="p">;</span>
+<span class="n">NVIC_PriorityGroupConfig</span><span class="p">(</span><span class="n">NVIC_PriorityGroup_2</span><span class="p">);</span>
+<span class="n">NVIC_InitStructure</span><span class="p">.</span><span class="n">NVIC_IRQChannel</span>                   <span class="o">=</span> <span class="n">USART1_IRQn</span><span class="p">;</span>
+<span class="n">NVIC_InitStructure</span><span class="p">.</span><span class="n">NVIC_IRQChannelSubPriority</span>        <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="n">NVIC_InitStructure</span><span class="p">.</span><span class="n">NVIC_IRQChannelPreemptionPriority</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">NVIC_InitStructure</span><span class="p">.</span><span class="n">NVIC_IRQChannelCmd</span>                <span class="o">=</span> <span class="n">ENABLE</span><span class="p">;</span>
+<span class="n">NVIC_Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">NVIC_InitStructure</span><span class="p">);</span>
+</pre></div>
+</td></tr></table>
+
+<p>这里我们仅介绍的是中断分组和设置优先级的方法，至于每个外设的对应中断状态如何清除、查询，这个在后面具体介绍每个外设时会再详细介绍。总结来说就是设置中断优先级分为两步为：</p>
+<ol>
+<li>
+<p>在系统初始化时设置一次中断分组，确定抢占、子优先级的分配位数。</p>
+</li>
+<li>
+<p>设置所用中断的中断优先级别，对每个中断调用 <strong>NVIC_Init()</strong> 初始化。</p>
+</li>
+</ol>
 <h2 id="_5">硬件连接<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
 <p>外设中断控制属于 <strong>Breeze Mini</strong> 主微控制器STM32F103TBU6自身提供的中断管理功能，是没有外部电路连接的。</p>
 <h2 id="_6">软件设计<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>

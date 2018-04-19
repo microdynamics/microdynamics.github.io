@@ -636,24 +636,64 @@
     相关知识
   </a>
   
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stm32-flash" title="STM32 FLASH简介" class="md-nav__link">
+    STM32 FLASH简介
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" title="主存储器" class="md-nav__link">
+    主存储器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" title="信息块" class="md-nav__link">
+    信息块
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" title="闪存存储器接口寄存器" class="md-nav__link">
+    闪存存储器接口寄存器
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" title="硬件连接" class="md-nav__link">
+  <a href="#_6" title="硬件连接" class="md-nav__link">
     硬件连接
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" title="软件设计" class="md-nav__link">
+  <a href="#_7" title="软件设计" class="md-nav__link">
     软件设计
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_5" title="参考" class="md-nav__link">
+  <a href="#_8" title="参考" class="md-nav__link">
     参考
   </a>
   
@@ -1017,24 +1057,64 @@
     相关知识
   </a>
   
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stm32-flash" title="STM32 FLASH简介" class="md-nav__link">
+    STM32 FLASH简介
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" title="主存储器" class="md-nav__link">
+    主存储器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" title="信息块" class="md-nav__link">
+    信息块
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" title="闪存存储器接口寄存器" class="md-nav__link">
+    闪存存储器接口寄存器
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" title="硬件连接" class="md-nav__link">
+  <a href="#_6" title="硬件连接" class="md-nav__link">
     硬件连接
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" title="软件设计" class="md-nav__link">
+  <a href="#_7" title="软件设计" class="md-nav__link">
     软件设计
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_5" title="参考" class="md-nav__link">
+  <a href="#_8" title="参考" class="md-nav__link">
     参考
   </a>
   
@@ -1062,10 +1142,18 @@
                   <h1>5.6 STM32驱动开发-读写Flash和模拟EEPROM</h1>
                 
                 <h2 id="_1">前言<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>这里主要讲解 <strong>Breeze Mini</strong> 的FLASH相关操作，完整代码在工程目录下的 <strong>Drivers</strong> 子目录下的 <strong>stm32f10x_driver_flash.c</strong> 和 <strong>stm32f10x_driver_flash.h</strong> 中，该代码主要用STM32自带的FLASH来存储控制算法所需的相关常数。</p>
 <h2 id="_2">相关知识<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<h2 id="_3">硬件连接<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
-<h2 id="_4">软件设计<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
-<h2 id="_5">参考<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<h3 id="stm32-flash">STM32 FLASH简介<a class="headerlink" href="#stm32-flash" title="Permanent link">&para;</a></h3>
+<p>STM32不同型号的控制器的FLASH的容量也有所不同，最小的只有16K字节，最大的则有1024K字节，<strong>Breez Mini</strong> 选择的 <strong>STM32F103TBU6</strong> 的FLASH容量为128K字节，属于中等容量产品。中等容量产品的闪存模块结构如下图所示：</p>
+<p>由上图可见，STM32的闪存模块由 <strong>主存储器</strong>、<strong>信息块</strong> 和 <strong>闪存存储器接口寄存器</strong> 3部分组成。</p>
+<h4 id="_3">主存储器<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h4>
+<p>主存储器用来存放代码和常数数据(如<code class="codehilite"><span class="k">const</span></code>类型的数据)，对于STM32F103TBU6来说，其主存储器每页上有1K字节，共128页。从上图</p>
+<h4 id="_4">信息块<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h4>
+<h4 id="_5">闪存存储器接口寄存器<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h4>
+<h2 id="_6">硬件连接<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<h2 id="_7">软件设计<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<h2 id="_8">参考<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://documents-1256406063.cos.ap-shanghai.myqcloud.com/STM32F1%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97-%E5%BA%93%E5%87%BD%E6%95%B0%E7%89%88%E6%9C%AC_V3.1%20.pdf">STM32开发指南-库函数版本_V3.1.pdf</a>, 正点原子, <a href="http://www.alientek.com/">ALLENTEK</a>.</li>
 </ul>
