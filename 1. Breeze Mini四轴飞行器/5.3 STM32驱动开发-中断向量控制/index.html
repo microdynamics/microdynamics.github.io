@@ -99,6 +99,10 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
     <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
     
+      <a href="#_1" tabindex="1" class="md-skip">
+        跳转至
+      </a>
+    
     
       <header class="md-header" data-md-component="header">
   <nav class="md-header-nav md-grid">
@@ -568,9 +572,153 @@
     <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
     
     
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        5.3 STM32驱动开发-中断向量控制
+      </label>
+    
     <a href="./" title="5.3 STM32驱动开发-中断向量控制" class="md-nav__link md-nav__link--active">
       5.3 STM32驱动开发-中断向量控制
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" title="前言" class="md-nav__link">
+    前言
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" title="相关知识" class="md-nav__link">
+    相关知识
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" title="中断简介" class="md-nav__link">
+    中断简介
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stm32" title="STM32中断" class="md-nav__link">
+    STM32中断
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nvic" title="NVIC简介" class="md-nav__link">
+    NVIC简介
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iser" title="ISER寄存器" class="md-nav__link">
+    ISER寄存器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#icer" title="ICER寄存器" class="md-nav__link">
+    ICER寄存器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ispr" title="ISPR寄存器" class="md-nav__link">
+    ISPR寄存器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#icpr" title="ICPR寄存器" class="md-nav__link">
+    ICPR寄存器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iabr" title="IABR寄存器" class="md-nav__link">
+    IABR寄存器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ip" title="IP寄存器" class="md-nav__link">
+    IP寄存器
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stm32_1" title="STM32中断分组" class="md-nav__link">
+    STM32中断分组
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" title="固件库配置中断" class="md-nav__link">
+    固件库配置中断
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" title="硬件连接" class="md-nav__link">
+    硬件连接
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" title="软件设计" class="md-nav__link">
+    软件设计
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" title="参考" class="md-nav__link">
+    参考
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -935,6 +1083,152 @@
               </div>
             
             
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" title="前言" class="md-nav__link">
+    前言
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" title="相关知识" class="md-nav__link">
+    相关知识
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" title="中断简介" class="md-nav__link">
+    中断简介
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stm32" title="STM32中断" class="md-nav__link">
+    STM32中断
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nvic" title="NVIC简介" class="md-nav__link">
+    NVIC简介
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iser" title="ISER寄存器" class="md-nav__link">
+    ISER寄存器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#icer" title="ICER寄存器" class="md-nav__link">
+    ICER寄存器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ispr" title="ISPR寄存器" class="md-nav__link">
+    ISPR寄存器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#icpr" title="ICPR寄存器" class="md-nav__link">
+    ICPR寄存器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iabr" title="IABR寄存器" class="md-nav__link">
+    IABR寄存器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ip" title="IP寄存器" class="md-nav__link">
+    IP寄存器
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stm32_1" title="STM32中断分组" class="md-nav__link">
+    STM32中断分组
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" title="固件库配置中断" class="md-nav__link">
+    固件库配置中断
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" title="硬件连接" class="md-nav__link">
+    硬件连接
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" title="软件设计" class="md-nav__link">
+    软件设计
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" title="参考" class="md-nav__link">
+    参考
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           <div class="md-content">
             <article class="md-content__inner md-typeset">
@@ -945,7 +1239,119 @@
                 
                   <h1>5.3 STM32驱动开发-中断向量控制</h1>
                 
-                
+                <h2 id="_1">前言<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>这里主要讲解 <strong>Breeze Mini</strong> 的中断控制驱动，完整代码在工程目录下的 <strong>Drivers</strong> 子目录下的 <strong>stm32f10x_driver_nvic.c</strong> 和 <strong>stm32f10x_driver_nvic.h</strong> 中，该代码主要用来初始化各外设的中断和中断优先级。</p>
+<h2 id="_2">相关知识<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h3 id="_3">中断简介<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<h3 id="stm32">STM32中断<a class="headerlink" href="#stm32" title="Permanent link">&para;</a></h3>
+<p>Cortex-M3内核支持256个中断，其中包括16个内核中断和240个外部中断，并且其具有256级的可编程中断设置。但是STM32并且没有完全实现Cortex-M3标准中的这些中断。实际上STM32只有84个中断，包括16个内核中断和68个可屏蔽中断，具有16级可编程的中断优先级。我们常用的是这68个可屏蔽中断，但是STM32的68个可屏蔽中断在STM32F103系列产品上只有60个(在F107系列上才有68个)。由于我们用的主控是 <strong>STM32F103TBU6</strong>，所以这里只介绍这60个可屏蔽中断。</p>
+<h3 id="nvic">NVIC简介<a class="headerlink" href="#nvic" title="Permanent link">&para;</a></h3>
+<p><strong>NVIC(Nested Vectored Interrupt Controller)</strong> 为STM32的嵌套中断向量控制器，在 <strong>core_cm3.h</strong> 中定义了与NVIC有关的寄存器变量：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span>
+<span class="p">{</span>
+    <span class="n">__IO</span> <span class="kt">uint32_t</span> <span class="n">ISER</span><span class="p">[</span><span class="mi">8</span><span class="p">];</span>
+         <span class="kt">uint32_t</span> <span class="n">RESERVED0</span><span class="p">[</span><span class="mi">24</span><span class="p">];</span>
+    <span class="n">__IO</span> <span class="kt">uint32_t</span> <span class="n">ICER</span><span class="p">[</span><span class="mi">8</span><span class="p">];</span>
+         <span class="kt">uint32_t</span> <span class="n">RSERVED1</span><span class="p">[</span><span class="mi">24</span><span class="p">];</span>
+    <span class="n">__IO</span> <span class="kt">uint32_t</span> <span class="n">ISPR</span><span class="p">[</span><span class="mi">8</span><span class="p">];</span>
+         <span class="kt">uint32_t</span> <span class="n">RESERVED2</span><span class="p">[</span><span class="mi">24</span><span class="p">];</span>
+    <span class="n">__IO</span> <span class="kt">uint32_t</span> <span class="n">ICPR</span><span class="p">[</span><span class="mi">8</span><span class="p">];</span>
+         <span class="kt">uint32_t</span> <span class="n">RESERVED3</span><span class="p">[</span><span class="mi">24</span><span class="p">];</span>
+    <span class="n">__IO</span> <span class="kt">uint32_t</span> <span class="n">IABR</span><span class="p">[</span><span class="mi">8</span><span class="p">];</span>
+         <span class="kt">uint32_t</span> <span class="n">RESERVED4</span><span class="p">[</span><span class="mi">56</span><span class="p">];</span>
+    <span class="n">__IO</span> <span class="kt">uint8_t</span>  <span class="n">IP</span><span class="p">[</span><span class="mi">240</span><span class="p">];</span>
+         <span class="kt">uint32_t</span> <span class="n">RESERVED5</span><span class="p">[</span><span class="mi">644</span><span class="p">];</span>
+    <span class="n">__O</span>  <span class="kt">uint32_t</span> <span class="n">STIR</span><span class="p">;</span>
+<span class="p">}</span>  <span class="n">NVIC_Type</span><span class="p">;</span>
+</pre></div>
+</td></tr></table>
+
+<p>只有了解这些中断寄存器变量，才能更加方便地使用STM32的中断功能来设计程序。下面重点介绍6个寄存器：</p>
+<h4 id="iser">ISER寄存器<a class="headerlink" href="#iser" title="Permanent link">&para;</a></h4>
+<p><strong>ISER(Interrupt Set-Enable Registers)</strong> 是中断使能寄存器组，组里有8个32位寄存器，共256个位，每一位控制前面说的Cortex-M3内核所支持的256个中断。但是STM32F103TBU6的可屏蔽中断只有60个，所以只用到ISER[0]和ISER[1]，加起来能控制64个中断，其中多出的高4位不用。要想使能某个中断，必须要置对应ISER位为1，使能该位(光使能还不够，还需要设置中断分组、屏蔽和IO口映射等设置才能正常工作)。</p>
+<h4 id="icer">ICER寄存器<a class="headerlink" href="#icer" title="Permanent link">&para;</a></h4>
+<p><strong>ICER(Interrupt Clear-Enable Registers)</strong> 是中断失能寄存器组，寄存器数和布局都和ISER完全一样，只是向对应位写1会失能对应中断，写0无效。</p>
+<h4 id="ispr">ISPR寄存器<a class="headerlink" href="#ispr" title="Permanent link">&para;</a></h4>
+<p><strong>ISPR(Interrupt Set-Pending Registers)</strong> 是中断挂起控制寄存器组，寄存器数和布局都和ISER完全一样，只是向对应位写1会将正在执行的中断挂起，写0无效。</p>
+<h4 id="icpr">ICPR寄存器<a class="headerlink" href="#icpr" title="Permanent link">&para;</a></h4>
+<p><strong>ICPR(Interrupt Clear-Pending Registers)</strong> 是中断解挂控制寄存器组，寄存器数和布局都和ISER完全一样，只是向对应位写1会解挂对应中断，写0无效。</p>
+<h4 id="iabr">IABR寄存器<a class="headerlink" href="#iabr" title="Permanent link">&para;</a></h4>
+<p><strong>IABR(Interrupt Active Bit Registers)</strong> 是中断激活标志位寄存器组，寄存器数和布局都和ISER完全一样，当对应位为1时，表示该位所对应的中断正在执行，不过该寄存器是只读的，通过读对应位的值可以得到正在执行的中断是哪一个，当中断执行完成后对应位由硬件自动清零。</p>
+<h4 id="ip">IP寄存器<a class="headerlink" href="#ip" title="Permanent link">&para;</a></h4>
+<p><strong>IP(Interrupt Priority Registers)</strong> 是中断优先级控制寄存器组，这个寄存器非常重要，是用来设置STM32各外设的中断优先级的，IP寄存器由240个8位的寄存器组成，每个可屏蔽中断占用8位，这样一共可以控制240个中断，而STM32只用了其中的前60个，每个可屏蔽中断所占用的8位并没有完全使用，而只是使用了高4位，这4位中又分为 <strong>抢占优先级</strong> 和 <strong>子优先级</strong> 位，其中抢占优先级位在前，子优先级在后。这两个优先级位的位数是可以通过 <strong>SCB-&gt; AIRCR</strong> 中的中断分组来设置。简单来说，就是抢占和子优先级位加在一起共有4位，可以通过编程设置两个优先级位各占几位，比如设置抢占优先级位为1位，那么子优先级位就会有3位。</p>
+<h3 id="stm32_1">STM32中断分组<a class="headerlink" href="#stm32_1" title="Permanent link">&para;</a></h3>
+<p>STM32将所有的中断分成5组，组号0~4。分组的设置是由 <strong>SCB-&gt;AIRCR</strong> 寄存器的8~10位的值决定的，具体情况如下表所示：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="err">组</span>        <span class="n">AIRCR</span><span class="p">[</span><span class="mi">10</span><span class="o">:</span><span class="mi">8</span><span class="p">]</span>        <span class="n">bit</span><span class="p">[</span><span class="mi">7</span><span class="o">:</span><span class="mi">4</span><span class="p">]</span><span class="err">分配情况</span>        <span class="err">分配结果</span>
+<span class="mi">0</span>            <span class="mi">111</span>                 <span class="mi">0</span> <span class="o">:</span> <span class="mi">4</span>       <span class="mi">0</span><span class="err">位抢占优先级，</span><span class="mi">4</span><span class="err">位子优先级</span>
+<span class="mi">1</span>            <span class="mi">110</span>                 <span class="mi">1</span> <span class="o">:</span> <span class="mi">3</span>       <span class="mi">1</span><span class="err">位抢占优先级，</span><span class="mi">3</span><span class="err">位子优先级</span>
+<span class="mi">2</span>            <span class="mi">101</span>                 <span class="mi">2</span> <span class="o">:</span> <span class="mi">2</span>       <span class="mi">2</span><span class="err">位抢占优先级，</span><span class="mi">2</span><span class="err">位子优先级</span>
+<span class="mi">3</span>            <span class="mi">100</span>                 <span class="mi">3</span> <span class="o">:</span> <span class="mi">1</span>       <span class="mi">3</span><span class="err">位抢占优先级，</span><span class="mi">1</span><span class="err">位子优先级</span>
+<span class="mi">4</span>            <span class="mo">011</span>                 <span class="mi">4</span> <span class="o">:</span> <span class="mi">0</span>       <span class="mi">4</span><span class="err">位抢占优先级，</span><span class="mi">0</span><span class="err">位子优先级</span>
+</pre></div>
+</td></tr></table>
+
+<p>通过上面这个表我们可以知道如果组设置为3，则此时所有的60个中断的IP寄存器的高4位中最高3位是用来设置抢占优先级，低1位用来设置子优先级，此时对于每个中断可以设置0<sub>7的抢占和0</sub>1的子优先级。抢占优先级的响应优先高于子优先级，数值越小表示优先级越高。</p>
+<p>中断优先级打断规则：如果两个中断的的抢占和子优先级都完全一样，则哪个中断先产生就先执行。此外高优先级的抢占优先级可以打断正在执行的低抢占优先级的中断，若两个中断的抢占优先级相同，则哪个中断先产生就先执行。比如现设置中断优先级组为2，然后设置中断3的抢占优先级为2，子优先级为1，中断6的抢占优先级为3，子优先级位0，中断7的抢占优先级为2，子优先级位0，则优先级顺序为 ** 中断7 &gt; 中断3 &gt; 中断6**。此时中断3和7都可以打断中断6的执行，但是中断3和7不能相互打断。</p>
+<h3 id="_4">固件库配置中断<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>STM32与中断相关的库函数在 <strong>FWLib</strong> 目录下的 <strong>misc.c</strong> 和 <strong>misc.h</strong> 中。</p>
+<p>首先介绍的是中断优先级分组函数 <strong>NVIC_PriorityGroupConfig</strong>，其原型为：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="kt">void</span> <span class="nf">NVIC_PriorityGroupConfig</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="n">NVIC_PriorityGroup</span><span class="p">);</span>
+</pre></div>
+</td></tr></table>
+
+<p>这个函数的作用是对中断的优先级进行分组，一旦分好组后就不要再更改了，这个函数在程序中最好只调用一次(理论上也可以调用多次，但是需要保证每次调用时设置的分组都一样)，这个函数的具体实现为：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="kt">void</span> <span class="nf">NVIC_PriorityGroupConfig</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="n">NVIC_PriorityGroup</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">assert_param</span><span class="p">(</span><span class="n">IS_NVIC_PRIORITY_GROUP</span><span class="p">(</span><span class="n">NVIC_PriorityGroup</span><span class="p">));</span>
+    <span class="n">SCB</span><span class="o">-&gt;</span><span class="n">AIRCR</span> <span class="o">=</span> <span class="n">AIRCR_VECTKEY_MASK</span> <span class="o">|</span> <span class="n">NVIC_PriorityGroup</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table>
+
+<p>通过上述定义可以看出这个函数的唯一目的就是通过设置 <strong>SCB-&gt; AIRCR</strong> 寄存器来设置中断优先级分组，这在前面已经介绍过了，选中 <strong>"IS_NVIC_PRIORITY_GROUP"</strong>，然后右键 <strong>"Go to defition of..."</strong> 可以跳转到其定义处：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="cp">#define IS_NVIC_PRIORITY_GROUP(GROUP) (((GROUP) == NVIC_PriorityGroup_0) || \</span>
+<span class="cp">                                       ((GROUP) == NVIC_PriorityGroup_1) || \</span>
+<span class="cp">                                       ((GROUP) == NVIC_PriorityGroup_2) || \</span>
+<span class="cp">                                       ((GROUP) == NVIC_PriorityGroup_3) || \</span>
+<span class="cp">                                       ((GROUP) == NVIC_PriorityGroup_4))</span>
+</pre></div>
+</td></tr></table>
+
+<h2 id="_5">硬件连接<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<p>外设中断控制属于 <strong>Breeze Mini</strong> 主微控制器STM32F103TBU6自身提供的中断管理功能，是没有外部电路连接的。</p>
+<h2 id="_6">软件设计<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<h2 id="_7">参考<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://documents-1256406063.cos.ap-shanghai.myqcloud.com/STM32F1%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97-%E5%BA%93%E5%87%BD%E6%95%B0%E7%89%88%E6%9C%AC_V3.1%20.pdf">STM32开发指南-库函数版本_V3.1.pdf</a>, 正点原子, <a href="http://www.alientek.com/">ALLENTEK</a>.</li>
+</ul>
                 
                   
                 
