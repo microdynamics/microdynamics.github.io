@@ -99,6 +99,10 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
     <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
     
+      <a href="#_1" tabindex="1" class="md-skip">
+        跳转至
+      </a>
+    
     
       <header class="md-header" data-md-component="header">
   <nav class="md-header-nav md-grid">
@@ -544,9 +548,84 @@
     <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
     
     
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        5.1 STM32驱动开发-系统时钟树
+      </label>
+    
     <a href="./" title="5.1 STM32驱动开发-系统时钟树" class="md-nav__link md-nav__link--active">
       5.1 STM32驱动开发-系统时钟树
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" title="前言" class="md-nav__link">
+    前言
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" title="相关知识" class="md-nav__link">
+    相关知识
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" title="时钟树简介" class="md-nav__link">
+    时钟树简介
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stm32" title="STM32时钟" class="md-nav__link">
+    STM32时钟
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" title="硬件连接" class="md-nav__link">
+    硬件连接
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" title="软件设计" class="md-nav__link">
+    软件设计
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" title="参考" class="md-nav__link">
+    参考
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -935,6 +1014,83 @@
               </div>
             
             
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" title="前言" class="md-nav__link">
+    前言
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" title="相关知识" class="md-nav__link">
+    相关知识
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" title="时钟树简介" class="md-nav__link">
+    时钟树简介
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stm32" title="STM32时钟" class="md-nav__link">
+    STM32时钟
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" title="硬件连接" class="md-nav__link">
+    硬件连接
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" title="软件设计" class="md-nav__link">
+    软件设计
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" title="参考" class="md-nav__link">
+    参考
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           <div class="md-content">
             <article class="md-content__inner md-typeset">
@@ -945,7 +1101,157 @@
                 
                   <h1>5.1 STM32驱动开发-系统时钟树</h1>
                 
-                
+                <h2 id="_1">前言<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>这里主要讲解 <strong>Breeze Mini</strong> 的主时钟系统设置，完整代码在工程目录下的 <strong>Drivers</strong> 子目录下的 <strong>stm32f10x_driver_clock.c</strong> 和 <strong>stm32f10x_driver_clock.h</strong> 中。</p>
+<h2 id="_2">相关知识<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h3 id="_3">时钟树简介<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>时钟系统在整个芯片系统中占据着十分重要的地位，因为时钟系统要产生数字电路工作所必须的时序信号，换句话来说就是 <strong>各个工作逻辑都是在时钟所产生的时序脉冲下顺序执行</strong>，就像人的心跳一样。STM32的内部时钟信号非常多，从几十k到几十M的都有，存在多种频率的时钟信号是因为STM32本身支持非常多的外设，但并不是所有的外设都需要系统时钟这么高的频率，比如看门狗和RTC功能只需要几十k的时钟即可，时钟频率越高功耗越大，同时抗电磁干扰能力越弱，因此许多具有丰富外设的MCU都是采用这种多时钟系统以提高工作效率。</p>
+<p>接下来具体介绍STM32的时钟系统，其系统图如下所示：</p>
+<p>在STM32中共有5个时钟源，分别为 <strong>HSI、HSE、LSI、LSE</strong> 和 <strong>PLL</strong>。</p>
+<ol>
+<li>
+<p><strong>HSI</strong> 是高速内部时钟，由内部RC振荡器提供，频率为8MHz。</p>
+</li>
+<li>
+<p><strong>HSE</strong> 是高速外部时钟，可外接石英晶振或时钟源，其外接的频率范围为4MHz~16MHz。</p>
+</li>
+<li>
+<p><strong>LSI</strong> 是低速内部时钟，由内部RC振荡器提供，频率为40KHz，独立看门狗的时钟源只能是LSI，同时LSI还可以作为RTC的时钟源。</p>
+</li>
+<li>
+<p><strong>LSE</strong> 是低速外部时钟，要接32.768KHz的石英晶振，主要用于RTC的时钟源。</p>
+</li>
+<li>
+<p><strong>PLL</strong> 是锁相环倍频输出，其输入时钟源可以选择 <strong>HSI/2</strong>、<strong>HSE</strong> 或 <strong>HSE/2</strong>，倍频可选择2~16倍，但是最好不要超过 <strong>72MHz</strong>。</p>
+</li>
+</ol>
+<p>上面简单概括了STM32的5个时钟源，现在将会一一讲解这些时钟源是如何给外设提供指定频率时序信号的，具体内容见下图：</p>
+<p>A. MCO是STM32的一个时钟输出IO(PA8)，它可以选择一个时钟信号输出，可以选择PLL输出的2分频、HSI、HSE或者系统时钟。</p>
+<p>B. 这个是RTC时钟源，从图中可以看出RTC的时钟源可以选择LSI、LSE或者HSE的128分频。</p>
+<p>C. 从图中可以看出USB的时钟来自于PLL时钟源，STM32中有一个全速功能的USB模块，其串行接口引擎需要一个频率为48MHz的时钟源。该时钟源只能从PLL输出端获得，可以选择1.5分频或者1分频，也就是说当需要使用USB模块时，PLL必须使能并且时钟频率要配置为48MHz或72MHz。</p>
+<p>D. 这个是STM32的系统时钟SYSCLK，它提供了STM32大部分部件工作时所需的时钟信号，系统时钟可选择为PLL输出、HSI或HSE。系统时钟最大频率为72MHz，也可以超频，但是可能会导致系统工作不稳定。</p>
+<p>E. 这里是指所有外设的时钟，所有外设的时钟最终都来源于SYSCLK，SYSCLK通过AHB分频器分频后送给各外设使用。这些外设包括：</p>
+<ol>
+<li>
+<p>AHB总线、内核、内存和DMA使用的HCLK时钟。</p>
+</li>
+<li>
+<p>8分频后送给Cortex的系统定时器时钟。</p>
+</li>
+<li>
+<p>送给Cortex的空闲运行时钟FCLK。</p>
+</li>
+<li>
+<p>送给APB1分频器，一路供APB1外设使用(PCLK1，最大频率36MHz)，一路供定时器2、3和4倍频使用。</p>
+</li>
+<li>
+<p>送给APB2分频器，一路供APB2外设使用(PCLK2，最大频率72MHz)，一路供定时器1倍频使用。</p>
+</li>
+</ol>
+<p>在以上的时钟输出中，有很多是需要使能控制的，比如AHB总线时钟、内核时钟、各APB1和APB2外设等，<strong>当需要使用某个模块时，要先使能对应的时钟</strong>。</p>
+<h3 id="stm32">STM32时钟<a class="headerlink" href="#stm32" title="Permanent link">&para;</a></h3>
+<p>STM32时钟系统的配置代码分为两部分，一部分在 <strong>CMSIS</strong> 目录下的 <strong>system_stm32f10x.c</strong> 中的 SystemInit()函数中，用于初始化，另一部分在 <strong>FWLib</strong> 目录下的 <strong>stm32f10x_rcc.c</strong> 中，用于操作时钟系统。对于系统时钟来说，默认情况下是在SystemInit函数的SetSysClock函数中判断的，<strong>SetSysClock</strong> 函数的定义如下所示：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="k">static</span> <span class="kt">void</span> <span class="nf">SetSysClock</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="cp">#ifdef SYSCLK_FREQ_HSE</span>
+    <span class="n">SetSysClockToHSE</span><span class="p">();</span>
+<span class="cp">#elif defined SYSCLK_FREQ_24MHz</span>
+    <span class="n">SetSysClockTo24</span><span class="p">();</span>
+<span class="cp">#elif defined SYSCLK_FREQ_36MHz</span>
+    <span class="n">SetSysClockTo36</span><span class="p">();</span>
+<span class="cp">#elif defined SYSCLK_FREQ_48MHz</span>
+    <span class="n">SetSysClockTo48</span><span class="p">();</span>
+<span class="cp">#elif defined SYSCLK_FREQ_56MHz</span>
+  <span class="n">SetSysClockTo56</span><span class="p">();</span>
+<span class="cp">#elif defined SYSCLK_FREQ_72MHz</span>
+    <span class="n">SetSysClockTo72</span><span class="p">();</span>
+<span class="cp">#endif</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table>
+
+<p>这段代码设置系统时钟的频率为72MHz，其宏定义为：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="cp">#define SYSCLK_FREQ_72MHz  72000000</span>
+</pre></div>
+</td></tr></table>
+
+<p>如果想设置系统时钟频率为36MHz，只需注释掉上面的宏定义，并加入如下定义即可：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="cp">#define SYSCLK_FREQ_36MHz  36000000</span>
+</pre></div>
+</td></tr></table>
+
+<p>设置完系统时钟后可以通过变量 <strong>SystemCoreClock</strong> 获得系统时钟的值，在 <strong>system_stm32f10x.c</strong> 中该变量的定义为：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="cp">#ifdef SYSCLK_FREQ_HSE</span>
+    <span class="kt">uint32_t</span> <span class="n">SystemCoreClock</span>         <span class="o">=</span> <span class="n">SYSCLK_FREQ_HSE</span><span class="p">;</span>
+<span class="cp">#elif defined SYSCLK_FREQ_24MHz</span>
+    <span class="kt">uint32_t</span> <span class="n">SystemCoreClock</span>         <span class="o">=</span> <span class="n">SYSCLK_FREQ_24MHz</span><span class="p">;</span>
+<span class="cp">#elif defined SYSCLK_FREQ_36MHz</span>
+    <span class="kt">uint32_t</span> <span class="n">SystemCoreClock</span>         <span class="o">=</span> <span class="n">SYSCLK_FREQ_36MHz</span><span class="p">;</span>
+<span class="cp">#elif defined SYSCLK_FREQ_48MHz</span>
+    <span class="kt">uint32_t</span> <span class="n">SystemCoreClock</span>         <span class="o">=</span> <span class="n">SYSCLK_FREQ_48MHz</span><span class="p">;</span>
+<span class="cp">#elif defined SYSCLK_FREQ_56MHz</span>
+    <span class="kt">uint32_t</span> <span class="n">SystemCoreClock</span>         <span class="o">=</span> <span class="n">SYSCLK_FREQ_56MHz</span><span class="p">;</span>
+<span class="cp">#elif defined SYSCLK_FREQ_72MHz</span>
+    <span class="kt">uint32_t</span> <span class="n">SystemCoreClock</span>         <span class="o">=</span> <span class="n">SYSCLK_FREQ_72MHz</span><span class="p">;</span>
+<span class="cp">#else </span><span class="cm">/*!&lt; HSI Selected as System Clock source */</span><span class="cp"></span>
+    <span class="kt">uint32_t</span> <span class="n">SystemCoreClock</span>         <span class="o">=</span> <span class="n">HSI_VALUE</span><span class="p">;</span>
+<span class="cp">#endif</span>
+</pre></div>
+</td></tr></table>
+
+<p>总结来说，当系统时钟频率设置为72MHz大小时：</p>
+<ol>
+<li>
+<p>SYSCLK时钟：72MHz</p>
+</li>
+<li>
+<p>AHB总线时钟(使用SYSCLK为时钟源)：72MHz</p>
+</li>
+<li>
+<p>APB1总线时钟：36MHz</p>
+</li>
+<li>
+<p>APB2总线时钟：72MHz</p>
+</li>
+<li>
+<p>PLL时钟：72MHz</p>
+</li>
+</ol>
+<h2 id="_4">硬件连接<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<h2 id="_5">软件设计<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<h2 id="_6">参考<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://documents-1256406063.cos.ap-shanghai.myqcloud.com/STM32F1%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97-%E5%BA%93%E5%87%BD%E6%95%B0%E7%89%88%E6%9C%AC_V3.1%20.pdf">STM32开发指南-库函数版本_V3.1.pdf</a>, 正点原子, <a href="http://www.alientek.com/">ALLENTEK</a>.</li>
+</ul>
                 
                   
                 
