@@ -240,13 +240,25 @@
     
         
     <url>
-     <loc>https://microdynamics.github.io/4. Breeze知识库/四轴飞行器介绍/</loc>
+     <loc>https://microdynamics.github.io/4. Breeze知识库/1.1 四轴飞行器介绍/</loc>
      <lastmod>2018-04-21</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>https://microdynamics.github.io/4. Breeze知识库/嵌入式C语言技巧/</loc>
+     <loc>https://microdynamics.github.io/4. Breeze知识库/1.2 四轴飞行器电机/</loc>
+     <lastmod>2018-04-21</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>https://microdynamics.github.io/4. Breeze知识库/1.3 四周飞行器桨叶/</loc>
+     <lastmod>2018-04-21</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>https://microdynamics.github.io/4. Breeze知识库/2.1 嵌入式C语言技巧/</loc>
      <lastmod>2018-04-21</lastmod>
      <changefreq>daily</changefreq>
     </url>
