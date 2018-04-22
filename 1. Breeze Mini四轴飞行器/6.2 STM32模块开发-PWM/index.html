@@ -506,8 +506,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../3.4%20%E9%A3%9E%E6%8E%A7%E7%B3%BB%E7%BB%9F%E6%80%BB%E8%A7%88/" title="3.2 飞控系统总览" class="md-nav__link">
-      3.2 飞控系统总览
+    <a href="../3.4%20%E9%A3%9E%E6%8E%A7%E7%B3%BB%E7%BB%9F%E6%80%BB%E8%A7%88/" title="3.4 飞控系统总览" class="md-nav__link">
+      3.4 飞控系统总览
     </a>
   </li>
 
@@ -727,6 +727,19 @@
   <a href="#_4" title="软件设计" class="md-nav__link">
     软件设计
   </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pwm_2" title="PWM初始化" class="md-nav__link">
+    PWM初始化
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1175,6 +1188,19 @@
     软件设计
   </a>
   
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pwm_2" title="PWM初始化" class="md-nav__link">
+    PWM初始化
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1206,26 +1232,210 @@
                   <h1>6.2 STM32模块开发-PWM</h1>
                 
                 <h2 id="_1">前言<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
-<p>这里主要讲解 <strong>Breeze Mini</strong> 的PWM输出功能模块，完整代码在工程目录下的 <strong>Modules</strong> 子目录下的 <strong>stm32f10x_module_motor.c</strong> 和 <strong>stm32f10x_module_motor.h</strong> 中，该代码主要产生PWM信号来控制空心杯电机的速度大小。</p>
+<p>这里主要讲解 <strong>Breeze Mini</strong> 的PWM输出功能模块，完整代码在工程目录下的 <strong>Modules</strong> 子目录下的 <strong>stm32f10x_module_motor.c</strong> 和 <strong>stm32f10x_module_motor.h</strong> 中，该代码主要用于产生具有不同占空比的PWM信号来控制空心杯电机的速度大小。</p>
 <h2 id="_2">相关知识<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <h3 id="pwm">PWM简介<a class="headerlink" href="#pwm" title="Permanent link">&para;</a></h3>
-<p><strong>PWM(Pulse Width Modulation)</strong> 叫做 <strong>脉冲宽度调制</strong>，是一种利用数字输出来控制模拟电路的方法，简单来说就是对脉冲的宽度进行控制。</p>
+<p><strong>PWM(Pulse Width Modulation)</strong> 叫做 <strong>脉冲宽度调制</strong>，是一种利用数字输出来控制模拟电路的方法，简单来说就是对脉冲的宽度进行控制。PWM的一个优点是从处理器到被控系统信号都是数字形式的，无需进行 <strong>数模转换</strong>。让信号保持为数字形式可将噪声影响降到最小。噪声只有在强到足以将逻辑1改变为逻辑0或将逻辑0改变为逻辑1时，也才能对数字信号产生影响。其具体波形如下所示：</p>
+<p><img alt="breeze_embedded_pwm_wave" src="https://microdynamics-1256406063.cos.ap-shanghai.myqcloud.com/breeze/embedded/pwm_wave.jpg" /></p>
+<p><strong>占空比</strong> 是PWM中非常重要的参数，其定义为上图中 <strong>"可变的脉冲宽度"</strong> 与 <strong>"恒定的脉冲周期"</strong> 的比值。例如占空比为50%即高电平占整个周期时间的一半。本质上我们所调节的PWM的占空比，在非常短的时间(一个周期)内，让IO口一段时间输出高电平，一段时间输出低电平，由于时间非常短，当输出低电平的时候电机还没来得及停止转动，这时候高电平又来了，结果就是电机比正常(占空比为1)转的时候要慢，同理如果让占空比越大电机速度就越快，占空比为1时速度最快，为0时电机停止转动。</p>
+<p>在PWM调速系统中，一般可以采用 <strong>定宽调频</strong>、<strong>调宽调频</strong> 和 <strong>定频调宽</strong> 3种方法来改变脉冲的占空比，但是前两种方法在调速时改变了控制脉宽的周期，从而引起控制脉冲频率的改变，当该频率与系统的固有频率接近时将会引起系统振荡。所以常采用 <strong>定频调宽法</strong> 来改变占空比。</p>
+<p><strong>定频调宽调速</strong> 是在脉冲波形的频率不变的前提下(脉冲波形的周期不变)，通过改变一个周期波形内高电平的时间从而改变占空比，进而由 <strong>等效原理</strong> 可知在一个脉冲周期中的平均电压也会发生改变，使得电机转速发生变化。假定电机始终接通电源时，电机最大转速为Vmax, 占空比为D = t / T, 则电机的平均速度Vd = D * Vmax。由公式可知当改变占空比D = t /T 时，就可以得到不同的电机平均速度Vd，从而达到调速的目的。</p>
 <h3 id="stm32pwm">STM32的PWM外设<a class="headerlink" href="#stm32pwm" title="Permanent link">&para;</a></h3>
-<p>STM32的PWM输出信号都是通过定时器产生的，除了TIM6和TIM7，其他的定时器都能够产生PWM输出。其中高级定时器TIM1能够产生最多7路的PWM信号输出，通用定时器能够产生最多4路的PWM信号。为了能够对STM32的PWM产生有更深地理解，这里先介绍与PWM相关的寄存器。</p>
+<p>STM32的PWM输出信号都是通过定时器产生的，除了TIM6和TIM7，其他的定时器都能够产生PWM输出。其中高级定时器TIM1能够产生最多7路的PWM信号输出，通用定时器能够产生最多4路的PWM信号。为了能够对STM32的PWM信号的产生有更深入地理解，这里先介绍与PWM有关的寄存器。</p>
 <p>由于STM32的PWM信号是通过定时器产生的，所以如果要使用通用定时器TIM来产生PWM输出，除了要了解 <strong>STM32驱动开发-通用与高级定时器</strong> 中所讲解的寄存器外，还要介绍3个寄存器，这3个寄存器分别是 <strong>捕获/比较模式寄存器(TIMx_CCMR[1...2])</strong>、<strong>捕获/比较使能寄存器(TIMx_CCER)</strong> 和 <strong>捕获/比较寄存器(TIMx_CCR[1...4])</strong>。</p>
 <h4 id="timx_ccmr">TIMx_CCMR寄存器<a class="headerlink" href="#timx_ccmr" title="Permanent link">&para;</a></h4>
-<p>该寄存器共有2个，分别为TIMx_CCMR1和TIMx_CCMR2。其中TIMx_CCMR1控制通道1和2(CH1, CH2)，TIMx_CCMR2控制通道3和4(CH3, CH4)，以下该寄存器各位描述：</p>
-<p>该寄存器的有些位在不同模式下的功能是不一样的，对该寄存器的详细说明，可以参考 <strong>STM32寄存器手册</strong> 第288页，14.4.7一节。这里要额外说明的是 <strong>模式设置位OCxM</strong>，该位由3位组成，所以共可以配置成7种模式，我们这里使用的是PWM模式，所以需要设置成 <strong>110</strong> 或者 <strong>111</strong>。设置值的差别仅在于 <strong>输出电平的极性会相反</strong>。</p>
+<p>该寄存器共有2个，分别为TIMx_CCMR1和TIMx_CCMR2。其中TIMx_CCMR1控制通道1和2(CH1, CH2)，TIMx_CCMR2控制通道3和4(CH3, CH4)，下图为该寄存器的各位描述：</p>
+<p>该寄存器的有些位在不同模式下的功能是不一样的，对该寄存器的详细说明，可以参考 <strong>STM32寄存器手册</strong> 第288页，14.4.7一节。这里要额外说明的是 <strong>模式设置位OCxM</strong>，该设置位由3个二进制位组成，所以一共可以配置成7种模式，我们这里使用的是PWM模式，所以需要设置成 <strong>110</strong> 或者 <strong>111</strong>。设置成 <strong>110</strong> 和 <strong>111</strong> 的差别仅在于 <strong>会使得输出电平的极性相反</strong>。</p>
 <h4 id="timx_ccer">TIMx_CCER寄存器<a class="headerlink" href="#timx_ccer" title="Permanent link">&para;</a></h4>
 <p>该寄存器控制各个输入输出通道的开关，其各位描述如下图所示：</p>
-<p>该寄存使用起来比较简单，想要定时器从第几个通道输出PWM信号，就置第几个CC[1...4]E为1，比如想要从通道2输出PWM信号，就需要将 <strong>CC2E</strong> 置为1，更加详细的用法可以参考 <strong>STM32寄存器手册</strong> 第292页，14.4.9一节。</p>
+<p>该寄存器使用起来比较简单，想要定时器从第几个通道输出PWM信号，就置第几个CC[1...4]E为1，比如想要从通道2输出PWM信号，就需要将 <strong>CC2E</strong> 置为1，更加详细的用法可以参考 <strong>STM32寄存器手册</strong> 第292页，14.4.9一节。</p>
 <h4 id="timx_ccr">TIMx_CCR寄存器<a class="headerlink" href="#timx_ccr" title="Permanent link">&para;</a></h4>
 <p>TIMx_CCR一共有4个，分别对应4路输出通道，该寄存器的各位描述为：</p>
 <p>在输出模式下，该寄存器的值会与CNT的值进行比较，根据比较结果来产生相应的动作。修改该寄存器的值就可以控制PWM的输出脉宽。</p>
 <h3 id="pwm_1">库函数配置PWM<a class="headerlink" href="#pwm_1" title="Permanent link">&para;</a></h3>
-<p>PWM相关的库函数在 <strong>FWLib</strong> 目录下的 <strong>stm32f10x_tim.c</strong> 和 <strong>stm32f10x_tim.h</strong> 中。</p>
+<p>PWM相关的库函数在 <strong>FWLib</strong> 目录下的 <strong>stm32f10x_tim.c</strong> 和 <strong>stm32f10x_tim.h</strong> 中。这里以定时器的TIM3通道3输出PWM信号为例介绍使用固件库产生PWM的方法。首先像前面介绍的代码一样要先使能对应APB总线下的外设时钟(TIM3是APB1总线下的外设)：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">RCC_APB1PeriphClockCmd</span><span class="p">(</span><span class="n">RCC_APB1Periph_TIM3</span><span class="p">,</span> <span class="n">ENABLE</span><span class="p">);</span>
+</pre></div>
+</td></tr></table>
+
+<p>然后设置输出的GPIO口，由于TIM3的通道3在默认GPIOB的第0口输出，故代码如下：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">GPIO_InitTypeDef</span>        <span class="n">GPIO_InitStructure</span><span class="p">;</span>
+<span class="n">RCC_APB2PeriphClockCmd</span><span class="p">(</span><span class="n">RCC_APB2Periph_GPIOB</span><span class="p">,</span> <span class="n">ENABLE</span><span class="p">);</span>
+<span class="n">GPIO_InitStructure</span><span class="p">.</span><span class="n">GPIO_Pin</span>   <span class="o">=</span> <span class="n">GPIO_Pin_0</span><span class="p">;</span>
+<span class="n">GPIO_InitStructure</span><span class="p">.</span><span class="n">GPIO_Mode</span>  <span class="o">=</span> <span class="n">GPIO_Mode_AF_PP</span><span class="p">;</span>
+<span class="n">GPIO_InitStructure</span><span class="p">.</span><span class="n">GPIO_Speed</span> <span class="o">=</span> <span class="n">GPIO_Speed_2MHz</span><span class="p">;</span>
+<span class="n">GPIO_Init</span><span class="p">(</span><span class="n">GPIOB</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">GPIO_InitStructure</span><span class="p">);</span>
+</pre></div>
+</td></tr></table>
+
+<p>接着是设置TIM3的ARR和PSC两个寄存器的值来控制生成的PWM信号的周期，这一步实际上就是配置产生PWM信号的TIM3定时器的定时溢出周期，这个在前面介绍定时器时已经介绍过了，这里就直接给出代码：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">TIM_TimeBaseStructure</span><span class="p">.</span><span class="n">TIM_Period</span>        <span class="o">=</span> <span class="n">arr</span><span class="p">;</span>
+<span class="n">TIM_TimeBaseStructure</span><span class="p">.</span><span class="n">TIM_Prescaler</span>     <span class="o">=</span> <span class="n">psc</span><span class="p">;</span>
+<span class="n">TIM_TimeBaseStructure</span><span class="p">.</span><span class="n">TIM_ClockDivision</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">TIM_TimeBaseStructure</span><span class="p">.</span><span class="n">TIM_CounterMode</span>   <span class="o">=</span> <span class="n">TIM_CounterMode_Up</span><span class="p">;</span>
+<span class="n">TIM_TimeBaseInit</span><span class="p">(</span><span class="n">TIM3</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">TIM_TimeBaseStructure</span><span class="p">);</span>
+</pre></div>
+</td></tr></table>
+
+<p>接着需要设置TIM3_CH3为PWM输出模式(默认)，这里官方库提供 <strong>TIM_OC1Init()~TIM_OC4Init()</strong> 4个函数来分别独立设置4个通道的工作模式，这里使用的是通道3，所以使用的函数是：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="kt">void</span> <span class="nf">TIM_OC3Init</span><span class="p">(</span><span class="n">TIM_TypeDef</span><span class="o">*</span> <span class="n">TIMx</span><span class="p">,</span> <span class="n">TIM_OCInitTypeDef</span><span class="o">*</span> <span class="n">TIM_OCInitStruct</span><span class="p">);</span>
+</pre></div>
+</td></tr></table>
+
+<p>这种初始化外设函数的声明结构已经多次出现了，想必读者已经非常熟悉了，<strong>TIM_OCInitTypeDef</strong> 的类型定义为：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span>
+<span class="p">{</span>
+    <span class="kt">uint16_t</span> <span class="n">TIM_OCMode</span><span class="p">;</span>
+    <span class="kt">uint16_t</span> <span class="n">TIM_OutputState</span><span class="p">;</span>
+    <span class="kt">uint16_t</span> <span class="n">TIM_OutputNState</span><span class="p">;</span>
+    <span class="kt">uint16_t</span> <span class="n">TIM_Pulse</span><span class="p">;</span>
+    <span class="kt">uint16_t</span> <span class="n">TIM_OCPolarity</span><span class="p">;</span>
+    <span class="kt">uint16_t</span> <span class="n">TIM_OCNPolarity</span><span class="p">;</span>
+    <span class="kt">uint16_t</span> <span class="n">TIM_OCIdleState</span><span class="p">;</span>
+    <span class="kt">uint16_t</span> <span class="n">TIM_OCNIdleState</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">TIM_OCInitTypeDef</span><span class="p">;</span>
+</pre></div>
+</td></tr></table>
+
+<p>这里主要介绍3个会用到的成员变量：<strong>TIM_OCMode</strong> 用来设置工作模式是 <strong>PWM</strong> 还是 <strong>输出比较</strong>。<strong>TIM_OutputState</strong> 用来使能PWM输出到端口，<strong>TIM_OCPolarity</strong> 用来设置输出极性的高低。其他的成员变量只有高级定时器才会用到(TIM3是通用定时器)。这样要实现功能的初始化代码为：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">TIM_OCStructInit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">TIM_OCInitStructure</span><span class="p">);</span>
+<span class="n">TIM_OCInitStructure</span><span class="p">.</span><span class="n">TIM_OCMode</span>      <span class="o">=</span> <span class="n">TIM_OCMode_PWM1</span><span class="p">;</span>
+<span class="n">TIM_OCInitStructure</span><span class="p">.</span><span class="n">TIM_OutputState</span> <span class="o">=</span> <span class="n">TIM_OutputState_Enable</span><span class="p">;</span>
+<span class="n">TIM_OCInitStructure</span><span class="p">.</span><span class="n">TIM_Pulse</span>       <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">TIM_OCInitStructure</span><span class="p">.</span><span class="n">TIM_OCPolarity</span>  <span class="o">=</span> <span class="n">TIM_OCPolarity_High</span><span class="p">;</span>
+</pre></div>
+</td></tr></table>
+
+<p>最后只需要使能TIM3即可：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">TIM_Cmd</span><span class="p">(</span><span class="n">TIM3</span><span class="p">,</span> <span class="n">ENABLE</span><span class="p">);</span>
+</pre></div>
+</td></tr></table>
+
+<p>虽然此时PWM已经开始输出了，但是信号的占空比和频率都是固定的，如果想要在初始化之后修改PWM的占空比，可以通过修改TIM3_CCR3寄存器的值来实现。官方库提供修改TIM_CCR3的函数为：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="kt">void</span> <span class="nf">TIM_SetCompare3</span><span class="p">(</span><span class="n">TIM_TypeDef</span><span class="o">*</span> <span class="n">TIMx</span><span class="p">,</span> <span class="kt">uint16_t</span> <span class="n">Compare3</span><span class="p">);</span>
+</pre></div>
+</td></tr></table>
+
+<p>这样就可以控制TIM3的通道3输出PWM信号了。</p>
 <h2 id="_3">硬件连接<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p><strong>Breeze Mini</strong> 硬件上4个电机控制信号线分别连接在 <strong>GPIOA.0</strong>、<strong>GPIOA.1</strong>、<strong>GPIOB.0</strong> 和 <strong>GPIOB.1</strong> 上，该部分原理图如下所示：</p>
+<p><img alt="breeze_embedded_motor_sch" src="https://microdynamics-1256406063.cos.ap-shanghai.myqcloud.com/breeze/embedded/motor_sch.png" /></p>
 <h2 id="_4">软件设计<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p>完整代码在工程目录下的 <strong>Modules</strong> 子目录下的 <strong>stm32f10x_module_motor.c</strong> 和 <strong>stm32f10x_module_motor.h</strong> 中。</p>
+<h3 id="pwm_2">PWM初始化<a class="headerlink" href="#pwm_2" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="kt">void</span> <span class="nf">Motor_Init</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">u16</span>                     <span class="n">prescaler</span> <span class="o">=</span> <span class="p">(</span><span class="n">u16</span><span class="p">)(</span><span class="n">SystemCoreClock</span> <span class="o">/</span> <span class="mi">24000000</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">GPIO_InitTypeDef</span>        <span class="n">GPIO_InitStructure</span><span class="p">;</span>
+    <span class="n">TIM_OCInitTypeDef</span>       <span class="n">TIM_OCInitStructure</span><span class="p">;</span>
+    <span class="n">TIM_TimeBaseInitTypeDef</span> <span class="n">TIM_TimeBaseStructure</span><span class="p">;</span>
+
+    <span class="n">RCC_APB1PeriphClockCmd</span><span class="p">(</span><span class="n">RCC_APB1Periph_TIM2</span> <span class="o">|</span> <span class="n">RCC_APB1Periph_TIM3</span><span class="p">,</span> <span class="n">ENABLE</span><span class="p">);</span>
+    <span class="n">RCC_APB2PeriphClockCmd</span><span class="p">(</span><span class="n">RCC_APB2Periph_GPIOA</span> <span class="o">|</span> <span class="n">RCC_APB2Periph_GPIOB</span><span class="p">,</span> <span class="n">ENABLE</span><span class="p">);</span>
+
+    <span class="n">GPIO_InitStructure</span><span class="p">.</span><span class="n">GPIO_Pin</span>   <span class="o">=</span> <span class="n">GPIO_Pin_0</span> <span class="o">|</span> <span class="n">GPIO_Pin_1</span><span class="p">;</span>
+    <span class="n">GPIO_InitStructure</span><span class="p">.</span><span class="n">GPIO_Mode</span>  <span class="o">=</span> <span class="n">GPIO_Mode_AF_PP</span><span class="p">;</span>
+    <span class="n">GPIO_InitStructure</span><span class="p">.</span><span class="n">GPIO_Speed</span> <span class="o">=</span> <span class="n">GPIO_Speed_2MHz</span><span class="p">;</span>
+    <span class="n">GPIO_Init</span><span class="p">(</span><span class="n">GPIOA</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">GPIO_InitStructure</span><span class="p">);</span>
+    <span class="n">GPIO_Init</span><span class="p">(</span><span class="n">GPIOB</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">GPIO_InitStructure</span><span class="p">);</span>
+
+    <span class="n">TIM_DeInit</span><span class="p">(</span><span class="n">TIM2</span><span class="p">);</span>
+    <span class="n">TIM_DeInit</span><span class="p">(</span><span class="n">TIM3</span><span class="p">);</span>
+    <span class="n">TIM_TimeBaseStructure</span><span class="p">.</span><span class="n">TIM_Period</span>        <span class="o">=</span> <span class="mi">999</span><span class="p">;</span>
+    <span class="n">TIM_TimeBaseStructure</span><span class="p">.</span><span class="n">TIM_Prescaler</span>     <span class="o">=</span> <span class="n">prescaler</span><span class="p">;</span>
+    <span class="n">TIM_TimeBaseStructure</span><span class="p">.</span><span class="n">TIM_ClockDivision</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">TIM_TimeBaseStructure</span><span class="p">.</span><span class="n">TIM_CounterMode</span>   <span class="o">=</span> <span class="n">TIM_CounterMode_Up</span><span class="p">;</span>
+    <span class="n">TIM_TimeBaseInit</span><span class="p">(</span><span class="n">TIM2</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">TIM_TimeBaseStructure</span><span class="p">);</span>
+    <span class="n">TIM_TimeBaseInit</span><span class="p">(</span><span class="n">TIM3</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">TIM_TimeBaseStructure</span><span class="p">);</span>
+
+    <span class="n">TIM_OCStructInit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">TIM_OCInitStructure</span><span class="p">);</span>
+    <span class="n">TIM_OCInitStructure</span><span class="p">.</span><span class="n">TIM_OCMode</span>      <span class="o">=</span> <span class="n">TIM_OCMode_PWM1</span><span class="p">;</span>
+    <span class="n">TIM_OCInitStructure</span><span class="p">.</span><span class="n">TIM_OutputState</span> <span class="o">=</span> <span class="n">TIM_OutputState_Enable</span><span class="p">;</span>
+    <span class="n">TIM_OCInitStructure</span><span class="p">.</span><span class="n">TIM_Pulse</span>       <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">TIM_OCInitStructure</span><span class="p">.</span><span class="n">TIM_OCPolarity</span>  <span class="o">=</span> <span class="n">TIM_OCPolarity_High</span><span class="p">;</span>
+
+    <span class="n">TIM_OC1Init</span><span class="p">(</span><span class="n">TIM2</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">TIM_OCInitStructure</span><span class="p">);</span>
+    <span class="n">TIM_OC2Init</span><span class="p">(</span><span class="n">TIM2</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">TIM_OCInitStructure</span><span class="p">);</span>
+    <span class="n">TIM_OC3Init</span><span class="p">(</span><span class="n">TIM3</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">TIM_OCInitStructure</span><span class="p">);</span>
+    <span class="n">TIM_OC4Init</span><span class="p">(</span><span class="n">TIM3</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">TIM_OCInitStructure</span><span class="p">);</span>
+
+    <span class="n">TIM_OC1PreloadConfig</span><span class="p">(</span><span class="n">TIM2</span><span class="p">,</span> <span class="n">TIM_OCPreload_Enable</span><span class="p">);</span>
+    <span class="n">TIM_OC2PreloadConfig</span><span class="p">(</span><span class="n">TIM2</span><span class="p">,</span> <span class="n">TIM_OCPreload_Enable</span><span class="p">);</span>
+    <span class="n">TIM_OC3PreloadConfig</span><span class="p">(</span><span class="n">TIM3</span><span class="p">,</span> <span class="n">TIM_OCPreload_Enable</span><span class="p">);</span>
+    <span class="n">TIM_OC4PreloadConfig</span><span class="p">(</span><span class="n">TIM3</span><span class="p">,</span> <span class="n">TIM_OCPreload_Enable</span><span class="p">);</span>
+
+    <span class="n">TIM_Cmd</span><span class="p">(</span><span class="n">TIM2</span><span class="p">,</span> <span class="n">ENABLE</span><span class="p">);</span>
+    <span class="n">TIM_Cmd</span><span class="p">(</span><span class="n">TIM3</span><span class="p">,</span> <span class="n">ENABLE</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table>
+
 <h2 id="_5">参考<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://documents-1256406063.cos.ap-shanghai.myqcloud.com/STM32F1%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97-%E5%BA%93%E5%87%BD%E6%95%B0%E7%89%88%E6%9C%AC_V3.1%20.pdf">STM32开发指南-库函数版本_V3.1.pdf</a>, 正点原子, <a href="http://www.alientek.com/">ALLENTEK</a>.</li>
