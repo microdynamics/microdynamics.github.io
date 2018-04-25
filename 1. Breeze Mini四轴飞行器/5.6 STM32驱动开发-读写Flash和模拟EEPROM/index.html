@@ -1456,6 +1456,7 @@
 <p>这里主要讲解 <strong>Breeze Mini</strong> 的FLASH相关操作，完整代码在工程目录下的 <strong>Drivers</strong> 子目录下的 <strong>stm32f10x_driver_flash.c</strong>、<strong>stm32f10x_driver_flash.h</strong>、<strong>stm32f10x_driver_eeprom.c</strong> 和 <strong>stm32f10x_driver_eeprom.h</strong> 中，该代码主要实现对STM32自身的FLASH进行读写来模拟实现EEPROM的功能，进而存储控制算法所需的相关常数。</p>
 <h2 id="_2">相关知识<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <h3 id="icpiap">ICP和IAP<a class="headerlink" href="#icpiap" title="Permanent link">&para;</a></h3>
+<p>ICP()称为 <strong>"在电路编程"</strong>，IAP()称为 <strong>"在应用编程"</strong></p>
 <h3 id="stm32-flash">STM32 FLASH简介<a class="headerlink" href="#stm32-flash" title="Permanent link">&para;</a></h3>
 <p>STM32不同型号的控制器的FLASH的容量也有所不同，最小的只有16K字节，最大的则有1024K字节，<strong>Breez Mini</strong> 选择的 <strong>STM32F103TBU6</strong> 的FLASH容量为128K字节，属于中等容量产品。中等容量产品的闪存模块结构如下图所示：</p>
 <p>由上图可见，STM32的闪存模块由 <strong>主存储器</strong>、<strong>信息块</strong> 和 <strong>闪存存储器接口寄存器</strong> 3部分组成。</p>
