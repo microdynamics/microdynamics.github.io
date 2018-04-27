@@ -742,17 +742,30 @@
     固件库操作
   </a>
   
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" title="数据发送与接收" class="md-nav__link">
+    数据发送与接收
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
-  <a href="#_7" title="硬件连接" class="md-nav__link">
+  <a href="#_8" title="硬件连接" class="md-nav__link">
     硬件连接
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#_8" title="软件设计" class="md-nav__link">
+  <a href="#_9" title="软件设计" class="md-nav__link">
     软件设计
   </a>
   
@@ -760,15 +773,22 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_9" title="环形收发队列" class="md-nav__link">
+  <a href="#_10" title="环形收发队列" class="md-nav__link">
     环形收发队列
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#_10" title="初始化" class="md-nav__link">
+  <a href="#_11" title="初始化" class="md-nav__link">
     初始化
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" title="串口打印支持" class="md-nav__link">
+    串口打印支持
   </a>
   
 </li>
@@ -784,14 +804,14 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_11" title="总结" class="md-nav__link">
+  <a href="#_13" title="总结" class="md-nav__link">
     总结
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_12" title="参考" class="md-nav__link">
+  <a href="#_14" title="参考" class="md-nav__link">
     参考
   </a>
   
@@ -1428,17 +1448,30 @@
     固件库操作
   </a>
   
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" title="数据发送与接收" class="md-nav__link">
+    数据发送与接收
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
-  <a href="#_7" title="硬件连接" class="md-nav__link">
+  <a href="#_8" title="硬件连接" class="md-nav__link">
     硬件连接
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#_8" title="软件设计" class="md-nav__link">
+  <a href="#_9" title="软件设计" class="md-nav__link">
     软件设计
   </a>
   
@@ -1446,15 +1479,22 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_9" title="环形收发队列" class="md-nav__link">
+  <a href="#_10" title="环形收发队列" class="md-nav__link">
     环形收发队列
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#_10" title="初始化" class="md-nav__link">
+  <a href="#_11" title="初始化" class="md-nav__link">
     初始化
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" title="串口打印支持" class="md-nav__link">
+    串口打印支持
   </a>
   
 </li>
@@ -1470,14 +1510,14 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_11" title="总结" class="md-nav__link">
+  <a href="#_13" title="总结" class="md-nav__link">
     总结
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_12" title="参考" class="md-nav__link">
+  <a href="#_14" title="参考" class="md-nav__link">
     参考
   </a>
   
@@ -1617,13 +1657,224 @@
 <h3 id="_5">简介<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
 <p>USART即 <strong>Universal Synchronous Asynchronous Receiver/Transmitter</strong>(通用同步异步串行接收/发送器)，这个同步和异步指的是通信的双方的时钟信号是否相同的，如果是相同的话则就是工作在同步模式，否则就是工作在异步模式，同步模式一般都是要求通信双方保持同步时钟序，这也是因为同步通信数据是以一组约定好的字符格式来为定义的，简单来讲同步串口通信传输不以单个字符为基本单位，而是以一个字符组合(帧)，帧的长度和数据内容由开发者定义，这个帧中包含有同步信息以通知接收方调整时序进而达到同步，由于数据是以一种包的形式发送的，如果发送和接收方时钟不同步的话，则接收方可能不会从包的起始开始接收，出现错误。而异步通信是以单个字符作为传输的基本单位的，但是为了接收方能够知道数据接收的起始和验证数据在传输过程中没有错误，还需要人为在数据间插入起始位、终止位和校验位。STM32TBU6支持的USART在实际开发过程中主要是和PC，nRF51822进行通信，通信双方的时钟序是不同的，所以目前使用的是 <strong>异步串口</strong> 进行通信。</p>
 <h3 id="_6">固件库操作<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
-<h3 id="_7">硬件连接<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<p>USART相关的库函数在 <strong>FWLib</strong> 目录下的 <strong>stm32f10x_usart.c</strong> 和 <strong>stm32f10x_usart.h</strong> 中。</p>
+<h4 id="_7">数据发送与接收<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h4>
+<p>STM32串口数据的发送和接收是通过USART_DR寄存器来实现的，该寄存器是一个双寄存器，包含有TDR和RDR，当向该寄存器写数据时，串口就会自动发送，当收到数据的时候，串口就会将数据存储在该寄存器中。固件库中提供的向串口发送数据的函数为：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="kt">void</span> <span class="nf">USART_SendData</span><span class="p">(</span><span class="n">USART_TypeDef</span><span class="o">*</span> <span class="n">USARTx</span><span class="p">,</span> <span class="kt">uint16_t</span> <span class="n">Data</span><span class="p">);</span>
+</pre></div>
+</td></tr></table>
+
+<p>固件库中提供的从串口读取数据的函数为：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="kt">uint16_t</span> <span class="nf">USART_ReceiveData</span><span class="p">(</span><span class="n">USART_TypeDef</span><span class="o">*</span> <span class="n">USARTx</span><span class="p">);</span>
+</pre></div>
+</td></tr></table>
+
+<p>串口的状态(数据的接收和发送)是通过读取状态寄存器USART_SR得到的，USART_SR的各位描述如下：</p>
+<p>这里值得关注的是第5位的RXNE和第六位的TC，<strong>RXNE</strong> 位(读数据寄存器非空)被置1的时候，就是提示已经有数据被串口接收到了，并且已经可读了，此时应该尽快读取USART_DR的值，通过读USART_DR可以将该位自动清零，向该位写零也可以达到同样的效果。另外 <strong>TC</strong> 位(发送完成)被置1的时候，表示USART_DR内的数据已经发送完成了，如果设置了这个位的中断，则会产生中断，该位也有两种清零方式：</p>
+<p><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="mf">1.</span> <span class="err">读</span><span class="n">USART_SR</span><span class="err">，写</span><span class="n">USART_DR</span>
+<span class="mf">2.</span> <span class="err">向该位写零</span>
+</pre></div>
+</td></tr></table>
+固件库所提供的读取串口状态的函数为：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">FlagStatus</span> <span class="nf">USART_GetFlagStatus</span><span class="p">(</span><span class="n">USART_TypeDef</span><span class="o">*</span> <span class="n">USARTx</span><span class="p">,</span> <span class="kt">uint16_t</span> <span class="n">USART_FLAG</span><span class="p">);</span>
+</pre></div>
+</td></tr></table>
+
+<p>这个函数的第一个参数表示要获得状态的串口是哪一个，第二个参数则表示要查看串口的哪种状态，比如要获得串口1的RXNE状态的代码为：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">USART_GetFlagStatus</span><span class="p">(</span><span class="n">USART1</span><span class="p">,</span> <span class="n">USART_FLAG_RXNE</span><span class="p">);</span>
+</pre></div>
+</td></tr></table>
+
+<p>一般情况下串口数据的发送和读取都是通过中断的方式来实现的，由于发送是串口的一种主动的操作，即将数据发送到串口上等待被别人读取，其具体实现是先将待发送的数据准备好，然后使能中断发送，此时MCU会通过触发中断的方式来将数据发送并判断发送是否完成，此时需要注意要软件清零。串口接收则直接由MCU获得与串口有关的中断状态，然后查询是否是接收中断。要判断发生的是哪种串口中断，可以固件库提供的函数：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">ITStatus</span> <span class="nf">USART_GetITStatus</span><span class="p">(</span><span class="n">USART_TypeDef</span><span class="o">*</span> <span class="n">USARTx</span><span class="p">,</span> <span class="kt">uint16_t</span> <span class="n">USART_IT</span><span class="p">);</span>
+</pre></div>
+</td></tr></table>
+
+<p>比如使能了串口1的接收中断，则当中断发生时，可以通过如下代码查询发生的中断是否是串口接收中断：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">USART_GetITStatus</span><span class="p">(</span><span class="n">USART1</span><span class="p">,</span> <span class="n">USART_IT_RXNE</span><span class="p">);</span>
+</pre></div>
+</td></tr></table>
+
+<p>若返回值是SET，则表示该中断发生了。</p>
+<h3 id="_8">硬件连接<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
 <p>USART属于 <strong>Breeze Mini</strong> 主微控制器STM32F103TBU6的通信协议实现，是没有外部电路连接的。</p>
-<h3 id="_8">软件设计<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
-<h4 id="_9">环形收发队列<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h4>
-<h4 id="_10">初始化<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h4>
-<h2 id="_11">总结<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h2>
-<h2 id="_12">参考<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h2>
+<h3 id="_9">软件设计<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<h4 id="_10">环形收发队列<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h4>
+<p>由于STM32的硬件串口上没有设置FIFO缓冲区，为了防止 <strong>数据没有被快速读出而导致的被覆盖的问题</strong>，此时需要用软件来实现一个FIFO缓冲区，即一个队列。这队列可以将数据暂存在里面，然后按照入队顺序读取数据。</p>
+<p>一般队列的C语言实现都是先定义一个数组，然后在该数组上维护一个入队指针和一个出队指针，入队时向右移动入队指针，出队时向右移动出队指针。如果一直重复入队和出队操作，不管数组开的多大，总会出现超出数组的边界的情况，这个是顺序队列的缺陷。但是如果考虑到每次进行串口数据读取的暂存数据都不会太多，即 <strong>任意时刻队列中的数据都是不多的</strong> ，而且向前面那种移动指针的方式会使得出队指针之前的空间被永久弃用了，为了解决这个问题，我们可以将队列的头尾相连，这样让入队和出队指针都可以在一个环中循环移动，使得出队指针之前的空间也得到了再次利用。这里简单介绍一下如何使用C语言特性去实现这个循环队列，首先可以定义一个循环队列的数据类型：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span>
+<span class="p">{</span>
+    <span class="n">u8</span>  <span class="o">*</span><span class="n">buffer</span><span class="p">;</span>    <span class="c1">//指向存储数组的指针变量</span>
+    <span class="n">u16</span>  <span class="n">mask</span><span class="p">;</span>      <span class="c1">//队列的大小</span>
+    <span class="n">vu16</span> <span class="n">index_rd</span><span class="p">;</span>  <span class="c1">//出队指针(变量)</span>
+    <span class="n">vu16</span> <span class="n">index_wt</span><span class="p">;</span>  <span class="c1">//入队指针(变量)</span>
+<span class="p">}</span> <span class="n">USART_RingBuffer</span><span class="p">;</span>
+</pre></div>
+</td></tr></table>
+
+<p>其他对于循环队列的操作比较简单，</p>
+<h4 id="_11">初始化<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h4>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="kt">void</span> <span class="nf">UART1_init</span><span class="p">(</span><span class="n">u32</span> <span class="n">pclk2</span><span class="p">,</span> <span class="n">u32</span> <span class="n">bound</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">float</span> <span class="n">temp</span><span class="p">;</span>
+    <span class="n">u16</span> <span class="n">mantissa</span><span class="p">;</span>
+    <span class="n">u16</span> <span class="n">fraction</span><span class="p">;</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="p">(</span><span class="kt">float</span><span class="p">)(</span><span class="n">pclk2</span> <span class="o">*</span> <span class="mi">1000000</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">bound</span> <span class="o">*</span> <span class="mi">16</span><span class="p">);</span> <span class="c1">//得到USARTDIV</span>
+    <span class="n">mantissa</span> <span class="o">=</span> <span class="n">temp</span><span class="p">;</span>                                <span class="c1">//得到整数部分</span>
+    <span class="n">fraction</span> <span class="o">=</span> <span class="p">(</span><span class="n">temp</span> <span class="o">-</span> <span class="n">mantissa</span><span class="p">)</span> <span class="o">*</span> <span class="mi">16</span><span class="p">;</span>              <span class="c1">//得到小数部分</span>
+    <span class="n">mantissa</span> <span class="o">&lt;&lt;=</span> <span class="mi">4</span><span class="p">;</span>
+    <span class="n">mantissa</span> <span class="o">+=</span> <span class="n">fraction</span><span class="p">;</span>
+    <span class="n">RCC</span><span class="o">-&gt;</span><span class="n">APB2ENR</span>  <span class="o">|=</span> <span class="mi">1</span><span class="o">&lt;&lt;</span><span class="mi">2</span><span class="p">;</span>                          <span class="c1">//使能PORTA口时钟</span>
+    <span class="n">RCC</span><span class="o">-&gt;</span><span class="n">APB2ENR</span>  <span class="o">|=</span> <span class="mi">1</span><span class="o">&lt;&lt;</span><span class="mi">14</span><span class="p">;</span>                         <span class="c1">//使能串口时钟</span>
+    <span class="n">GPIOA</span><span class="o">-&gt;</span><span class="n">CRH</span>    <span class="o">&amp;=</span> <span class="mi">0</span><span class="n">XFFFFF00F</span><span class="p">;</span>                    <span class="c1">//IO状态设置</span>
+    <span class="n">GPIOA</span><span class="o">-&gt;</span><span class="n">CRH</span>    <span class="o">|=</span> <span class="mi">0</span><span class="n">X000008B0</span><span class="p">;</span>                    <span class="c1">//IO状态设置</span>
+    <span class="n">RCC</span><span class="o">-&gt;</span><span class="n">APB2RSTR</span> <span class="o">|=</span> <span class="mi">1</span><span class="o">&lt;&lt;</span><span class="mi">14</span><span class="p">;</span>                         <span class="c1">//复位串口1</span>
+    <span class="n">RCC</span><span class="o">-&gt;</span><span class="n">APB2RSTR</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="p">(</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="mi">14</span><span class="p">);</span>                      <span class="c1">//停止复位</span>
+
+    <span class="n">USART1</span><span class="o">-&gt;</span><span class="n">BRR</span>  <span class="o">=</span> <span class="n">mantissa</span><span class="p">;</span>                        <span class="c1">//波特率设置</span>
+    <span class="n">USART1</span><span class="o">-&gt;</span><span class="n">CR1</span> <span class="o">|=</span> <span class="mi">0</span><span class="n">X200C</span><span class="p">;</span>                          <span class="c1">//1位停止,无校验位</span>
+    <span class="n">USART1</span><span class="o">-&gt;</span><span class="n">CR1</span> <span class="o">|=</span> <span class="mi">1</span><span class="o">&lt;&lt;</span><span class="mi">8</span><span class="p">;</span>                            <span class="c1">//PE中断使能</span>
+    <span class="n">USART1</span><span class="o">-&gt;</span><span class="n">CR1</span> <span class="o">|=</span> <span class="mi">1</span><span class="o">&lt;&lt;</span><span class="mi">5</span><span class="p">;</span>                            <span class="c1">//接收缓冲区非空中断使能</span>
+    <span class="n">NVIC_InitUSART</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table>
+
+<p>以下代码主要是对接收和发送缓冲队列进行初始化，特别要说明的一点是成员变量 <strong>mask</strong> 的值设置成 <strong>USART_BUFFER_SIZE - 1</strong>，是因为USART_BUFFER_SIZE的值设置成了128，对应的二进制位 <strong>0000 0000 1000 0000</strong>，为了能够通过 <strong>位与运算实现接收，发送指针每到达数组边界时就自动回到开始位置</strong>，需要保证 <strong>mask</strong> 的值为 <strong>0000 0000 0111 1111</strong> 这种形式的，即值为128 - 1 = 127，实现循环移动指针的操作读者可以自己尝试几个值来试一下：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">USART_RingBufferRxStructure</span><span class="p">.</span><span class="n">index_rd</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">USART_RingBufferRxStructure</span><span class="p">.</span><span class="n">index_wt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">USART_RingBufferRxStructure</span><span class="p">.</span><span class="n">mask</span>     <span class="o">=</span> <span class="n">USART_BUFFER_SIZE</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+<span class="n">USART_RingBufferRxStructure</span><span class="p">.</span><span class="n">buffer</span>   <span class="o">=</span> <span class="o">&amp;</span><span class="n">usart_ring_buffer_rx</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+
+<span class="n">USART_RingBufferTxStructure</span><span class="p">.</span><span class="n">index_rd</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">USART_RingBufferTxStructure</span><span class="p">.</span><span class="n">index_wt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">USART_RingBufferTxStructure</span><span class="p">.</span><span class="n">mask</span>     <span class="o">=</span> <span class="n">USART_BUFFER_SIZE</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+<span class="n">USART_RingBufferTxStructure</span><span class="p">.</span><span class="n">buffer</span>   <span class="o">=</span> <span class="o">&amp;</span><span class="n">usart_ring_buffer_tx</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+</pre></div>
+</td></tr></table>
+
+<h4 id="_12">串口打印支持<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h4>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="cm">/* Add the below code to support &#39;printf&#39; function */</span>
+<span class="cp">#if 1</span>
+<span class="cp">#pragma import(__use_no_semihosting)</span>
+
+<span class="cm">/* The support function is needed by standard library */</span>
+<span class="k">struct</span> <span class="n">__FILE</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">handle</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="kt">FILE</span> <span class="n">__stdout</span><span class="p">;</span>
+
+<span class="cm">/* Define _sys_exit() to avoid to use semihosting */</span>
+<span class="n">_sys_exit</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cm">/* Redefine &#39;fputc&#39; function */</span>
+<span class="kt">int</span> <span class="n">fputc</span><span class="p">(</span><span class="kt">int</span> <span class="n">ch</span><span class="p">,</span> <span class="kt">FILE</span> <span class="o">*</span><span class="n">f</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">while</span> <span class="p">((</span><span class="n">USART1</span><span class="o">-&gt;</span><span class="n">SR</span> <span class="o">&amp;</span> <span class="mh">0x40</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span>  <span class="cm">/* Cyclic send until complete */</span>
+    <span class="n">USART1</span><span class="o">-&gt;</span><span class="n">DR</span> <span class="o">=</span> <span class="p">(</span><span class="n">u8</span><span class="p">)</span><span class="n">ch</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">ch</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cp">#endif</span>
+</pre></div>
+</td></tr></table>
+
+<p>有的时候为了能够将MCU的相应状态和数据通过串口打印到电脑等上位机上，可以通过自行编写发送函数来实现，但是由于发送的数据的类型和格式比较多，都自己实现的话比较繁琐。还有一种方法就是通过 <strong>重写fputc函数</strong> 来实现。这就是所谓的 <strong>"串口打印"</strong>，这种方法调用printf来格式化输出，和C语言中的printf的使用方法是完全一样的，只不过是将输出口从原先的标准I/O重定向到串口上，而由于printf函数底层上是通过 <strong>调用fputc实现的</strong>，所以需要重写fputc函数。</p>
+<div class="admonition info">
+<p class="admonition-title">注意</p>
+<p>由于嵌入式设备FLASH空间比较小，所以其实嵌入式C语言并没有实现标准C中的所有功能，比如嵌入式C不支持标准浮点数等，这样如果使用printf输出浮点数会出现问题，此时可以在链接中间代码时使用Keil MDK提供的MicroLIB库，该库提供了很多对嵌入式C功能的补充。</p>
+</div>
+<p>以下是操作USART进行数据读写的函数接口：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="k">extern</span> <span class="kt">void</span> <span class="nf">USART_ClearBuffer</span><span class="p">(</span><span class="n">USART_RingBuffer</span> <span class="o">*</span><span class="n">ring_buffer</span><span class="p">);</span>
+<span class="k">extern</span> <span class="kt">void</span> <span class="nf">USART_InitUSART</span><span class="p">(</span><span class="n">u32</span> <span class="n">baud_rate</span><span class="p">);</span>
+<span class="k">extern</span> <span class="kt">void</span> <span class="nf">USART_InitUSART1</span><span class="p">(</span><span class="n">u32</span> <span class="n">baud_rate</span><span class="p">);</span>
+<span class="k">extern</span> <span class="kt">void</span> <span class="nf">USART_SendBuffer</span><span class="p">(</span><span class="n">u8</span> <span class="o">*</span><span class="n">bytes</span><span class="p">,</span> <span class="n">u8</span> <span class="n">length</span><span class="p">);</span>
+<span class="k">extern</span> <span class="kt">void</span> <span class="nf">USART_SendByte</span><span class="p">(</span><span class="n">u8</span> <span class="n">byte</span><span class="p">);</span>
+<span class="k">extern</span> <span class="kt">void</span> <span class="nf">USART_WriteBuffer</span><span class="p">(</span><span class="n">USART_RingBuffer</span> <span class="o">*</span><span class="n">ring_buffer</span><span class="p">,</span> <span class="n">u8</span> <span class="n">byte</span><span class="p">);</span>
+<span class="k">extern</span> <span class="n">u8</span>   <span class="nf">USART_ReadBuffer</span><span class="p">(</span><span class="n">USART_RingBuffer</span> <span class="o">*</span><span class="n">ring_buffer</span><span class="p">);</span>
+<span class="k">extern</span> <span class="n">u16</span>  <span class="nf">USART_CountBuffer</span><span class="p">(</span><span class="n">USART_RingBuffer</span> <span class="o">*</span><span class="n">ring_buffer</span><span class="p">);</span>
+</pre></div>
+</td></tr></table>
+
+<p>每个函数的实现都不是太复杂，这里就不再一一介绍了。</p>
+<h2 id="_13">总结<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h2>
+<p>IIC和USART是 <strong>Breeze Mini</strong> 内外设之间进行数据交换的重要方式，其中IIC主要用于获得支持IIC协议的传感器的数据，而USART则主要用于和上位机通信，打印调试信息和进行蓝牙数据通信。</p>
+<h2 id="_14">参考<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
 <p><a href="https://documents-1256406063.cos.ap-shanghai.myqcloud.com/STM32F1%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97-%E5%BA%93%E5%87%BD%E6%95%B0%E7%89%88%E6%9C%AC_V3.1%20.pdf">STM32开发指南-库函数版本_V3.1.pdf</a>, 正点原子, <a href="http://www.alientek.com/">ALLENTEK</a>.</p>
@@ -1632,7 +1883,7 @@
 <p><a href="https://www.cnblogs.com/bixiaopengblog/p/7469536.html">IIC协议</a></p>
 </li>
 <li>
-<p><a href="https://blog.csdn.net/seashine_yan/article/details/71192283">同步串口和一步串口的区别及使用情况</a></p>
+<p><a href="https://blog.csdn.net/seashine_yan/article/details/71192283">同步串口和异步串口的区别及使用情况</a></p>
 </li>
 </ul>
                 
