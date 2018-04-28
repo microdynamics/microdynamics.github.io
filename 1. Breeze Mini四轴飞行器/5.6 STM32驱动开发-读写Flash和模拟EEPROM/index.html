@@ -653,9 +653,43 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#icpiap" title="ICP和IAP" class="md-nav__link">
-    ICP和IAP
+  <a href="#icpispiap" title="ICP、ISP和IAP简介" class="md-nav__link">
+    ICP、ISP和IAP简介
   </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#icp" title="ICP" class="md-nav__link">
+    ICP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isp" title="ISP" class="md-nav__link">
+    ISP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iap" title="IAP" class="md-nav__link">
+    IAP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" title="3种方式总结" class="md-nav__link">
+    3种方式总结
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -1295,9 +1329,43 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#icpiap" title="ICP和IAP" class="md-nav__link">
-    ICP和IAP
+  <a href="#icpispiap" title="ICP、ISP和IAP简介" class="md-nav__link">
+    ICP、ISP和IAP简介
   </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#icp" title="ICP" class="md-nav__link">
+    ICP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isp" title="ISP" class="md-nav__link">
+    ISP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iap" title="IAP" class="md-nav__link">
+    IAP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" title="3种方式总结" class="md-nav__link">
+    3种方式总结
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -1467,8 +1535,27 @@
                 <h2 id="_1">前言<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <p>这里主要讲解 <strong>Breeze Mini</strong> 的FLASH相关操作，完整代码在工程目录下的 <strong>Drivers</strong> 子目录下的 <strong>stm32f10x_driver_flash.c</strong>、<strong>stm32f10x_driver_flash.h</strong>、<strong>stm32f10x_driver_eeprom.c</strong> 和 <strong>stm32f10x_driver_eeprom.h</strong> 中，该代码主要实现对STM32自身的FLASH进行读写来模拟实现EEPROM的功能，进而存储控制算法所需的相关常数。</p>
 <h2 id="_2">相关知识<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<h3 id="icpiap">ICP和IAP<a class="headerlink" href="#icpiap" title="Permanent link">&para;</a></h3>
-<p>ICP()称为 <strong>"在电路编程"</strong>，IAP()称为 <strong>"在应用编程"</strong></p>
+<h3 id="icpispiap">ICP、ISP和IAP简介<a class="headerlink" href="#icpispiap" title="Permanent link">&para;</a></h3>
+<p>ICP、ISP和IAP是对基于FLASH的IC进行烧写的3种方式，这里简单介绍一下3者之间的区别。</p>
+<h4 id="icp">ICP<a class="headerlink" href="#icp" title="Permanent link">&para;</a></h4>
+<p>ICP(In-Circuit Programming)即 <strong>"在电路编程"</strong>，指的是通过外接的仿真/下载器(JLink)，通过特定的通信协议标准(JTAG或者SWD)，可对所有FLASH空间进行烧写的一种编程方式。使用ICP方式烧写只需满足IC上电这个条件，结合MDK等IDE的话还可以进行在硬件单步调试，这是ICP编程的一个优势。</p>
+<h4 id="isp">ISP<a class="headerlink" href="#isp" title="Permanent link">&para;</a></h4>
+<p>ISP(In-System Programming)即 <strong>"在系统编程"</strong>，指的是不通过外接的仿真/下载器，只通过板载的通信接口(USART)将代码烧写到部分FLASH空间的一种编程方式。使用ISP方式烧写需满足IC和晶振上电，且预先要有一段程序已被烧写进去。</p>
+<h4 id="iap">IAP<a class="headerlink" href="#iap" title="Permanent link">&para;</a></h4>
+<p>IAP(In-Application Programming)即 <strong>"在应用编程"</strong>，指的是在MCU运行的状态下，不通过外接的仿真/下载器，只通过板载的通信接口(USART)将代码烧写到部分FLASH空间的一种编程方式。实现IAP方式时，FLASH空间需要有两块存储区，一块被称为BOOT区，一个被称为主程序区，程序上电时选择从BOOT区启动，此时若有对主程序区的编程需求，则会对其进行编程。否则程序指针会跳转到主程序区去执行代码。</p>
+<h4 id="3">3种方式总结<a class="headerlink" href="#3" title="Permanent link">&para;</a></h4>
+<p>这里用一个比较形象的比喻来描述3者之间的区别：</p>
+<ol>
+<li>
+<p>ICP是把房子和地基都拆了重建，人需要等两者造好之后才能入住(<strong>主程序不能运行</strong>)</p>
+</li>
+<li>
+<p>ISP是把房子拆了重建，但是地基还保留着，人需要等房子造好后才能入住(<strong>主程序不能运行</strong>)</p>
+</li>
+<li>
+<p>IAP是对造好的房子进行内饰装修，此时人是可以入住的(<strong>主程序能运行</strong>)</p>
+</li>
+</ol>
 <h3 id="stm32-flash">STM32 FLASH简介<a class="headerlink" href="#stm32-flash" title="Permanent link">&para;</a></h3>
 <p>STM32不同型号的控制器的FLASH的容量也有所不同，最小的只有16K字节，最大的则有1024K字节，<strong>Breez Mini</strong> 选择的 <strong>STM32F103TBU6</strong> 的FLASH容量为128K字节，属于中等容量产品。中等容量产品的闪存模块结构如下图所示：</p>
 <p>由上图可见，STM32的闪存模块由 <strong>主存储器</strong>、<strong>信息块</strong> 和 <strong>闪存存储器接口寄存器</strong> 3部分组成。</p>
